@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_app/add_todo.dart';
-import 'package:todo_list_app/todo.dart';
+import 'package:todo_list_app/todo_home.dart';
 import 'package:todo_list_app/todo_provider.dart';
-import 'package:todo_list_app/view.dart';
+import 'package:todo_list_app/view_todo.dart';
 
 void main() => runApp(const TodoApp());
 
@@ -19,10 +19,11 @@ class TodoApp extends StatelessWidget{
           useMaterial3: true, brightness: Brightness.dark
         ),
         debugShowCheckedModeBanner: false,
-        home: const AddUpdate(),
+        home: const TodoHome(),
         initialRoute: '/',
         routes: {
-          '/views': (context) => const Views()
+          '/add': (context) => const AddUpdate(),
+          '/view': (context) => const Views()
         }
       ),
     );

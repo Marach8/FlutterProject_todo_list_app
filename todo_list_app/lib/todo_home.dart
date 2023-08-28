@@ -48,20 +48,45 @@ class _Td extends State<TodoHome>{
                       fontWeight: FontWeight.bold,
                     )
                   )
-                ), 
-                SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                ),
+
+                const SizedBox(height: 20),
+
+                Wrap(
+                  //mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TextButton.icon(
-                      onPressed: (){},
-                      icon: Icon(Icons.add),
-                      label: Text('Add')
+                      onPressed: (){Navigator.of(context).pushNamed('/add');},
+                      icon: const Icon(Icons.add),
+                      label: const Text('Add')
                     ),
                     TextButton.icon(
-                      onPressed: (){},
-                      icon: Icon(Icons.view_array),
-                      label: Text('View')
+                      onPressed: (){
+                        if (user.dataBase.isNotEmpty) {
+                          Navigator.of(context).pushNamed('/view');
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              action: SnackBarAction(
+                                label: 'Ok', onPressed: () => ScaffoldMessenger.of(context).hideCurrentSnackBar()
+                              ),
+                              content: const Text(
+                                'Oops!!! seems like you currently have no Todos to view. Add Todos first',
+                                style: TextStyle(
+                                  fontFamily: 'monospace', fontWeight: FontWeight.bold, fontSize: 15,
+                                  color: Colors.white
+                                )
+                              ), 
+                              backgroundColor: const Color.fromARGB(255, 75, 9, 4), duration: const Duration(seconds: 5), elevation: 20,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
+                              ),                              
+                            )
+                          );
+                        }
+                      },
+                      icon: const Icon(Icons.view_array),
+                      label: const Text('View')
                     ),
                     TextButton.icon(
                       onPressed: (){},
