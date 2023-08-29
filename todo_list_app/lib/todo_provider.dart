@@ -5,23 +5,24 @@ class User extends ChangeNotifier{
   
   void addTodo(String title, String date, String todo){
     List<String> newList = [];
+    
     newList.addAll([date, todo]);
     dataBase.putIfAbsent(title, () => newList);
     notifyListeners();
   }
-  void viewTodo(){
+  // void viewTodo(){
 
-  }
+  // }
 
-  void removeTodo(String title){
-    dataBase.remove(title);
-    notifyListeners();
-  }
+  // void removeTodo(String title){
+  //   dataBase.remove(title);
+  //   notifyListeners();
+  // }
 
-  void updateTodo(String title){
-    final todoUpdate = dataBase[title];
-    
-    notifyListeners();
-  }
+  // void updateTodo(String title){
+  //   final todoUpdate = dataBase[title];
+        
+  //   notifyListeners();
+  // }
   
 }

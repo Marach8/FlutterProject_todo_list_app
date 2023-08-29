@@ -114,8 +114,8 @@ class _AU extends State<AddUpdate> {
                         hintStyle: TextStyle(
                           fontFamily: 'monospace', color: Colors.white70,
                           fontSize: 20, fontWeight: FontWeight.bold,
-                        )               
-                      ), 
+                        )
+                      ),
                       style: const TextStyle(
                         fontSize: 20, color: Colors.blueAccent,
                         decoration: TextDecoration.none, fontFamily: 'monospace'
