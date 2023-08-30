@@ -22,18 +22,19 @@ class _AU extends State<AddUpdate> {
       builder: (context) {
         //Future.delayed(const Duration(seconds:2), () => Navigator.of(context).pop());
         return AlertDialog(
+          backgroundColor: const Color.fromARGB(255, 20, 27, 39),
           title: const Text(
             'Save Todo',
             style: TextStyle(
-              fontFamily: 'monospace', color: Colors.white70,
-              fontSize: 20, fontWeight: FontWeight.bold,
+              fontFamily: 'monospace', color: Colors.white,
+              fontSize: 25, fontWeight: FontWeight.bold,
             )
           ),
           content: const Text(
             'Todo has been saved sucessfully. Do you want to add another?',
             style: TextStyle(
               fontFamily: 'monospace', color: Colors.white70,
-              fontSize: 20, fontWeight: FontWeight.bold,
+              fontSize: 15, fontWeight: FontWeight.bold,
             )
           ),
           actions: [
@@ -45,8 +46,8 @@ class _AU extends State<AddUpdate> {
               child: const Text(
                 'Yes',
                 style: TextStyle(
-                  fontFamily: 'monospace', color: Colors.white70,
-                  fontSize: 20, fontWeight: FontWeight.bold,
+                  fontFamily: 'monospace', color: Colors.green,
+                  fontSize: 25, fontWeight: FontWeight.bold,
                 )
               )
             ),
@@ -59,8 +60,8 @@ class _AU extends State<AddUpdate> {
               child: const Text(
                 'No',
                 style: TextStyle(
-                  fontFamily: 'monospace', color: Colors.white70,
-                  fontSize: 20, fontWeight: FontWeight.bold,
+                  fontFamily: 'monospace', color: Colors.green,
+                  fontSize: 25, fontWeight: FontWeight.bold,
                 )
               )
             )
@@ -71,22 +72,6 @@ class _AU extends State<AddUpdate> {
     );
   }
 
-  
-
-  // final User userInstance = User();
-
-  // @override 
-  // void initState(){
-  //   super.initState();
-  //   if(userInstance.toUpdate){
-  //     controller1 = userInstance.dataBase.
-  //   }
-  // }
-
-  // @override 
-  // void dispose(){
-  //   controller1.dispose(); controller2.dispose(); controller3.dispose(); super.dispose();
-  // }
   
   @override 
   Widget build(BuildContext context) {

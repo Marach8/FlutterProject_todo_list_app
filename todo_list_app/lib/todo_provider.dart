@@ -11,8 +11,6 @@ class User extends ChangeNotifier{
   void dispose(){
     controller1.dispose(); controller2.dispose(); controller3.dispose(); super.dispose();
   }
-
-  bool toUpdate = false;
   
   void addTodo(){
     List<String> newList = [];

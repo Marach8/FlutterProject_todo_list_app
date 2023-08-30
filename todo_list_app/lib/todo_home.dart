@@ -15,7 +15,52 @@ class _Td extends State<TodoHome>{
   Widget build(BuildContext context){
 
     var h = MediaQuery.of(context).size.height;
-    var w = MediaQuery.of(context).size.width;
+
+    void notify1(String text, IconData icon){
+      ScaffoldMessenger.of(context).showMaterialBanner(
+        MaterialBanner(
+          surfaceTintColor: Colors.blue.shade900,
+          leading: Icon(icon, size: 40, color: Colors.green,), elevation: 10,
+          actions: [
+            TextButton(
+              onPressed:(){ScaffoldMessenger.of(context).hideCurrentMaterialBanner();}, 
+              child: const Text(
+                'Ok', style: TextStyle(fontFamily: 'monospace', fontSize: 30, fontWeight: FontWeight.bold, color: Colors.green)
+              )
+            )
+          ],
+          backgroundColor: Colors.white, shadowColor: Colors.yellow, padding: const EdgeInsets.all(10),
+          content: Text(
+            text, 
+            style: const TextStyle(
+              fontFamily: 'monospace', fontSize: 15,
+              fontWeight: FontWeight.bold, color: Colors.black
+            )
+          ),
+        )
+      );
+    }
+
+    void notify2(){
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          action: SnackBarAction(
+            label: 'Ok', onPressed: () => ScaffoldMessenger.of(context).hideCurrentSnackBar()
+          ),
+          content: const Text(
+            'Oops!!! seems like you currently have no Todos. Add Todos first.',
+            style: TextStyle(
+              fontFamily: 'monospace', fontWeight: FontWeight.bold, fontSize: 15,
+              color: Colors.white
+            )
+          ), 
+          backgroundColor: const Color.fromARGB(255, 75, 9, 4), duration: const Duration(seconds: 5), elevation: 20,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
+          ),
+        )
+      );
+    }
     
     return Consumer<User>(
       builder: ((context, user, child)
@@ -42,7 +87,7 @@ class _Td extends State<TodoHome>{
                     borderRadius: BorderRadius.circular(50),
                   ),
                   child: const Text(
-                    'Hello, Welcome To Our Todo Manager',
+                    'Hello, Welcome To Our Todo Manager.',
                     style: TextStyle(
                       fontFamily: 'monospace', fontSize: 45,
                       fontWeight: FontWeight.bold,
@@ -63,39 +108,32 @@ class _Td extends State<TodoHome>{
                       onPressed: (){
                         if (user.dataBase.isNotEmpty) {
                           Navigator.of(context).pushNamed('/view');
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              action: SnackBarAction(
-                                label: 'Ok', onPressed: () => ScaffoldMessenger.of(context).hideCurrentSnackBar()
-                              ),
-                              content: const Text(
-                                'Oops!!! seems like you currently have no Todos to view. Add Todos first',
-                                style: TextStyle(
-                                  fontFamily: 'monospace', fontWeight: FontWeight.bold, fontSize: 15,
-                                  color: Colors.white
-                                )
-                              ), 
-                              backgroundColor: const Color.fromARGB(255, 75, 9, 4), duration: const Duration(seconds: 5), elevation: 20,
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
-                              ),                              
-                            )
-                          );
-                        }
+                        } else {notify2();}
                       },
                       icon: const Icon(Icons.view_array),
                       label: const Text('View')
                     ),
                     TextButton.icon(
-                      onPressed: (){},
-                      icon: Icon(Icons.delete),
-                      label: Text('Delete')
+                      onPressed: (){
+                        if (user.dataBase.isNotEmpty) {
+                          notify1('To delete, swipe the item you want to delete to the left or right.', Icons.delete);
+                          Future.delayed(const Duration(seconds:5), () =>ScaffoldMessenger.of(context).hideCurrentMaterialBanner());
+                          Navigator.of(context).pushNamed('/view');
+                        } else {notify2();}                        
+                      },
+                      icon: const Icon(Icons.delete),
+                      label: const Text('Delete')
                     ),
                     TextButton.icon(
-                      onPressed: (){},
-                      icon: Icon(Icons.update_sharp),
-                      label: Text('Update')
+                      onPressed: (){
+                        if (user.dataBase.isNotEmpty) {
+                          notify1('LongPress on the item you want to update to go to update mode.', Icons.update_sharp);
+                          Future.delayed(const Duration(seconds:5), () =>ScaffoldMessenger.of(context).hideCurrentMaterialBanner());
+                          Navigator.of(context).pushNamed('/view');
+                        } else {notify2();}                        
+                      },
+                      icon: const Icon(Icons.update_sharp),
+                      label: const Text('Update')
                     ),
                   ]
                 )
