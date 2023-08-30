@@ -2,27 +2,30 @@ import 'package:flutter/material.dart';
 
 class User extends ChangeNotifier{
   Map<String, List<String>> dataBase = {};
+
+  TextEditingController controller1 = TextEditingController();
+  TextEditingController controller2 = TextEditingController();
+  TextEditingController controller3 = TextEditingController();  
+
+  @override
+  void dispose(){
+    controller1.dispose(); controller2.dispose(); controller3.dispose(); super.dispose();
+  }
+
+  bool toUpdate = false;
   
-  void addTodo(String title, String date, String todo){
+  void addTodo(){
     List<String> newList = [];
     
-    newList.addAll([date, todo]);
-    dataBase.putIfAbsent(title, () => newList);
+    newList.addAll([controller2.text, controller3.text]);
+    dataBase.putIfAbsent(controller1.text, () => newList);
     notifyListeners();
   }
-  // void viewTodo(){
 
-  // }
-
-  // void removeTodo(String title){
-  //   dataBase.remove(title);
-  //   notifyListeners();
-  // }
-
-  // void updateTodo(String title){
-  //   final todoUpdate = dataBase[title];
-        
-  //   notifyListeners();
-  // }
+  void updateTodo(String keyItem, String dateItem, String todoItem){
+    controller1.text = keyItem; controller2.text = dateItem; controller3.text = todoItem;
+    dataBase.remove(keyItem);
+    notifyListeners();
+  }
   
 }

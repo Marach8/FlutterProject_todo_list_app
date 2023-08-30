@@ -44,7 +44,7 @@ class _Td extends State<TodoHome>{
                   child: const Text(
                     'Hello, Welcome To Our Todo Manager',
                     style: TextStyle(
-                      fontFamily: 'monospace', fontSize: 50,
+                      fontFamily: 'monospace', fontSize: 45,
                       fontWeight: FontWeight.bold,
                     )
                   )
@@ -53,7 +53,6 @@ class _Td extends State<TodoHome>{
                 const SizedBox(height: 20),
 
                 Wrap(
-                  //mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TextButton.icon(
                       onPressed: (){Navigator.of(context).pushNamed('/add');},

@@ -62,6 +62,10 @@ class _Views extends State<Views> {
                   //style: ListTileStyle.drawer,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                   contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                  onLongPress: (){
+                    user.updateTodo(title, date, content);
+                    Navigator.of(context).pop(); Navigator.of(context).pushNamed('/add');
+                  },
                   leading: Text(
                     date,
                     style: const TextStyle(

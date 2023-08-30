@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_app/todo_provider.dart';
@@ -10,11 +11,12 @@ class AddUpdate extends StatefulWidget{
 }
 
 class _AU extends State<AddUpdate> {
-  TextEditingController controller1 = TextEditingController();
-  TextEditingController controller2 = TextEditingController();
-  TextEditingController controller3 = TextEditingController();  
+  TextEditingController control = TextEditingController();
+  // TextEditingController controller2 = TextEditingController();
+  // TextEditingController controller3 = TextEditingController();  
+  // User userData = User();
 
-  Future <void> dialogBox() {
+  Future <void> dialogBox(TextEditingController control1, TextEditingController control2,TextEditingController control3,) {
     return showDialog(
       context: context,
       builder: (context) {
@@ -38,7 +40,7 @@ class _AU extends State<AddUpdate> {
             TextButton(
               onPressed: (){
                 Navigator.of(context).pop();
-                controller1.clear(); controller2.clear(); controller3.clear();
+                control1.clear(); control2.clear(); control3.clear();
               }, 
               child: const Text(
                 'Yes',
@@ -51,7 +53,7 @@ class _AU extends State<AddUpdate> {
             TextButton(
               onPressed: (){
                 Navigator.of(context).pop();
-                controller1.clear(); controller2.clear(); controller3.clear();
+                control1.clear(); control2.clear(); control3.clear();
                 Navigator.of(context).pop();
               }, 
               child: const Text(
@@ -69,16 +71,27 @@ class _AU extends State<AddUpdate> {
     );
   }
 
-  @override 
-  void dispose(){
-    controller1.dispose(); controller2.dispose(); controller3.dispose(); super.dispose();
-  }
+  
+
+  // final User userInstance = User();
+
+  // @override 
+  // void initState(){
+  //   super.initState();
+  //   if(userInstance.toUpdate){
+  //     controller1 = userInstance.dataBase.
+  //   }
+  // }
+
+  // @override 
+  // void dispose(){
+  //   controller1.dispose(); controller2.dispose(); controller3.dispose(); super.dispose();
+  // }
   
   @override 
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
-    var h = MediaQuery.of(context).size.height;
-    bool hasData = [controller1, controller2, controller3].every((controller) => controller.text.isNotEmpty);
+    var h = MediaQuery.of(context).size.height;    
     
     return Consumer<User>(
       builder: (context, user, child)
@@ -104,7 +117,7 @@ class _AU extends State<AddUpdate> {
                   ),
                   child: SingleChildScrollView(
                     child: TextField( 
-                      controller: controller1,
+                      controller: user.controller1,
                       maxLines: null, autocorrect: true, 
                       cursorColor: Colors.blue,              
                       decoration: const InputDecoration(
@@ -134,7 +147,7 @@ class _AU extends State<AddUpdate> {
                   ),
                   child: SingleChildScrollView(
                     child: TextField( 
-                      controller: controller2,
+                      controller: user.controller2,
                       maxLines: null, autocorrect: true, 
                       cursorColor: Colors.blue,              
                       decoration: const InputDecoration(
@@ -164,7 +177,7 @@ class _AU extends State<AddUpdate> {
                   ),
                   child: SingleChildScrollView(
                     child: TextField( 
-                      controller: controller3,
+                      controller: user.controller3,
                       maxLines: null, autocorrect: true, 
                       cursorColor: Colors.blue,              
                       decoration: const InputDecoration(
@@ -188,9 +201,11 @@ class _AU extends State<AddUpdate> {
             
                 ElevatedButton.icon(
                   onPressed: () async{
+                    //print(user.toUpdate);
+                    bool hasData = [user.controller1, user.controller2, user.controller3].every((controller) => controller.text.isNotEmpty);
                     if(hasData){
-                      user.addTodo(controller1.text, controller2.text, controller3.text);
-                      await dialogBox();                      
+                      user.addTodo();
+                      await dialogBox(user.controller1, user.controller2, user.controller3);                      
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
@@ -207,7 +222,7 @@ class _AU extends State<AddUpdate> {
                           backgroundColor: Colors.red.shade900, duration: const Duration(seconds: 5), elevation: 20,
                           shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
-                          ),                              
+                          ),
                         )
                       );
                     }
