@@ -20,12 +20,12 @@ class _Td extends State<TodoHome>{
       ScaffoldMessenger.of(context).showMaterialBanner(
         MaterialBanner(
           surfaceTintColor: Colors.blue.shade900,
-          leading: Icon(icon, size: 40, color: Colors.green,), elevation: 10,
+          leading: Icon(icon, size: 40, color: Colors.blue,), elevation: 2,
           actions: [
             TextButton(
               onPressed:(){ScaffoldMessenger.of(context).hideCurrentMaterialBanner();}, 
               child: const Text(
-                'Ok', style: TextStyle(fontFamily: 'monospace', fontSize: 30, fontWeight: FontWeight.bold, color: Colors.green)
+                'Ok', style: TextStyle(fontFamily: 'monospace', fontSize: 30, fontWeight: FontWeight.bold, color: Colors.blue)
               )
             )
           ],
@@ -51,10 +51,10 @@ class _Td extends State<TodoHome>{
             'Oops!!! seems like you currently have no Todos. Add Todos first.',
             style: TextStyle(
               fontFamily: 'monospace', fontWeight: FontWeight.bold, fontSize: 15,
-              color: Colors.white
+              color: Color.fromARGB(255, 195, 190, 251)
             )
           ), 
-          backgroundColor: const Color.fromARGB(255, 75, 9, 4), duration: const Duration(seconds: 5), elevation: 20,
+          backgroundColor: const Color.fromARGB(255, 40, 40, 46), duration: const Duration(seconds: 5), elevation: 20,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
           ),
@@ -67,7 +67,7 @@ class _Td extends State<TodoHome>{
         => Scaffold(
           appBar: AppBar( 
             centerTitle: true, title: const Text('My Todo'),
-            backgroundColor: Colors.deepPurple,           
+            backgroundColor: const Color.fromARGB(255, 4, 4, 4),           
           ),
           body: Center(
             child: Column(
@@ -77,10 +77,10 @@ class _Td extends State<TodoHome>{
                   height: h*0.4,               
                   margin: const EdgeInsets.all(20), padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: Colors.black87,
+                    color: const Color.fromARGB(221, 30, 30, 30),
                     boxShadow: const [
                       BoxShadow(
-                        color: Color.fromARGB(255, 97, 92, 92),
+                        color: Color.fromARGB(255, 21, 21, 40),
                         blurRadius: 10, spreadRadius: 10,
                       )
                     ],
@@ -90,7 +90,7 @@ class _Td extends State<TodoHome>{
                     'Hello, Welcome To Our Todo Manager.',
                     style: TextStyle(
                       fontFamily: 'monospace', fontSize: 45,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.bold, color: Colors.black87
                     )
                   )
                 ),
@@ -114,7 +114,7 @@ class _Td extends State<TodoHome>{
                       label: const Text('View')
                     ),
                     TextButton.icon(
-                      onPressed: (){
+                      onPressed: () {
                         if (user.dataBase.isNotEmpty) {
                           notify1('To delete, swipe the item you want to delete to the left or right.', Icons.delete);
                           Future.delayed(const Duration(seconds:5), () =>ScaffoldMessenger.of(context).hideCurrentMaterialBanner());
@@ -125,7 +125,7 @@ class _Td extends State<TodoHome>{
                       label: const Text('Delete')
                     ),
                     TextButton.icon(
-                      onPressed: (){
+                      onPressed: () {
                         if (user.dataBase.isNotEmpty) {
                           notify1('LongPress on the item you want to update to go to update mode.', Icons.update_sharp);
                           Future.delayed(const Duration(seconds:5), () =>ScaffoldMessenger.of(context).hideCurrentMaterialBanner());

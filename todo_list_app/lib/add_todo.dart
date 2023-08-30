@@ -12,15 +12,11 @@ class AddUpdate extends StatefulWidget{
 
 class _AU extends State<AddUpdate> {
   TextEditingController control = TextEditingController();
-  // TextEditingController controller2 = TextEditingController();
-  // TextEditingController controller3 = TextEditingController();  
-  // User userData = User();
 
-  Future <void> dialogBox(TextEditingController control1, TextEditingController control2,TextEditingController control3,) {
+  Future <void> dialogBox(TextEditingController control1, TextEditingController control2,TextEditingController control3,){
     return showDialog(
       context: context,
       builder: (context) {
-        //Future.delayed(const Duration(seconds:2), () => Navigator.of(context).pop());
         return AlertDialog(
           backgroundColor: const Color.fromARGB(255, 20, 27, 39),
           title: const Text(
@@ -83,10 +79,10 @@ class _AU extends State<AddUpdate> {
       => Scaffold(
         appBar: AppBar(centerTitle: true, title: const Text(
             'Add the details of your todo here',
-            style: TextStyle(fontFamily: 'sans serif', color:Colors.grey)
+            style: TextStyle(fontFamily: 'sans serif', color:Colors.white, fontSize: 17)
           )
         ),
-        backgroundColor: Colors.white38,
+        backgroundColor: Color.fromARGB(97, 78, 78, 78),
         body: Center(
           child: SingleChildScrollView(
             child: Column(

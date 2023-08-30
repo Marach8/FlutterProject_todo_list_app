@@ -18,14 +18,14 @@ class _Views extends State<Views> {
     return Consumer<User>(
       builder: (context, user, child) 
       => Scaffold(
-          backgroundColor: Colors.white12,
+          backgroundColor: const Color.fromARGB(31, 28, 28, 28),
           appBar: AppBar(
             centerTitle: true, 
             title: Text(
               'Welcome to your views',
               style: GoogleFonts.getFont('Quicksand', fontWeight: FontWeight.bold, fontSize: 20,)
             ),
-            backgroundColor: Colors.white24, foregroundColor: Colors.black87,
+            backgroundColor: const Color.fromARGB(60, 106, 106, 106), foregroundColor: Colors.white,
           ),
           body: ListView.builder(
             itemCount: user.dataBase.length,
@@ -35,12 +35,6 @@ class _Views extends State<Views> {
               final content = user.dataBase[title]![1];              
               return Dismissible(                
                 key: Key(title),
-                // onUpdate: (DismissUpdateDetails details){
-                //   final dragState = details.progress;                  
-                //   if(0 < dragState && dragState < 1){
-                //     setState(() => isDragged = true);
-                //   } else {setState(() => isDragged = false);}
-                // },
                 onDismissed: (direction){
                   if(direction == DismissDirection.endToStart){
                     setState(() => user.dataBase.remove(title));
@@ -59,32 +53,32 @@ class _Views extends State<Views> {
                   )
                 ),
                 child: ListTile(
-                  //style: ListTileStyle.drawer,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                   contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                   onLongPress: (){
                     user.updateTodo(title, date, content);
                     Navigator.of(context).pop(); Navigator.of(context).pushNamed('/add');
                   },
-                  leading: Text(
+                  leading: const Icon(Icons.create, size: 40, color: Colors.blue,),
+                  trailing: Text(
                     date,
                     style: const TextStyle(
-                      fontFamily: 'serif', fontWeight: FontWeight.bold, fontSize: 15,
-                      color: Colors.white, overflow: TextOverflow.ellipsis
+                      fontWeight: FontWeight.w500, fontSize: 15,
+                      color: Colors.white60, overflow: TextOverflow.ellipsis
                     )
                   ),
                   title: Text(
                     title,
                     style: const TextStyle(
                       fontFamily: 'monospace', fontWeight: FontWeight.bold, fontSize: 20,
-                      color: Colors.white, overflow: TextOverflow.ellipsis
+                      color: Colors.white70, overflow: TextOverflow.ellipsis
                     )
                     ),
                   subtitle: Text(
                     content,
                     style: const TextStyle(
-                      fontFamily: 'serif', fontWeight: FontWeight.bold, fontSize: 15,
-                      color: Colors.white, overflow: TextOverflow.ellipsis
+                      fontWeight: FontWeight.w300, fontSize: 15,
+                      color: Colors.white60, overflow: TextOverflow.ellipsis
                     )
                   )
                 )
