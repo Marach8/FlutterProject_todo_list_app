@@ -13,8 +13,7 @@ class User extends ChangeNotifier{
   }
   
   void addTodo(){
-    List<String> newList = [];
-    
+    List<String> newList = [];    
     newList.addAll([controller2.text, controller3.text]);
     dataBase.putIfAbsent(controller1.text, () => newList);
     notifyListeners();
@@ -26,8 +25,9 @@ class User extends ChangeNotifier{
     notifyListeners();
   }
 
-  void readTodo(){
-    
-  }
+  // void undo(String keyItem, String dateItem, String todoItem){
+  //   int index = dataBase.keys.toList().indexOf(keyItem);
+  //   dataBase.i
+  // }
   
 }

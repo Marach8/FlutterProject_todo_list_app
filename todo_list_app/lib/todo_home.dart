@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_app/todo_provider.dart';
 
@@ -19,13 +20,13 @@ class _Td extends State<TodoHome>{
     void notify1(String text, IconData icon){
       ScaffoldMessenger.of(context).showMaterialBanner(
         MaterialBanner(
-          surfaceTintColor: Colors.blue.shade900,
-          leading: Icon(icon, size: 40, color: Colors.blue,), elevation: 2,
+          //surfaceTintColor: Colors.blue.shade900,
+          leading: Icon(icon, size: 40, color: Colors.blue,), elevation: 5,
           actions: [
             TextButton(
               onPressed:(){ScaffoldMessenger.of(context).hideCurrentMaterialBanner();}, 
               child: const Text(
-                'Ok', style: TextStyle(fontFamily: 'monospace', fontSize: 30, fontWeight: FontWeight.bold, color: Colors.blue)
+                'Ok', style: TextStyle(fontFamily: 'monospace', fontSize: 20, fontWeight: FontWeight.w300, color: Colors.blue)
               )
             )
           ],
@@ -45,13 +46,13 @@ class _Td extends State<TodoHome>{
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           action: SnackBarAction(
-            label: 'Ok', onPressed: () => ScaffoldMessenger.of(context).hideCurrentSnackBar()
+            label: 'Ok', onPressed: () => ScaffoldMessenger.of(context).hideCurrentSnackBar(), textColor: Colors.blue,
           ),
-          content: const Text(
-            'Oops!!! seems like you currently have no Todos. Add Todos first.',
-            style: TextStyle(
-              fontFamily: 'monospace', fontWeight: FontWeight.bold, fontSize: 15,
-              color: Color.fromARGB(255, 195, 190, 251)
+          content: Text(
+            'Oops!!! seems like you currently have no Todos. Add Todos first!',
+            style: GoogleFonts.getFont(
+              'Nunito', fontWeight: FontWeight.w500, fontSize: 17,
+              color: Colors.red.shade500
             )
           ), 
           backgroundColor: const Color.fromARGB(255, 40, 40, 46), duration: const Duration(seconds: 5), elevation: 20,
@@ -61,13 +62,24 @@ class _Td extends State<TodoHome>{
         )
       );
     }
+
+    Widget buttons(IconData icon, String text, VoidCallback function){
+      return TextButton.icon(
+        style: ButtonStyle(
+          foregroundColor: MaterialStatePropertyAll(Colors.blueGrey.shade200)
+        ),
+        onPressed: function,
+        icon: Icon(icon),
+        label: Text(text, style: GoogleFonts.getFont('Nunito', fontSize: 17, fontWeight: FontWeight.w600,))
+      );
+    }
     
     return Consumer<User>(
       builder: ((context, user, child)
         => Scaffold(
           appBar: AppBar( 
             centerTitle: true, title: const Text('My Todo'),
-            backgroundColor: const Color.fromARGB(255, 4, 4, 4),           
+            backgroundColor: const Color.fromARGB(255, 19, 19, 19), foregroundColor: Colors.blueGrey.shade300,          
           ),
           body: Center(
             child: Column(
@@ -80,8 +92,8 @@ class _Td extends State<TodoHome>{
                     color: const Color.fromARGB(221, 30, 30, 30),
                     boxShadow: const [
                       BoxShadow(
-                        color: Color.fromARGB(255, 21, 21, 40),
-                        blurRadius: 10, spreadRadius: 10,
+                        color: Colors.blueGrey,
+                        blurRadius: 10, spreadRadius: 1,
                       )
                     ],
                     borderRadius: BorderRadius.circular(50),
@@ -90,7 +102,7 @@ class _Td extends State<TodoHome>{
                     'Hello, Welcome To Our Todo Manager.',
                     style: TextStyle(
                       fontFamily: 'monospace', fontSize: 45,
-                      fontWeight: FontWeight.bold, color: Colors.black87
+                      fontWeight: FontWeight.bold, color: Colors.blueGrey
                     )
                   )
                 ),
@@ -99,42 +111,34 @@ class _Td extends State<TodoHome>{
 
                 Wrap(
                   children: [
-                    TextButton.icon(
-                      onPressed: (){Navigator.of(context).pushNamed('/add');},
-                      icon: const Icon(Icons.add),
-                      label: const Text('Add')
-                    ),
-                    TextButton.icon(
-                      onPressed: (){
+                    buttons(Icons.add, 'Add', () => Navigator.of(context).pushNamed('/add')),
+                    buttons(
+                      Icons.view_array, 'View', (){
                         if (user.dataBase.isNotEmpty) {
-                          Navigator.of(context).pushNamed('/view');
-                        } else {notify2();}
-                      },
-                      icon: const Icon(Icons.view_array),
-                      label: const Text('View')
-                    ),
-                    TextButton.icon(
-                      onPressed: () {
-                        if (user.dataBase.isNotEmpty) {
-                          notify1('To delete, swipe the item you want to delete to the left or right.', Icons.delete);
+                          notify1('To view an item in detail, tap on the item.', Icons.view_array_rounded);
                           Future.delayed(const Duration(seconds:5), () =>ScaffoldMessenger.of(context).hideCurrentMaterialBanner());
                           Navigator.of(context).pushNamed('/view');
-                        } else {notify2();}                        
-                      },
-                      icon: const Icon(Icons.delete),
-                      label: const Text('Delete')
+                        } else {notify2();}
+                      }
                     ),
-                    TextButton.icon(
-                      onPressed: () {
+                    buttons(
+                      Icons.delete, 'Delete', (){
+                        if (user.dataBase.isNotEmpty) {
+                          notify1('To delete an item, swipe the item to the left or right.', Icons.delete);
+                          Future.delayed(const Duration(seconds:5), () =>ScaffoldMessenger.of(context).hideCurrentMaterialBanner());
+                          Navigator.of(context).pushNamed('/view');
+                        } else {notify2();}
+                      }
+                    ),
+                    buttons(
+                      Icons.update_rounded, 'Update', (){
                         if (user.dataBase.isNotEmpty) {
                           notify1('LongPress on the item you want to update to go to update mode.', Icons.update_sharp);
                           Future.delayed(const Duration(seconds:5), () =>ScaffoldMessenger.of(context).hideCurrentMaterialBanner());
                           Navigator.of(context).pushNamed('/view');
-                        } else {notify2();}                        
-                      },
-                      icon: const Icon(Icons.update_sharp),
-                      label: const Text('Update')
-                    ),
+                        } else {notify2();}
+                      }
+                    ),                    
                   ]
                 )
               ]

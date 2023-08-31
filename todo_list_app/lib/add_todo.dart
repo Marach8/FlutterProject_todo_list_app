@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_app/todo_provider.dart';
 
@@ -13,53 +13,59 @@ class AddUpdate extends StatefulWidget{
 class _AU extends State<AddUpdate> {
   TextEditingController control = TextEditingController();
 
+  Widget textFields(String text, TextEditingController control){
+    return Container(
+      padding: const EdgeInsets.all(10), margin: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: const [
+          BoxShadow(blurRadius:10, spreadRadius: 10)
+        ]
+      ),
+      child: SingleChildScrollView(
+        child: TextField( 
+          controller: control,
+          maxLines: null, autocorrect: true, 
+          cursorColor: Colors.blue,              
+          decoration: InputDecoration(
+            border: InputBorder.none, focusedBorder: InputBorder.none,
+            fillColor: Colors.black, filled: true,
+            hintText: text,
+            hintStyle: TextStyle(
+              fontFamily: 'monospace', color: Colors.blueGrey.withOpacity(0.6),
+              fontSize: 20, fontWeight: FontWeight.bold,
+            )
+          ),
+          style: const TextStyle(
+            fontSize: 20, color: Colors.white,
+            decoration: TextDecoration.none, fontFamily: 'monospace'
+          )
+        ),
+      ),
+    );
+  }
+
   Future <void> dialogBox(TextEditingController control1, TextEditingController control2,TextEditingController control3,){
     return showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: const Color.fromARGB(255, 20, 27, 39),
-          title: const Text(
-            'Save Todo',
-            style: TextStyle(
-              fontFamily: 'monospace', color: Colors.white,
-              fontSize: 25, fontWeight: FontWeight.bold,
-            )
-          ),
-          content: const Text(
+          backgroundColor: Colors.blueGrey.shade900,
+          title: Text('Save Todo', style: GoogleFonts.getFont('Nunito', color: Colors.white, fontSize: 25, fontWeight: FontWeight.w500,)),
+          content: Text(
             'Todo has been saved sucessfully. Do you want to add another?',
-            style: TextStyle(
-              fontFamily: 'monospace', color: Colors.white70,
-              fontSize: 15, fontWeight: FontWeight.bold,
-            )
+            style: GoogleFonts.getFont('Nunito', color: Colors.white, fontSize: 15, fontWeight: FontWeight.w300,)
           ),
           actions: [
             TextButton(
-              onPressed: (){
-                Navigator.of(context).pop();
-                control1.clear(); control2.clear(); control3.clear();
-              }, 
-              child: const Text(
-                'Yes',
-                style: TextStyle(
-                  fontFamily: 'monospace', color: Colors.green,
-                  fontSize: 25, fontWeight: FontWeight.bold,
-                )
-              )
+              onPressed: (){Navigator.of(context).pop(); control1.clear(); control2.clear(); control3.clear();}, 
+              child: Text('Yes', style: GoogleFonts.getFont('Nunito', color: Colors.blue, fontSize: 15, fontWeight: FontWeight.w400,))
             ),
             TextButton(
               onPressed: (){
-                Navigator.of(context).pop();
-                control1.clear(); control2.clear(); control3.clear();
-                Navigator.of(context).pop();
+                Navigator.of(context).pop(); control1.clear(); control2.clear(); control3.clear(); Navigator.of(context).pop();
               }, 
-              child: const Text(
-                'No',
-                style: TextStyle(
-                  fontFamily: 'monospace', color: Colors.green,
-                  fontSize: 25, fontWeight: FontWeight.bold,
-                )
-              )
+              child: Text('No', style: GoogleFonts.getFont('Nunito', color: Colors.blue, fontSize: 15, fontWeight: FontWeight.w400,))
             )
           ],
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))
@@ -77,106 +83,18 @@ class _AU extends State<AddUpdate> {
     return Consumer<User>(
       builder: (context, user, child)
       => Scaffold(
-        appBar: AppBar(centerTitle: true, title: const Text(
+        appBar: AppBar(centerTitle: true, title: Text(
             'Add the details of your todo here',
-            style: TextStyle(fontFamily: 'sans serif', color:Colors.white, fontSize: 17)
+            style: GoogleFonts.getFont('Nunito', color:Colors.white, fontSize: 17)
           )
         ),
-        backgroundColor: Color.fromARGB(97, 78, 78, 78),
+        backgroundColor: const Color.fromARGB(97, 78, 78, 78),
         body: Center(
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  padding: const EdgeInsets.all(10), margin: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: const [
-                      BoxShadow(blurRadius:10, spreadRadius: 10)
-                    ]
-                  ),
-                  child: SingleChildScrollView(
-                    child: TextField( 
-                      controller: user.controller1,
-                      maxLines: null, autocorrect: true, 
-                      cursorColor: Colors.blue,              
-                      decoration: const InputDecoration(
-                        border: InputBorder.none, focusedBorder: InputBorder.none,
-                        fillColor: Colors.black, filled: true,
-                        hintText: 'Title',
-                        hintStyle: TextStyle(
-                          fontFamily: 'monospace', color: Colors.white70,
-                          fontSize: 20, fontWeight: FontWeight.bold,
-                        )
-                      ),
-                      style: const TextStyle(
-                        fontSize: 20, color: Colors.blueAccent,
-                        decoration: TextDecoration.none, fontFamily: 'monospace'
-                      )
-                    ),
-                  ),
-                ),
-        
-                Container(
-                  padding: const EdgeInsets.all(10), margin: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: const [
-                      BoxShadow(blurRadius:10, spreadRadius: 10)
-                    ]
-                  ),
-                  child: SingleChildScrollView(
-                    child: TextField( 
-                      controller: user.controller2,
-                      maxLines: null, autocorrect: true, 
-                      cursorColor: Colors.blue,              
-                      decoration: const InputDecoration(
-                        border: InputBorder.none, focusedBorder: InputBorder.none,
-                        fillColor: Colors.black, filled: true,
-                        hintText: 'Date/Time',
-                        hintStyle: TextStyle(
-                          fontFamily: 'monospace', color: Colors.white70,
-                          fontSize: 20, fontWeight: FontWeight.bold,
-                        )
-                      ),
-                      style: const TextStyle(
-                        fontSize: 20, color: Colors.deepOrangeAccent,
-                        decoration: TextDecoration.none, fontFamily: 'monospace'
-                      )
-                    ),
-                  ),
-                ),
-        
-                Container(
-                  padding: const EdgeInsets.all(10), margin: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: const [
-                      BoxShadow(blurRadius:10, spreadRadius: 10)
-                    ]
-                  ),
-                  child: SingleChildScrollView(
-                    child: TextField( 
-                      controller: user.controller3,
-                      maxLines: null, autocorrect: true, 
-                      cursorColor: Colors.blue,              
-                      decoration: const InputDecoration(
-                        border: InputBorder.none, focusedBorder: InputBorder.none,
-                        fillColor: Colors.black, filled: true,
-                        hintText: 'Content',
-                        hintStyle: TextStyle(
-                          fontFamily: 'monospace', color: Colors.white70,
-                          fontSize: 20, fontWeight: FontWeight.bold,
-                        )
-                      ),
-                      style: const TextStyle(
-                        fontSize: 20, color: Colors.yellow,
-                        decoration: TextDecoration.none, fontFamily: 'monospace'
-                      )
-                    ),
-                  ),
-                ),
+                textFields('Title', user.controller1), textFields('Date/Time', user.controller2), textFields('Content', user.controller3),
         
                 SizedBox(height: h*0.01),
             
@@ -191,16 +109,13 @@ class _AU extends State<AddUpdate> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           action: SnackBarAction(
-                            label: 'Ok', onPressed: () => ScaffoldMessenger.of(context).hideCurrentSnackBar()
+                            label: 'Ok', onPressed: () => ScaffoldMessenger.of(context).hideCurrentSnackBar(), textColor: Colors.blue,
                           ),
-                          content: const Text(
-                            'Oops!!! Please fill in all the textfields!',
-                            style: TextStyle(
-                              fontFamily: 'monospace', fontWeight: FontWeight.bold, fontSize: 15,
-                              color: Colors.white
-                            )
-                          ), 
-                          backgroundColor: Colors.red.shade900, duration: const Duration(seconds: 5), elevation: 20,
+                          content: Text(
+                            'Oops!!! Fields cannot be empty!',
+                            style: GoogleFonts.getFont('Nunito', fontWeight: FontWeight.w500, fontSize: 20, color: Colors.red.shade500),
+                          ),
+                          backgroundColor: const Color.fromARGB(255, 40, 40, 46), duration: const Duration(seconds: 5), elevation: 20,
                           shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
                           ),
@@ -208,22 +123,20 @@ class _AU extends State<AddUpdate> {
                       );
                     }
                   },
-                  icon: const Icon(Icons.save_sharp),
-                  label: const Text(
+                  icon: const Icon(Icons.save_sharp, color: Colors.blue),
+                  label: Text(
                     'Save Todo',
-                    style: TextStyle(
-                      fontFamily: 'monospace', fontWeight: FontWeight.bold, fontSize: 20,                    
-                    )
+                    style: GoogleFonts.getFont('Nunito', fontWeight: FontWeight.bold, fontSize: 20, color: Colors.blue)
                   ),
                   style: ButtonStyle(
                     elevation: const MaterialStatePropertyAll(20),
                     shadowColor: const MaterialStatePropertyAll(Color.fromARGB(255, 198, 160, 19)),
-                    backgroundColor: const MaterialStatePropertyAll(Colors.black),                  
+                    backgroundColor: MaterialStatePropertyAll(Colors.blueGrey.shade900),                  
                     shape: MaterialStatePropertyAll(
                       RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),                    
                     ),
-                    side: const MaterialStatePropertyAll(
-                      BorderSide(color: Colors.blue, strokeAlign: 3, width: 3)
+                    side: MaterialStatePropertyAll(
+                      BorderSide(color: Colors.blueGrey.shade600, strokeAlign: 3, width: 3)
                     ),
                     fixedSize: MaterialStatePropertyAll(Size(w*0.8, w*0.15))
                   ),
