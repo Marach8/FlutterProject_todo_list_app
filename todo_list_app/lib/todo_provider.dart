@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class User extends ChangeNotifier{
-  Map<String, List<String>> dataBase = {};
+  List<List<String>> dataBase = [];
 
   TextEditingController controller1 = TextEditingController();
   TextEditingController controller2 = TextEditingController();
@@ -14,20 +14,26 @@ class User extends ChangeNotifier{
   
   void addTodo(){
     List<String> newList = [];    
-    newList.addAll([controller2.text, controller3.text]);
-    dataBase.putIfAbsent(controller1.text, () => newList);
+    newList.addAll([controller1.text, controller2.text, controller3.text]);
+    dataBase.add(newList);
     notifyListeners();
   }
 
-  void updateTodo(String keyItem, String dateItem, String todoItem){
+  void updateTodo(String keyItem, String dateItem, String todoItem, int removeIndex){
     controller1.text = keyItem; controller2.text = dateItem; controller3.text = todoItem;
-    dataBase.remove(keyItem);
+    dataBase.removeAt(removeIndex);
     notifyListeners();
   }
 
-  // void undo(String keyItem, String dateItem, String todoItem){
-  //   int index = dataBase.keys.toList().indexOf(keyItem);
-  //   dataBase.i
-  // }
+  void delete(int removeIndex){
+    dataBase.removeAt(removeIndex);
+    notifyListeners();
+  }
+
+  void undo(String keyItem, String dateItem, String todoItem, int insertIndex){
+    List<String> newList = [keyItem, dateItem, todoItem];    
+    dataBase.insert(insertIndex, newList);
+    notifyListeners();
+  }
   
 }

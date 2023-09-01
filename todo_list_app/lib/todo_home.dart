@@ -15,8 +15,6 @@ class _Td extends State<TodoHome>{
   @override 
   Widget build(BuildContext context){
 
-    var h = MediaQuery.of(context).size.height;
-
     void notify1(String text, IconData icon){
       ScaffoldMessenger.of(context).showMaterialBanner(
         MaterialBanner(
@@ -65,9 +63,7 @@ class _Td extends State<TodoHome>{
 
     Widget buttons(IconData icon, String text, VoidCallback function){
       return TextButton.icon(
-        style: ButtonStyle(
-          foregroundColor: MaterialStatePropertyAll(Colors.blueGrey.shade200)
-        ),
+        style: ButtonStyle(foregroundColor: MaterialStatePropertyAll(Colors.blueGrey.shade200)),
         onPressed: function,
         icon: Icon(icon),
         label: Text(text, style: GoogleFonts.getFont('Nunito', fontSize: 17, fontWeight: FontWeight.w600,))
@@ -78,70 +74,90 @@ class _Td extends State<TodoHome>{
       builder: ((context, user, child)
         => Scaffold(
           appBar: AppBar( 
-            centerTitle: true, title: const Text('My Todo'),
+            centerTitle: true, title: const Row(
+              mainAxisAlignment: MainAxisAlignment.center ,
+              children:[Icon(Icons.edit), SizedBox(width:10), Text('My Todo')]
+            ),
             backgroundColor: const Color.fromARGB(255, 19, 19, 19), foregroundColor: Colors.blueGrey.shade300,          
           ),
           body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  height: h*0.4,               
-                  margin: const EdgeInsets.all(20), padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(221, 30, 30, 30),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.blueGrey,
-                        blurRadius: 10, spreadRadius: 1,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    //height: h*0.4,               
+                    margin: const EdgeInsets.all(20), padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(221, 30, 30, 30),
+                      boxShadow: const [BoxShadow(color: Colors.blueGrey, blurRadius: 10, spreadRadius: 1,)],
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    child: Text.rich(
+                      TextSpan(
+                        children: [
+                          const TextSpan(
+                            text: 'Hello, Welcome To Your Todo Manager. You currently have ',
+                            style: TextStyle(
+                            fontFamily: 'monospace', fontSize: 40,
+                            fontWeight: FontWeight.bold, color: Colors.blueGrey
+                            )
+                          ),
+                          TextSpan(
+                            text: '${user.dataBase.length}',
+                            style: TextStyle(
+                            fontFamily: 'monospace', fontSize: 40,
+                            fontWeight: FontWeight.bold, color: Colors.blueGrey.shade200
+                            )
+                          ),
+                          const TextSpan(
+                            text: ' Todos',
+                            style: TextStyle(
+                            fontFamily: 'monospace', fontSize: 40,
+                            fontWeight: FontWeight.bold, color: Colors.blueGrey
+                            )
+                          ),
+                        ]
                       )
-                    ],
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: const Text(
-                    'Hello, Welcome To Our Todo Manager.',
-                    style: TextStyle(
-                      fontFamily: 'monospace', fontSize: 45,
-                      fontWeight: FontWeight.bold, color: Colors.blueGrey
                     )
+                  ),
+            
+                  const SizedBox(height: 20),
+            
+                  Wrap(
+                    children: [
+                      buttons(Icons.add, 'Add', () => Navigator.of(context).pushNamed('/add')),
+                      buttons(
+                        Icons.view_array, 'View', (){
+                          if (user.dataBase.isNotEmpty) {
+                            notify1('To view an item in detail, tap on the item.', Icons.view_array_rounded);
+                            Future.delayed(const Duration(seconds:5), () =>ScaffoldMessenger.of(context).hideCurrentMaterialBanner());
+                            Navigator.of(context).pushNamed('/view');
+                          } else {notify2();}
+                        }
+                      ),
+                      buttons(
+                        Icons.delete, 'Delete', (){
+                          if (user.dataBase.isNotEmpty) {
+                            notify1('To delete an item, swipe the item to the left or right.', Icons.delete);
+                            Future.delayed(const Duration(seconds:5), () =>ScaffoldMessenger.of(context).hideCurrentMaterialBanner());
+                            Navigator.of(context).pushNamed('/view');
+                          } else {notify2();}
+                        }
+                      ),
+                      buttons(
+                        Icons.update_rounded, 'Update', (){
+                          if (user.dataBase.isNotEmpty) {
+                            notify1('To update an item, longpress on it to enter update mode.', Icons.update_sharp);
+                            Future.delayed(const Duration(seconds:5), () =>ScaffoldMessenger.of(context).hideCurrentMaterialBanner());
+                            Navigator.of(context).pushNamed('/view');
+                          } else {notify2();}
+                        }
+                      ),                    
+                    ]
                   )
-                ),
-
-                const SizedBox(height: 20),
-
-                Wrap(
-                  children: [
-                    buttons(Icons.add, 'Add', () => Navigator.of(context).pushNamed('/add')),
-                    buttons(
-                      Icons.view_array, 'View', (){
-                        if (user.dataBase.isNotEmpty) {
-                          notify1('To view an item in detail, tap on the item.', Icons.view_array_rounded);
-                          Future.delayed(const Duration(seconds:5), () =>ScaffoldMessenger.of(context).hideCurrentMaterialBanner());
-                          Navigator.of(context).pushNamed('/view');
-                        } else {notify2();}
-                      }
-                    ),
-                    buttons(
-                      Icons.delete, 'Delete', (){
-                        if (user.dataBase.isNotEmpty) {
-                          notify1('To delete an item, swipe the item to the left or right.', Icons.delete);
-                          Future.delayed(const Duration(seconds:5), () =>ScaffoldMessenger.of(context).hideCurrentMaterialBanner());
-                          Navigator.of(context).pushNamed('/view');
-                        } else {notify2();}
-                      }
-                    ),
-                    buttons(
-                      Icons.update_rounded, 'Update', (){
-                        if (user.dataBase.isNotEmpty) {
-                          notify1('LongPress on the item you want to update to go to update mode.', Icons.update_sharp);
-                          Future.delayed(const Duration(seconds:5), () =>ScaffoldMessenger.of(context).hideCurrentMaterialBanner());
-                          Navigator.of(context).pushNamed('/view');
-                        } else {notify2();}
-                      }
-                    ),                    
-                  ]
-                )
-              ]
+                ]
+              ),
             ),
           )
         )

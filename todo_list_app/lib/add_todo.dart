@@ -62,8 +62,8 @@ class _AU extends State<AddUpdate> {
               child: Text('Yes', style: GoogleFonts.getFont('Nunito', color: Colors.blue, fontSize: 15, fontWeight: FontWeight.w400,))
             ),
             TextButton(
-              onPressed: (){
-                Navigator.of(context).pop(); control1.clear(); control2.clear(); control3.clear(); Navigator.of(context).pop();
+              onPressed: () {
+                control1.clear(); control2.clear(); control3.clear(); Navigator.of(context).popUntil(ModalRoute.withName('/'));
               }, 
               child: Text('No', style: GoogleFonts.getFont('Nunito', color: Colors.blue, fontSize: 15, fontWeight: FontWeight.w400,))
             )
@@ -96,11 +96,10 @@ class _AU extends State<AddUpdate> {
               children: [
                 textFields('Title', user.controller1), textFields('Date/Time', user.controller2), textFields('Content', user.controller3),
         
-                SizedBox(height: h*0.01),
+                SizedBox(height: h*0.02),
             
                 ElevatedButton.icon(
                   onPressed: () async{
-                    //print(user.toUpdate);
                     bool hasData = [user.controller1, user.controller2, user.controller3].every((controller) => controller.text.isNotEmpty);
                     if(hasData){
                       user.addTodo();
@@ -123,10 +122,10 @@ class _AU extends State<AddUpdate> {
                       );
                     }
                   },
-                  icon: const Icon(Icons.save_sharp, color: Colors.blue),
+                  icon: Icon(Icons.save_sharp, color: Colors.blueGrey.shade400),
                   label: Text(
                     'Save Todo',
-                    style: GoogleFonts.getFont('Nunito', fontWeight: FontWeight.bold, fontSize: 20, color: Colors.blue)
+                    style: GoogleFonts.getFont('Nunito', fontWeight: FontWeight.bold, fontSize: 20, color: Colors.blueGrey.shade400)
                   ),
                   style: ButtonStyle(
                     elevation: const MaterialStatePropertyAll(20),
@@ -138,7 +137,7 @@ class _AU extends State<AddUpdate> {
                     side: MaterialStatePropertyAll(
                       BorderSide(color: Colors.blueGrey.shade600, strokeAlign: 3, width: 3)
                     ),
-                    fixedSize: MaterialStatePropertyAll(Size(w*0.8, w*0.15))
+                    fixedSize: MaterialStatePropertyAll(Size(w*0.8, w*0.13))
                   ),
                 ),
               ]
