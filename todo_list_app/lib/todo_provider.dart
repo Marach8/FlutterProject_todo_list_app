@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 class User extends ChangeNotifier{
   List<List<String>> dataBase = [];
 
-  TextEditingController controller1 = TextEditingController();
-  TextEditingController controller2 = TextEditingController();
-  TextEditingController controller3 = TextEditingController();  
+  TextEditingController controller1 = TextEditingController();  TextEditingController emailController = TextEditingController();
+  TextEditingController controller2 = TextEditingController();  TextEditingController passwordController = TextEditingController();
+  TextEditingController controller3 = TextEditingController();  TextEditingController usernameController = TextEditingController(); 
 
   @override
-  void dispose(){
-    controller1.dispose(); controller2.dispose(); controller3.dispose(); super.dispose();
-  }
+  void dispose(){controller1.dispose(); controller2.dispose(); controller3.dispose(); super.dispose();}
   
   void addTodo(){
     List<String> newList = [];    
