@@ -74,6 +74,17 @@ class _Td extends State<TodoHome>{
       builder: ((context, user, child)
         => Scaffold(
           appBar: AppBar( 
+            actions: [
+              PopupMenuButton(
+                color: Colors.blueGrey.shade100,        
+                onSelected: (value) {
+                  if(value == 'logout'){Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);}
+                },
+                itemBuilder: (context) => [
+                  const PopupMenuItem(value:'logout', height: 20, child: Text('Logout', style:TextStyle(color: Colors.black)),),
+                ]
+              ),
+            ],
             centerTitle: true, title: const Row(
               mainAxisAlignment: MainAxisAlignment.center ,
               children:[Icon(Icons.edit), SizedBox(width:10), Text('My Todo')]
@@ -96,15 +107,15 @@ class _Td extends State<TodoHome>{
                     child: Text.rich(
                       TextSpan(
                         children: [
-                          const TextSpan(
-                            text: 'Hello, Welcome To Your Todo Manager. You currently have ',
-                            style: TextStyle(
+                          TextSpan(
+                            text: 'Hello ${user.dataBase[user.loggedInUser]![0]}, Welcome To Your Todo Manager. You currently have ',
+                            style: const TextStyle(
                             fontFamily: 'monospace', fontSize: 40,
                             fontWeight: FontWeight.bold, color: Colors.blueGrey
                             )
                           ),
                           TextSpan(
-                            text: '${user.dataBase.length}',
+                            text: '${user.dataBase[user.loggedInUser]![2].length}',
                             style: TextStyle(
                             fontFamily: 'monospace', fontSize: 40,
                             fontWeight: FontWeight.bold, color: Colors.blueGrey.shade200
@@ -129,7 +140,7 @@ class _Td extends State<TodoHome>{
                       buttons(Icons.add, 'Add', () => Navigator.of(context).pushNamed('/add')),
                       buttons(
                         Icons.view_array, 'View', (){
-                          if (user.dataBase.isNotEmpty) {
+                          if (user.dataBase[user.loggedInUser]![2].isNotEmpty) {
                             notify1('To view an item in detail, tap on the item.', Icons.view_array_rounded);
                             Future.delayed(const Duration(seconds:5), () =>ScaffoldMessenger.of(context).hideCurrentMaterialBanner());
                             Navigator.of(context).pushNamed('/view');
@@ -138,7 +149,7 @@ class _Td extends State<TodoHome>{
                       ),
                       buttons(
                         Icons.delete, 'Delete', (){
-                          if (user.dataBase.isNotEmpty) {
+                          if (user.dataBase[user.loggedInUser]![2].isNotEmpty) {
                             notify1('To delete an item, swipe the item to the left or right.', Icons.delete);
                             Future.delayed(const Duration(seconds:5), () =>ScaffoldMessenger.of(context).hideCurrentMaterialBanner());
                             Navigator.of(context).pushNamed('/view');
@@ -147,7 +158,7 @@ class _Td extends State<TodoHome>{
                       ),
                       buttons(
                         Icons.update_rounded, 'Update', (){
-                          if (user.dataBase.isNotEmpty) {
+                          if (user.dataBase[user.loggedInUser]![2].isNotEmpty) {
                             notify1('To update an item, longpress on it to enter update mode.', Icons.update_sharp);
                             Future.delayed(const Duration(seconds:5), () =>ScaffoldMessenger.of(context).hideCurrentMaterialBanner());
                             Navigator.of(context).pushNamed('/view');

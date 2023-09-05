@@ -54,9 +54,10 @@ class _Views extends State<Views> {
           body: ListView.builder(
             itemCount: user.dataBase.length,
             itemBuilder: (context, index) {
-              final title = user.dataBase.elementAt(index)[0];             
-              final date = user.dataBase.elementAt(index)[1]; 
-              final content = user.dataBase.elementAt(index)[2];               
+              final title = user.dataBase[user.loggedInUser]![2].elementAt(index)[0];             
+              final date = user.dataBase[user.loggedInUser]![2].elementAt(index)[1]; 
+              final content = user.dataBase[user.loggedInUser]![2].elementAt(index)[2];
+              // final content = user.dataBase.elementAt(index)[2];               
               return Dismissible(                
                 key: Key(title),
                 onDismissed: (direction){
