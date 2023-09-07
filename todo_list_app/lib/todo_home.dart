@@ -18,7 +18,6 @@ class _Td extends State<TodoHome>{
     void notify1(String text, IconData icon){
       ScaffoldMessenger.of(context).showMaterialBanner(
         MaterialBanner(
-          //surfaceTintColor: Colors.blue.shade900,
           leading: Icon(icon, size: 40, color: Colors.blue,), elevation: 5,
           actions: [
             TextButton(
@@ -49,11 +48,10 @@ class _Td extends State<TodoHome>{
           content: Text(
             'Oops!!! seems like you currently have no Todos. Add Todos first!',
             style: GoogleFonts.getFont(
-              'Nunito', fontWeight: FontWeight.w500, fontSize: 17,
-              color: Colors.red.shade500
+              'Nunito', fontWeight: FontWeight.w500, fontSize: 17, color: Colors.red.shade500
             )
           ), 
-          backgroundColor: const Color.fromARGB(255, 40, 40, 46), duration: const Duration(seconds: 5), elevation: 20,
+          backgroundColor: Colors.white, duration: const Duration(seconds: 3), elevation: 20,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
           ),
@@ -64,8 +62,7 @@ class _Td extends State<TodoHome>{
     Widget buttons(IconData icon, String text, VoidCallback function){
       return TextButton.icon(
         style: ButtonStyle(foregroundColor: MaterialStatePropertyAll(Colors.blueGrey.shade200)),
-        onPressed: function,
-        icon: Icon(icon),
+        onPressed: function, icon: Icon(icon),
         label: Text(text, style: GoogleFonts.getFont('Nunito', fontSize: 17, fontWeight: FontWeight.w600,))
       );
     }

@@ -52,12 +52,11 @@ class _Views extends State<Views> {
             backgroundColor: const Color.fromARGB(59, 106, 106, 106), foregroundColor: Colors.white,
           ),
           body: ListView.builder(
-            itemCount: user.dataBase.length,
+            itemCount: user.dataBase[user.loggedInUser]![2].length,
             itemBuilder: (context, index) {
               final title = user.dataBase[user.loggedInUser]![2].elementAt(index)[0];             
               final date = user.dataBase[user.loggedInUser]![2].elementAt(index)[1]; 
-              final content = user.dataBase[user.loggedInUser]![2].elementAt(index)[2];
-              // final content = user.dataBase.elementAt(index)[2];               
+              final content = user.dataBase[user.loggedInUser]![2].elementAt(index)[2];                            
               return Dismissible(                
                 key: Key(title),
                 onDismissed: (direction){
@@ -94,7 +93,7 @@ class _Views extends State<Views> {
                           action: SnackBarAction(
                             onPressed: () {user.undo(title, date, content, index);}, label: 'Undo', textColor: Colors.blue, 
                           ),
-                          duration: const Duration(seconds: 4), backgroundColor: Colors.white,
+                          duration: const Duration(seconds: 2), backgroundColor: Colors.white,
                         )
                       ); 
                     }

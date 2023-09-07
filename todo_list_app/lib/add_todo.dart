@@ -18,9 +18,7 @@ class _AU extends State<AddUpdate> {
       padding: const EdgeInsets.all(10), margin: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        boxShadow: const [
-          BoxShadow(blurRadius:10, spreadRadius: 10)
-        ]
+        boxShadow: const [BoxShadow(blurRadius:10, spreadRadius: 10)]
       ),
       child: SingleChildScrollView(
         child: TextField( 
@@ -32,13 +30,12 @@ class _AU extends State<AddUpdate> {
             fillColor: Colors.black, filled: true,
             hintText: text,
             hintStyle: TextStyle(
-              fontFamily: 'monospace', color: Colors.blueGrey.withOpacity(0.6),
+              fontFamily: 'monospace', color: Colors.blueGrey.withOpacity(0.9),
               fontSize: 20, fontWeight: FontWeight.bold,
             )
           ),
           style: const TextStyle(
-            fontSize: 20, color: Colors.white,
-            decoration: TextDecoration.none, fontFamily: 'monospace'
+            fontSize: 20, color: Colors.white, decoration: TextDecoration.none, fontFamily: 'monospace'
           )
         ),
       ),
@@ -63,7 +60,7 @@ class _AU extends State<AddUpdate> {
             ),
             TextButton(
               onPressed: () {
-                control1.clear(); control2.clear(); control3.clear(); Navigator.of(context).popUntil(ModalRoute.withName('/'));
+                control1.clear(); control2.clear(); control3.clear(); Navigator.of(context).popUntil(ModalRoute.withName('/home'));
               }, 
               child: Text('No', style: GoogleFonts.getFont('Nunito', color: Colors.blue, fontSize: 15, fontWeight: FontWeight.w400,))
             )
@@ -84,11 +81,10 @@ class _AU extends State<AddUpdate> {
       builder: (context, user, child)
       => Scaffold(
         appBar: AppBar(centerTitle: true, title: Text(
-            'Add the details of your todo here',
-            style: GoogleFonts.getFont('Nunito', color:Colors.white, fontSize: 17)
+            'Add the details of your todo here', style: GoogleFonts.getFont('Nunito', color:Colors.white, fontSize: 17)
           )
         ),
-        backgroundColor: const Color.fromARGB(97, 78, 78, 78),
+        backgroundColor: Colors.blueGrey.shade900,
         body: Center(
           child: SingleChildScrollView(
             child: Column(
@@ -114,7 +110,7 @@ class _AU extends State<AddUpdate> {
                             'Oops!!! Fields cannot be empty!',
                             style: GoogleFonts.getFont('Nunito', fontWeight: FontWeight.w500, fontSize: 20, color: Colors.red.shade500),
                           ),
-                          backgroundColor: const Color.fromARGB(255, 40, 40, 46), duration: const Duration(seconds: 5), elevation: 20,
+                          backgroundColor: Colors.white, duration: const Duration(seconds: 2), elevation: 20,
                           shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
                           ),
@@ -129,15 +125,15 @@ class _AU extends State<AddUpdate> {
                   ),
                   style: ButtonStyle(
                     elevation: const MaterialStatePropertyAll(20),
-                    shadowColor: const MaterialStatePropertyAll(Color.fromARGB(255, 198, 160, 19)),
+                    shadowColor: const MaterialStatePropertyAll(Colors.blue),
                     backgroundColor: MaterialStatePropertyAll(Colors.blueGrey.shade900),                  
                     shape: MaterialStatePropertyAll(
                       RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),                    
                     ),
                     side: MaterialStatePropertyAll(
-                      BorderSide(color: Colors.blueGrey.shade600, strokeAlign: 3, width: 3)
+                      BorderSide(color: Colors.blueGrey.shade600, strokeAlign: 3, width: 1)
                     ),
-                    fixedSize: MaterialStatePropertyAll(Size(w*0.8, w*0.13))
+                    fixedSize: MaterialStatePropertyAll(Size(w*0.91, w*0.13))
                   ),
                 ),
               ]

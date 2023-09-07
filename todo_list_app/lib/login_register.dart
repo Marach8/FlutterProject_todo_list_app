@@ -13,7 +13,7 @@ class LoginPage extends StatefulWidget{
 class _Login extends State<LoginPage> {
   bool forgotPassword = false; bool isRegistered = true;  
   
-    Widget textField(bool enabled, Color color, String hintText, TextEditingController controller){
+    Widget textField(bool enabled, Color color, String hintText, TextEditingController controller, obscureText){
     return  Container(
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 0), 
       decoration: BoxDecoration(
@@ -22,9 +22,7 @@ class _Login extends State<LoginPage> {
       ),
       child: SingleChildScrollView(
         child: TextField(
-          controller: controller,
-          enabled: enabled,
-          maxLines: null, 
+          controller: controller, enabled: enabled, obscureText: obscureText,
           autocorrect: true, cursorColor: Colors.black,
           style: GoogleFonts.getFont('Quicksand', color: Colors.blueGrey.shade900, fontWeight: FontWeight.w500,), 
           decoration: InputDecoration(
@@ -104,14 +102,14 @@ class _Login extends State<LoginPage> {
                           const SizedBox(height: 10), const Divider(height:1, color: Colors.green), const SizedBox(height:10),
                           !isRegistered? Row(children:[text('Username', 15, FontWeight.w600, Colors.black45)])
                           : const SizedBox(), 
-                          !isRegistered? textField(true, Colors.white, '', user.usernameController): const SizedBox(), 
+                          !isRegistered? textField(true, Colors.white, '', user.usernameController, false): const SizedBox(), 
                           Row(children:[text('Mobile number or email', 15, FontWeight.w600, Colors.black45)]), 
-                          textField(forgotPassword? false: true, Colors.white, '', user.mobileEmailController), 
+                          textField(forgotPassword? false: true, Colors.white, '', user.mobileEmailController, false), 
                           Row(children:[text('Password', 15, FontWeight.w600, Colors.black45)]), 
-                          textField(forgotPassword? false : true, Colors.white, '', user.passwordController),
+                          textField(forgotPassword? false : true, Colors.white, '', user.passwordController, true),
                           !isRegistered? Row(children:[text('Confirm password', 15, FontWeight.w600, Colors.black45)])
                           : const SizedBox(), 
-                          !isRegistered? textField(true, Colors.white, '', user.confirmPassController): const SizedBox(),
+                          !isRegistered? textField(true, Colors.white, '', user.confirmPassController, true): const SizedBox(),
                           SizedBox(
                             height: 40,
                             child: Stack(                        
@@ -159,9 +157,9 @@ class _Login extends State<LoginPage> {
                                                   ]
                                                 ),
                                                 const SizedBox(height:20),const Divider(height: 1), const SizedBox(height:20),
-                                                textField(true, Colors.blueGrey.shade300, 'Enter mobile number or email', user.controllerA), 
+                                                textField(true, Colors.blueGrey.shade300, 'Enter mobile number or email', user.controllerA, false), 
                                                 const SizedBox(height:30), 
-                                                textField(true, Colors.blueGrey.shade300, 'Enter new password', user.controllerB), 
+                                                textField(true, Colors.blueGrey.shade300, 'Enter new password', user.controllerB, true), 
                                                 const SizedBox(height:20),const Divider(height: 1), const SizedBox(height:20), 
                                                 ElevatedButton(
                                                   onPressed: () async{
@@ -182,7 +180,7 @@ class _Login extends State<LoginPage> {
                                                       } else {
                                                         await Future.delayed(const Duration(seconds: 3), () {
                                                           Navigator.of(context).pop();
-                                                          snackBarAlert('User "${user.controllerA.text}" not found!', Colors.red, Icons.warning_rounded);
+                                                          snackBarAlert('User "${user.controllerA.text}" not found!!!', Colors.red, Icons.warning_rounded);
                                                         });
                                                         await Future.delayed(const Duration(seconds: 2), (){
                                                           ScaffoldMessenger.of(context).hideCurrentMaterialBanner();                                                        
@@ -214,6 +212,7 @@ class _Login extends State<LoginPage> {
                                 Positioned(right: 0, 
                                   child: GestureDetector(
                                     onTap: (){
+                                      user.mobileEmailController.clear(); user.passwordController.clear();
                                       setState(() => isRegistered = !isRegistered);
                                     },
                                     child: text(isRegistered? 'Not Registered?': 'Already Registered?', 13, FontWeight.w800, Colors.blueGrey.shade700,)
@@ -233,7 +232,8 @@ class _Login extends State<LoginPage> {
                                   alert(context);
                                   if(user.dataBase.containsKey(user.mobileEmailController.text) &&
                                     (user.passwordController.text == user.dataBase[user.mobileEmailController.text]![1])){
-                                      user.login(user.mobileEmailController.text);                                  
+                                      user.login(user.mobileEmailController.text);
+                                      user.mobileEmailController.clear(); user.passwordController.clear();
                                       await Future.delayed(const Duration(seconds: 3), () {
                                         Navigator.of(context).pop(); snackBarAlert('Login Successful...', Colors.green, Icons.check);
                                       });
@@ -271,7 +271,7 @@ class _Login extends State<LoginPage> {
                                     );
                                   }                                 
                                   else {
-                                    if(user.passwordController == user.confirmPassController){
+                                    if(user.passwordController.text == user.confirmPassController.text){
                                       alert(context);
                                       user.register(user.mobileEmailController.text, user.usernameController.text, user.passwordController.text);
                                       await Future.delayed(const Duration(seconds: 3), () {
