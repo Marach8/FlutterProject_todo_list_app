@@ -32,7 +32,7 @@ class User extends ChangeNotifier{
     notifyListeners();
   }
 
-  void undo(String keyItem, String dateItem, String todoItem, int insertIndex){
+  void undo(String keyItem, dateItem, todoItem, int insertIndex){
     List<String> newList = [keyItem, dateItem, todoItem];    
     dataBase[loggedInUser]![2].insert(insertIndex, newList);
     notifyListeners();

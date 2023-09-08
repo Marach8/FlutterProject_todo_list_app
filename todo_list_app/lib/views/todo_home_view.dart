@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_app/custom_widgets/alert_widget.dart';
+import 'package:todo_list_app/custom_widgets/button_widget.dart';
 import 'package:todo_list_app/functions/todo_provider.dart';
 
 class TodoHome extends StatefulWidget{
@@ -15,14 +16,6 @@ class _Td extends State<TodoHome>{
 
   @override 
   Widget build(BuildContext context){
-
-    Widget buttons(IconData icon, String text, VoidCallback function){
-      return TextButton.icon(
-        style: ButtonStyle(foregroundColor: MaterialStatePropertyAll(Colors.blueGrey.shade200)),
-        onPressed: function, icon: Icon(icon),
-        label: Text(text, style: GoogleFonts.getFont('Nunito', fontSize: 17, fontWeight: FontWeight.w600,))
-      );
-    }
     
     return Consumer<User>(
       builder: ((context, user, child)
@@ -90,8 +83,8 @@ class _Td extends State<TodoHome>{
             
                   Wrap(
                     children: [
-                      buttons(Icons.add, 'Add', () => Navigator.of(context).pushNamed('/add')),
-                      buttons(
+                      HomeButtons().homeButton(Icons.add, 'Add', () => Navigator.of(context).pushNamed('/add')),
+                      HomeButtons().homeButton(
                         Icons.view_array, 'View', (){
                           if (user.dataBase[user.loggedInUser]![2].isNotEmpty) {
                             MaterialBannerAlert(context: context).materialBannerAlert(
@@ -106,7 +99,7 @@ class _Td extends State<TodoHome>{
                           }
                         }
                       ),
-                      buttons(
+                      HomeButtons().homeButton(
                         Icons.delete, 'Delete', (){
                           if (user.dataBase[user.loggedInUser]![2].isNotEmpty) {
                             MaterialBannerAlert(context: context).materialBannerAlert(
@@ -121,7 +114,7 @@ class _Td extends State<TodoHome>{
                           }
                         }
                       ),
-                      buttons(
+                      HomeButtons().homeButton(
                         Icons.update_rounded, 'Update', (){
                           if (user.dataBase[user.loggedInUser]![2].isNotEmpty) {
                             MaterialBannerAlert(context: context).materialBannerAlert(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_list_app/custom_widgets/alert_widget.dart';
 import 'package:todo_list_app/functions/todo_provider.dart';
 
 class Views extends StatefulWidget{
@@ -61,7 +62,7 @@ class _Views extends State<Views> {
                 key: Key(title),
                 onDismissed: (direction){
                   if(direction == DismissDirection.endToStart){
-                    user.delete(index);
+                    user.delete(index);                    
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         behavior: SnackBarBehavior.floating, margin: const EdgeInsets.only(bottom:100),

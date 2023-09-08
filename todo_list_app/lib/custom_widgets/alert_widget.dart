@@ -23,6 +23,26 @@ class SnackBarAlert {
       )
     );
   }
+
+//   void elevatedSnackBarAlert(VoidCallback function){
+//     ScaffoldMessenger.of(context).showSnackBar(
+//       SnackBar(
+//         behavior: SnackBarBehavior.floating, margin: const EdgeInsets.only(bottom:100),
+//         shape: const RoundedRectangleBorder(
+//           borderRadius: BorderRadius.all(Radius.circular(10))
+//         ),
+//         content: Text(
+//           'Item deleted!', 
+//           style: GoogleFonts.getFont('Nunito', fontSize:20, color: Colors.black, fontWeight: FontWeight.w300)
+//         ),
+//         action: SnackBarAction(
+//           onPressed: function, label: 'Undo', textColor: Colors.blue, 
+//         ),
+//         duration: const Duration(seconds: 4), backgroundColor: Colors.white,
+//       )
+//     ); 
+//   }
+
 }
 
 
@@ -56,26 +76,41 @@ class MaterialBannerAlert{
   }
 }
 
-// void notify1(String text, IconData icon){
-//       ScaffoldMessenger.of(context).showMaterialBanner(
-//         MaterialBanner(
-//           leading: Icon(icon, size: 40, color: Colors.blue,), elevation: 5,
-//           actions: [
-//             TextButton(
-//               onPressed:(){ScaffoldMessenger.of(context).hideCurrentMaterialBanner();}, 
-//               child: const Text(
-//                 'Ok', style: TextStyle(fontFamily: 'monospace', fontSize: 20, fontWeight: FontWeight.w300, color: Colors.blue)
-//               )
-//             )
-//           ],
-//           backgroundColor: Colors.white, shadowColor: Colors.yellow, padding: const EdgeInsets.all(10),
-//           content: Text(
-//             text, 
-//             style: const TextStyle(
-//               fontFamily: 'monospace', fontSize: 15,
-//               fontWeight: FontWeight.bold, color: Colors.black
-//             )
-//           ),
-//         )
-//       );
-//     }
+
+
+class DialogBox{
+  final BuildContext context;
+
+  DialogBox({required this. context});
+
+  Future <void> dialogBox(TextEditingController control1, TextEditingController control2,TextEditingController control3,){
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Colors.blueGrey.shade900,
+          title: Text('Save Todo.', style: GoogleFonts.getFont('Nunito', color: Colors.white, fontSize: 25, fontWeight: FontWeight.w500,)),
+          content: Text(
+            'You todo has been saved sucessfully. Do you want to add another?',
+            style: GoogleFonts.getFont('Nunito', color: Colors.white, fontSize: 15, fontWeight: FontWeight.w300,)
+          ),
+          actions: [
+            TextButton(
+              onPressed: (){Navigator.of(context).pop(); control1.clear(); control2.clear(); control3.clear();}, 
+              child: Text('Yes', style: GoogleFonts.getFont('Nunito', color: Colors.blue, fontSize: 15, fontWeight: FontWeight.w400,))
+            ),
+            TextButton(
+              onPressed: () {
+                control1.clear(); control2.clear(); control3.clear(); Navigator.of(context).popUntil(ModalRoute.withName('/home'));
+              }, 
+              child: Text('No', style: GoogleFonts.getFont('Nunito', color: Colors.blue, fontSize: 15, fontWeight: FontWeight.w400,))
+            )
+          ],
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))
+        );
+      }      
+    );
+  }
+}
+
+
