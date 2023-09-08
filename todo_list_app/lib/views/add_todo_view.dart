@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_list_app/custom_widgets/alert_widget.dart';
 import 'package:todo_list_app/functions/todo_provider.dart';
 
 class AddUpdate extends StatefulWidget{
@@ -101,21 +102,7 @@ class _AU extends State<AddUpdate> {
                       user.addTodo();
                       await dialogBox(user.controller1, user.controller2, user.controller3);                      
                     } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          action: SnackBarAction(
-                            label: 'Ok', onPressed: () => ScaffoldMessenger.of(context).hideCurrentSnackBar(), textColor: Colors.blue,
-                          ),
-                          content: Text(
-                            'Oops!!! Fields cannot be empty!',
-                            style: GoogleFonts.getFont('Nunito', fontWeight: FontWeight.w500, fontSize: 20, color: Colors.red.shade500),
-                          ),
-                          backgroundColor: Colors.white, duration: const Duration(seconds: 2), elevation: 20,
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
-                          ),
-                        )
-                      );
+                      SnackBarAlert(context: context).snackBarAlert('Oops!!! Fields cannot be empty!');                      
                     }
                   },
                   icon: Icon(Icons.save_sharp, color: Colors.blueGrey.shade400),

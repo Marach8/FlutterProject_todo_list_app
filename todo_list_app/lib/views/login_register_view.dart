@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_list_app/functions/firebase_functions.dart';
 import 'package:todo_list_app/functions/todo_provider.dart';
 
 class LoginPage extends StatefulWidget{
@@ -273,6 +274,7 @@ class _Login extends State<LoginPage> {
                                   else {
                                     if(user.passwordController.text == user.confirmPassController.text){
                                       alert(context);
+                                      //firebaseRegister(user.mobileEmailController.text, user.passwordController.text);
                                       user.register(user.mobileEmailController.text, user.usernameController.text, user.passwordController.text);
                                       await Future.delayed(const Duration(seconds: 3), () {
                                         Navigator.of(context).pop(); snackBarAlert('Registration Successful...', Colors.green, Icons.check);

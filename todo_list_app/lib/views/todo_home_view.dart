@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_list_app/custom_widgets/alert_widget.dart';
 import 'package:todo_list_app/functions/todo_provider.dart';
 
 class TodoHome extends StatefulWidget{
@@ -14,50 +15,6 @@ class _Td extends State<TodoHome>{
 
   @override 
   Widget build(BuildContext context){
-
-    void notify1(String text, IconData icon){
-      ScaffoldMessenger.of(context).showMaterialBanner(
-        MaterialBanner(
-          leading: Icon(icon, size: 40, color: Colors.blue,), elevation: 5,
-          actions: [
-            TextButton(
-              onPressed:(){ScaffoldMessenger.of(context).hideCurrentMaterialBanner();}, 
-              child: const Text(
-                'Ok', style: TextStyle(fontFamily: 'monospace', fontSize: 20, fontWeight: FontWeight.w300, color: Colors.blue)
-              )
-            )
-          ],
-          backgroundColor: Colors.white, shadowColor: Colors.yellow, padding: const EdgeInsets.all(10),
-          content: Text(
-            text, 
-            style: const TextStyle(
-              fontFamily: 'monospace', fontSize: 15,
-              fontWeight: FontWeight.bold, color: Colors.black
-            )
-          ),
-        )
-      );
-    }
-
-    void notify2(){
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          action: SnackBarAction(
-            label: 'Ok', onPressed: () => ScaffoldMessenger.of(context).hideCurrentSnackBar(), textColor: Colors.blue,
-          ),
-          content: Text(
-            'Oops!!! seems like you currently have no Todos. Add Todos first!',
-            style: GoogleFonts.getFont(
-              'Nunito', fontWeight: FontWeight.w500, fontSize: 17, color: Colors.red.shade500
-            )
-          ), 
-          backgroundColor: Colors.white, duration: const Duration(seconds: 3), elevation: 20,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
-          ),
-        )
-      );
-    }
 
     Widget buttons(IconData icon, String text, VoidCallback function){
       return TextButton.icon(
@@ -94,7 +51,6 @@ class _Td extends State<TodoHome>{
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    //height: h*0.4,               
                     margin: const EdgeInsets.all(20), padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       color: const Color.fromARGB(221, 30, 30, 30),
@@ -138,28 +94,45 @@ class _Td extends State<TodoHome>{
                       buttons(
                         Icons.view_array, 'View', (){
                           if (user.dataBase[user.loggedInUser]![2].isNotEmpty) {
-                            notify1('To view an item in detail, tap on the item.', Icons.view_array_rounded);
+                            MaterialBannerAlert(context: context).materialBannerAlert(
+                              'To view an item in detail, tap on the item.', Icons.view_array_rounded
+                            );
                             Future.delayed(const Duration(seconds:5), () =>ScaffoldMessenger.of(context).hideCurrentMaterialBanner());
                             Navigator.of(context).pushNamed('/view');
-                          } else {notify2();}
+                          } else {
+                            SnackBarAlert(context: context).snackBarAlert(
+                              'Oops!!! seems like you currently have no Todos. Add Todos first!'
+                            );
+                          }
                         }
                       ),
                       buttons(
                         Icons.delete, 'Delete', (){
                           if (user.dataBase[user.loggedInUser]![2].isNotEmpty) {
-                            notify1('To delete an item, swipe the item to the left or right.', Icons.delete);
+                            MaterialBannerAlert(context: context).materialBannerAlert(
+                              'To delete an item, swipe the item to the left or right.', Icons.delete
+                            );
                             Future.delayed(const Duration(seconds:5), () =>ScaffoldMessenger.of(context).hideCurrentMaterialBanner());
                             Navigator.of(context).pushNamed('/view');
-                          } else {notify2();}
+                          } else {
+                            SnackBarAlert(context: context).snackBarAlert(
+                              'Oops!!! seems like you currently have no Todos. Add Todos first!'
+                            );
+                          }
                         }
                       ),
                       buttons(
                         Icons.update_rounded, 'Update', (){
                           if (user.dataBase[user.loggedInUser]![2].isNotEmpty) {
-                            notify1('To update an item, longpress on it to enter update mode.', Icons.update_sharp);
+                            MaterialBannerAlert(context: context).materialBannerAlert(
+                              'To update an item, longpress on it to enter update mode.', Icons.update_sharp
+                            );
                             Future.delayed(const Duration(seconds:5), () =>ScaffoldMessenger.of(context).hideCurrentMaterialBanner());
                             Navigator.of(context).pushNamed('/view');
-                          } else {notify2();}
+                          } else {
+                            SnackBarAlert(context: context)
+                            .snackBarAlert('Oops!!! seems like you currently have no Todos. Add Todos first!');
+                          }
                         }
                       ),                    
                     ]

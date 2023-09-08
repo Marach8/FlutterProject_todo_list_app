@@ -34,7 +34,7 @@ dependencies:
   intl:
   google_fonts:
   firebase_core:
-  firebase_auth:
+  firebase_auth: ^4.9.0
   cloud_firestore:
 
 
