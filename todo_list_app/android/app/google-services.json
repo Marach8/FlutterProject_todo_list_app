@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "309132438565",
+    "project_id": "todoapp-marach",
+    "storage_bucket": "todoapp-marach.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:309132438565:android:e6d5dcc21ac44ca36ba3cc",
+        "android_client_info": {
+          "package_name": "com.example.todo_list_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "309132438565-rik451k93ce4bdhqk7gdii42i2fvcklo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfHbzS2GoO4-cidCnu71kcoEsjOR3NjQs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "309132438565-rik451k93ce4bdhqk7gdii42i2fvcklo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
