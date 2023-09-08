@@ -1,11 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_list_app/add_todo.dart';
-import 'package:todo_list_app/login_register.dart';
-import 'package:todo_list_app/todo_home.dart';
-import 'package:todo_list_app/todo_provider.dart';
-import 'package:todo_list_app/view_todo.dart';
+import 'package:todo_list_app/views/add_todo_view.dart';
+import 'package:todo_list_app/views/login_register_view.dart';
+import 'package:todo_list_app/views/todo_home_view.dart';
+import 'package:todo_list_app/functions/todo_provider.dart';
+import 'package:todo_list_app/views/todo_views.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
