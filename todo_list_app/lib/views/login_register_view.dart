@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_list_app/custom_widgets/alert_widget.dart';
+import 'package:todo_list_app/custom_widgets/textfield_widget.dart';
+import 'package:todo_list_app/custom_widgets/textitem_widget.dart';
 import 'package:todo_list_app/functions/firebase_functions.dart';
 import 'package:todo_list_app/functions/todo_provider.dart';
 
@@ -14,57 +17,13 @@ class LoginPage extends StatefulWidget{
 class _Login extends State<LoginPage> {
   bool forgotPassword = false; bool isRegistered = true;  
   
-    Widget textField(bool enabled, Color color, String hintText, TextEditingController controller, obscureText){
-    return  Container(
-      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0), 
-      decoration: BoxDecoration(
-        color: color, borderRadius: BorderRadius.circular(30),
-        boxShadow: const [BoxShadow(blurRadius:3, spreadRadius: 1, color: Colors.black)],                            
-      ),
-      child: SingleChildScrollView(
-        child: TextField(
-          controller: controller, enabled: enabled, obscureText: obscureText,
-          autocorrect: true, cursorColor: Colors.black,
-          style: GoogleFonts.getFont('Quicksand', color: Colors.blueGrey.shade900, fontWeight: FontWeight.w500,), 
-          decoration: InputDecoration(
-            border: InputBorder.none, hintText: hintText,
-            hintStyle: GoogleFonts.getFont('Nunito', color: Colors.black45, fontWeight: FontWeight.w500,),
-          ),
-        ),
-      ),
-    );
-  }
 
-  Future<void> alert(BuildContext context){
-    return showDialog(
-      context: context,
-      builder: (context) => const AlertDialog(
-        content:  LinearProgressIndicator(),
-        title: Text('Please Wait...'),
-      )
-    );
-  }
-
-  snackBarAlert(String text, Color color, IconData icon){
-    return ScaffoldMessenger.of(context).showMaterialBanner(
-      MaterialBanner(
-        leading: Icon(icon, color: color, size:40), backgroundColor: Colors.blueGrey.shade800,
-        content: Text(text, style: GoogleFonts.getFont('Nunito', fontSize: 17, fontWeight: FontWeight.w400, color: Colors.white)), 
-        actions: [
-          TextButton(onPressed: (){}, 
-          child: const Text('Ok')
-          )
-        ]
-      )
-    );
-  }
-
-  Widget text(textItem, double fontSize, FontWeight font, Color color,){
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Text(textItem, style: GoogleFonts.getFont('Quicksand', fontWeight: font, color: color, fontSize: fontSize)),
-    );
-  }
+  // Widget text(textItem, double fontSize, FontWeight font, Color color,){
+  //   return Padding(
+  //     padding: const EdgeInsets.all(10.0),
+  //     child: Text(textItem, style: GoogleFonts.getFont('Quicksand', fontWeight: font, color: color, fontSize: fontSize)),
+  //   );
+  // }
 
   String appBarText(){
     if(isRegistered && !forgotPassword){return 'User Login';} 
@@ -99,18 +58,18 @@ class _Login extends State<LoginPage> {
                       ),
                       child: Column(
                         children: [                          
-                          text(isRegistered? 'Sign In': 'Sign Up', 25, FontWeight.w800, Colors.green.shade900),
+                          TextItem().textItem(isRegistered? 'Sign In': 'Sign Up', 25, FontWeight.w800, Colors.green.shade900),
                           const SizedBox(height: 10), const Divider(height:1, color: Colors.green), const SizedBox(height:10),
-                          !isRegistered? Row(children:[text('Username', 15, FontWeight.w600, Colors.black45)])
+                          !isRegistered? Row(children:[TextItem().textItem('Username', 15, FontWeight.w600, Colors.black45)])
                           : const SizedBox(), 
-                          !isRegistered? textField(true, Colors.white, '', user.usernameController, false): const SizedBox(), 
-                          Row(children:[text('Mobile number or email', 15, FontWeight.w600, Colors.black45)]), 
-                          textField(forgotPassword? false: true, Colors.white, '', user.mobileEmailController, false), 
-                          Row(children:[text('Password', 15, FontWeight.w600, Colors.black45)]), 
-                          textField(forgotPassword? false : true, Colors.white, '', user.passwordController, true),
-                          !isRegistered? Row(children:[text('Confirm password', 15, FontWeight.w600, Colors.black45)])
+                          !isRegistered? TextFields1().textField(true, Colors.white, '', user.usernameController, false): const SizedBox(), 
+                          Row(children:[TextItem().textItem('Mobile number or email', 15, FontWeight.w600, Colors.black45)]), 
+                          TextFields1().textField(forgotPassword? false: true, Colors.white, '', user.mobileEmailController, false), 
+                          Row(children:[TextItem().textItem('Password', 15, FontWeight.w600, Colors.black45)]), 
+                          TextFields1().textField(forgotPassword? false : true, Colors.white, '', user.passwordController, true),
+                          !isRegistered? Row(children:[TextItem().textItem('Confirm password', 15, FontWeight.w600, Colors.black45)])
                           : const SizedBox(), 
-                          !isRegistered? textField(true, Colors.white, '', user.confirmPassController, true): const SizedBox(),
+                          !isRegistered? TextFields1().textField(true, Colors.white, '', user.confirmPassController, true): const SizedBox(),
                           SizedBox(
                             height: 40,
                             child: Stack(                        
@@ -135,7 +94,7 @@ class _Login extends State<LoginPage> {
                                               children: [
                                                 Stack(
                                                   children: [
-                                                    Center(child: text('Password Reset', 20, FontWeight.w800, Colors.black,),),
+                                                    Center(child: TextItem().textItem('Password Reset', 20, FontWeight.w800, Colors.black,),),
                                                     Positioned(
                                                       right:0,
                                                       child: Container(
@@ -158,20 +117,20 @@ class _Login extends State<LoginPage> {
                                                   ]
                                                 ),
                                                 const SizedBox(height:20),const Divider(height: 1), const SizedBox(height:20),
-                                                textField(true, Colors.blueGrey.shade300, 'Enter mobile number or email', user.controllerA, false), 
+                                                TextFields1().textField(true, Colors.blueGrey.shade300, 'Enter mobile number or email', user.controllerA, false), 
                                                 const SizedBox(height:30), 
-                                                textField(true, Colors.blueGrey.shade300, 'Enter new password', user.controllerB, true), 
+                                                TextFields1().textField(true, Colors.blueGrey.shade300, 'Enter new password', user.controllerB, true), 
                                                 const SizedBox(height:20),const Divider(height: 1), const SizedBox(height:20), 
                                                 ElevatedButton(
                                                   onPressed: () async{
                                                     bool passwordResetFields = [user.controllerA, user.controllerB].every((controller) => controller.text.isNotEmpty);                                                    
                                                     if(passwordResetFields){
-                                                      alert(context);
+                                                      ProgressIndicatorDialog().alert(context);
                                                       if(user.dataBase.containsKey(user.controllerA.text)){
                                                         user.dataBase[user.controllerA.text]![1] == user.controllerB.text;
                                                         await Future.delayed(const Duration(seconds: 3), () {
                                                           Navigator.of(context).pop();
-                                                          snackBarAlert('Password Changed!!!', Colors.green, Icons.check);
+                                                          MaterialBannerAlert1(context:context).materialBannerAlert1('Password Changed!!!', Colors.green, Icons.check);
                                                         });
                                                         await Future.delayed(const Duration(seconds: 2), (){
                                                           ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
@@ -181,14 +140,14 @@ class _Login extends State<LoginPage> {
                                                       } else {
                                                         await Future.delayed(const Duration(seconds: 3), () {
                                                           Navigator.of(context).pop();
-                                                          snackBarAlert('User "${user.controllerA.text}" not found!!!', Colors.red, Icons.warning_rounded);
+                                                          MaterialBannerAlert1(context:context).materialBannerAlert1('User "${user.controllerA.text}" not found!!!', Colors.red, Icons.warning_rounded);
                                                         });
                                                         await Future.delayed(const Duration(seconds: 2), (){
                                                           ScaffoldMessenger.of(context).hideCurrentMaterialBanner();                                                        
                                                         });
                                                       }
                                                     } else{
-                                                      snackBarAlert('Fields Cannot be Empty!!!', Colors.red, Icons.warning_rounded);
+                                                      MaterialBannerAlert1(context:context).materialBannerAlert1('Fields Cannot be Empty!!!', Colors.red, Icons.warning_rounded);
                                                       await Future.delayed(const Duration(seconds: 2), () =>
                                                         ScaffoldMessenger.of(context).hideCurrentMaterialBanner()                                                       
                                                       );
@@ -199,7 +158,7 @@ class _Login extends State<LoginPage> {
                                                     fixedSize: MaterialStatePropertyAll(Size(w, 30)),
                                                     side: const MaterialStatePropertyAll(BorderSide(width: 1, strokeAlign: 3, color: Colors.black))
                                                   ),
-                                                  child: text('Change Password', 15, FontWeight.w700, Colors.black)
+                                                  child: TextItem().textItem('Change Password', 15, FontWeight.w700, Colors.black)
                                                 ),
                                               ],
                                             ),
@@ -207,7 +166,7 @@ class _Login extends State<LoginPage> {
                                         )
                                       );
                                     },
-                                    child: text('Forgot Password?', 13, FontWeight.w800, Colors.blueGrey.shade700,)
+                                    child: TextItem().textItem('Forgot Password?', 13, FontWeight.w800, Colors.blueGrey.shade700,)
                                   )
                                 ),
                                 Positioned(right: 0, 
@@ -216,7 +175,7 @@ class _Login extends State<LoginPage> {
                                       user.mobileEmailController.clear(); user.passwordController.clear();
                                       setState(() => isRegistered = !isRegistered);
                                     },
-                                    child: text(isRegistered? 'Not Registered?': 'Already Registered?', 13, FontWeight.w800, Colors.blueGrey.shade700,)
+                                    child: TextItem().textItem(isRegistered? 'Not Registered?': 'Already Registered?', 13, FontWeight.w800, Colors.blueGrey.shade700,)
                                   )
                                 ),
                               ] 
@@ -230,13 +189,14 @@ class _Login extends State<LoginPage> {
                               .every((controller) => controller.text.isNotEmpty);
                               if(isRegistered){
                                 if(loginFields){
-                                  alert(context);
+                                  ProgressIndicatorDialog().alert(context);
                                   if(user.dataBase.containsKey(user.mobileEmailController.text) &&
                                     (user.passwordController.text == user.dataBase[user.mobileEmailController.text]![1])){
                                       user.login(user.mobileEmailController.text);
                                       user.mobileEmailController.clear(); user.passwordController.clear();
                                       await Future.delayed(const Duration(seconds: 3), () {
-                                        Navigator.of(context).pop(); snackBarAlert('Login Successful...', Colors.green, Icons.check);
+                                        Navigator.of(context).pop(); 
+                                        MaterialBannerAlert1(context:context).materialBannerAlert1('Login Successful...', Colors.green, Icons.check);
                                       });
                                       await Future.delayed(const Duration(seconds: 2), () {
                                         ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
@@ -244,14 +204,15 @@ class _Login extends State<LoginPage> {
                                       });
                                     } else {
                                       await Future.delayed(const Duration(seconds: 3), () {
-                                        Navigator.of(context).pop(); snackBarAlert('Invalid Login Credentials!!!', Colors.red, Icons.warning_rounded);
+                                        Navigator.of(context).pop(); 
+                                        MaterialBannerAlert1(context:context).materialBannerAlert1('Invalid Login Credentials!!!', Colors.red, Icons.warning_rounded);
                                       });
                                       await Future.delayed(const Duration(seconds: 2), () =>
                                         ScaffoldMessenger.of(context).hideCurrentMaterialBanner()
                                       );
                                     }
                                 } else{
-                                  snackBarAlert('Fields Cannot be Empty!!!', Colors.red, Icons.warning_rounded);
+                                  MaterialBannerAlert1(context:context).materialBannerAlert1('Fields Cannot be Empty!!!', Colors.red, Icons.warning_rounded);
                                   await Future.delayed(const Duration(seconds: 2), () =>
                                     ScaffoldMessenger.of(context).hideCurrentMaterialBanner()
                                   );
@@ -263,9 +224,10 @@ class _Login extends State<LoginPage> {
                                 user.confirmPassController, user.usernameController].every((controller) => controller.text.isNotEmpty);
                                 if(registrationFields){
                                   if(user.dataBase.containsKey(user.mobileEmailController.text)){
-                                    alert(context);
+                                    ProgressIndicatorDialog().alert(context);
                                     await Future.delayed(const Duration(seconds: 3), () {
-                                      Navigator.of(context).pop(); snackBarAlert('User Already Exists!!!', Colors.red, Icons.warning_rounded);
+                                      Navigator.of(context).pop(); 
+                                      MaterialBannerAlert1(context:context).materialBannerAlert1('User Already Exists!!!', Colors.red, Icons.warning_rounded);
                                     });
                                     await Future.delayed(const Duration(seconds: 2), () =>
                                       ScaffoldMessenger.of(context).hideCurrentMaterialBanner()
@@ -273,11 +235,12 @@ class _Login extends State<LoginPage> {
                                   }                                 
                                   else {
                                     if(user.passwordController.text == user.confirmPassController.text){
-                                      alert(context);
+                                      ProgressIndicatorDialog().alert(context);
                                       //firebaseRegister(user.mobileEmailController.text, user.passwordController.text);
                                       user.register(user.mobileEmailController.text, user.usernameController.text, user.passwordController.text);
                                       await Future.delayed(const Duration(seconds: 3), () {
-                                        Navigator.of(context).pop(); snackBarAlert('Registration Successful...', Colors.green, Icons.check);
+                                        Navigator.of(context).pop(); 
+                                        MaterialBannerAlert1(context:context).materialBannerAlert1('Registration Successful...', Colors.green, Icons.check);
                                       });
                                       await Future.delayed(const Duration(seconds: 2), () =>
                                         ScaffoldMessenger.of(context).hideCurrentMaterialBanner()
@@ -286,14 +249,14 @@ class _Login extends State<LoginPage> {
                                       user.mobileEmailController.clear(); user.passwordController.clear(); user.usernameController.clear();
                                       user.confirmPassController.clear();
                                     } else{
-                                      snackBarAlert('Password Confirmation Error!!!', Colors.red, Icons.warning_rounded);
+                                      MaterialBannerAlert1(context:context).materialBannerAlert1('Password Confirmation Error!!!', Colors.red, Icons.warning_rounded);
                                       await Future.delayed(const Duration(seconds: 2), () =>
                                         ScaffoldMessenger.of(context).hideCurrentMaterialBanner()
                                       );
                                     }                                    
                                   }
                                 } else{
-                                  snackBarAlert('Fields Cannot be Empty!!!', Colors.red, Icons.warning_rounded);
+                                  MaterialBannerAlert1(context:context).materialBannerAlert1('Fields Cannot be Empty!!!', Colors.red, Icons.warning_rounded);
                                   await Future.delayed(const Duration(seconds: 2), () =>
                                     ScaffoldMessenger.of(context).hideCurrentMaterialBanner()
                                   );
@@ -304,7 +267,7 @@ class _Login extends State<LoginPage> {
                               fixedSize: MaterialStatePropertyAll(Size(w, 30)),
                               side: const MaterialStatePropertyAll(BorderSide(width: 1, strokeAlign: 3, color: Colors.green))
                             ),
-                            child: text(isRegistered? 'Login': 'Register', 15, FontWeight.w700, Colors.green)
+                            child: TextItem().textItem(isRegistered? 'Login': 'Register', 15, FontWeight.w700, Colors.green)
                           )
                         ],
                       )
