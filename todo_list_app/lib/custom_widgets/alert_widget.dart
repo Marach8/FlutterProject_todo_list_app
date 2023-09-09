@@ -115,8 +115,8 @@ class DialogBox{
 
 
 class ProgressIndicatorDialog{
-  Future<void> alert(BuildContext context){
-    return showDialog(
+  alert(BuildContext context){
+    showDialog(
       context: context,
       builder: (context) => const AlertDialog(
         content:  LinearProgressIndicator(),
@@ -131,17 +131,18 @@ class MaterialBannerAlert1{
   final BuildContext context;
   MaterialBannerAlert1(this.context);
   
-  materialBannerAlert1(String text, Color color, IconData icon){
-    return ScaffoldMessenger.of(context).showMaterialBanner(
+  materialBannerAlert1(String text, Color color, IconData icon) async{
+    ScaffoldMessenger.of(context).showMaterialBanner(
       MaterialBanner(
         leading: Icon(icon, color: color, size:40), backgroundColor: Colors.blueGrey.shade800,
         content: Text(text, style: GoogleFonts.getFont('Nunito', fontSize: 17, fontWeight: FontWeight.w400, color: Colors.white)), 
         actions: [
-          TextButton(onPressed: (){}, 
-          child: const Text('Ok')
+          TextButton(onPressed: (){ScaffoldMessenger.of(context).hideCurrentMaterialBanner();}, 
+          child: Text('Ok', style: GoogleFonts.getFont('Nunito', color: color))
           )
         ]
       )
     );
+    await Future.delayed(const Duration(seconds: 2), () => ScaffoldMessenger.of(context).hideCurrentMaterialBanner());
   }
 }

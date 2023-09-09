@@ -1,46 +1,43 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:todo_list_app/custom_widgets/alert_widget.dart';
 
 class FirebaseAuthRegister{
   final BuildContext context;
   FirebaseAuthRegister(this.context);
 
-  Future<User?> firebaseRegister(String email, String password,) async{
-
+  firebaseRegister(String email, String password, void Function(String text, Color color) firebaseAlert) async{
     try{
-      UserCredential userCredentials = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email, password: password
       );
-      //firebaseAlert('Registration Successful');
-      //return userCredentials.user;
+      firebaseAlert('Registration Successful...', Colors.green);
     } on FirebaseAuthException catch(e){
       if (e.code == 'weak-password'){
-        print('Weak password!');
-        //firebaseAlert('Password must contain at least 6 characters!!!');
-        //MaterialBannerAlert1(context).materialBannerAlert1(text, icon)
-      } else if(e.code == 'email-already-in-use'){
-        //firebaseAlert('This email is already registered!!!');
-        print('User already exists!');
+        firebaseAlert('Password must contain at least 6 characters!!!', Colors.red);
       }
-    } catch (e){print(e.toString());}
+      else if(e.code == 'email-already-in-use'){
+        firebaseAlert('This email is already registered!!!', Colors.red);
+      }
+    } catch (e){ firebaseAlert(e.toString(), Colors.red);}
   }
 }
 
-class FireBaseAuthLogin{
+class FirebaseAuthLogin{
+  final BuildContext context;
+  FirebaseAuthLogin(this.context);
 
-  Future<User?> firebaseLogin(String email, String password) async{
+  firebaseLogin(String email, String password, void Function(String text, Color color) firebaseAlert) async{
     try{
-      UserCredential userCredentials = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email, password: password
       );
-      return userCredentials.user;
+      firebaseAlert('Login Successful...', Colors.green);
     } on FirebaseAuthException catch(e){
-      if (e.code == 'weak-password'){
-        print('The password is weak!');
-      } else if(e.code == 'email-already-in-use'){
-        print('User already exists!');
+      if (e.code == 'user-not-found'){
+        firebaseAlert('This email is not registered!!!', Colors.red);
+      } else if(e.code == 'wrong-password'){
+        firebaseAlert('Incorrect login credentials!!!', Colors.red);
       }
-    } catch (e){print(e.toString());}
+    } catch (e){firebaseAlert(e.toString(), Colors.red);}
   }
 }

@@ -77,6 +77,7 @@ class _Login extends State<LoginPage> {
                                 Positioned(left: 0, 
                                   child: !isRegistered? const SizedBox(): GestureDetector(
                                     onTap: (){
+                                      user.mobileEmailController.clear(); user.passwordController.clear(); 
                                       setState(() => forgotPassword = true);
                                       ScaffoldMessenger.of(context).showSnackBar(
                                         SnackBar(
@@ -107,6 +108,7 @@ class _Login extends State<LoginPage> {
                                                         child: Center(
                                                           child: IconButton(
                                                             onPressed: () {
+                                                              user.controllerA.clear(); user.controllerB.clear();
                                                               ScaffoldMessenger.of(context).hideCurrentSnackBar();
                                                               setState(() => forgotPassword = false);
                                                             }, icon: const Icon(Icons.arrow_downward_rounded, color: Colors.black)
@@ -130,24 +132,25 @@ class _Login extends State<LoginPage> {
                                                         user.dataBase[user.controllerA.text]![1] == user.controllerB.text;
                                                         await Future.delayed(const Duration(seconds: 3), () {
                                                           Navigator.of(context).pop();
-                                                          MaterialBannerAlert1(context:context).materialBannerAlert1('Password Changed!!!', Colors.green, Icons.check);
+                                                          MaterialBannerAlert1(context).materialBannerAlert1('Password Changed!!!', Colors.green, Icons.check);
                                                         });
                                                         await Future.delayed(const Duration(seconds: 2), (){
                                                           ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                                                          user.controllerA.clear(); user.controllerB.clear();
                                                           ScaffoldMessenger.of(context).hideCurrentSnackBar();
                                                         });
                                                         setState(() => forgotPassword = false);
                                                       } else {
                                                         await Future.delayed(const Duration(seconds: 3), () {
                                                           Navigator.of(context).pop();
-                                                          MaterialBannerAlert1(context:context).materialBannerAlert1('User "${user.controllerA.text}" not found!!!', Colors.red, Icons.warning_rounded);
+                                                          MaterialBannerAlert1(context).materialBannerAlert1('User "${user.controllerA.text}" not found!!!', Colors.red, Icons.warning_rounded);
                                                         });
                                                         await Future.delayed(const Duration(seconds: 2), (){
                                                           ScaffoldMessenger.of(context).hideCurrentMaterialBanner();                                                        
                                                         });
                                                       }
                                                     } else{
-                                                      MaterialBannerAlert1(context:context).materialBannerAlert1('Fields Cannot be Empty!!!', Colors.red, Icons.warning_rounded);
+                                                      MaterialBannerAlert1(context).materialBannerAlert1('Fields Cannot be Empty!!!', Colors.red, Icons.warning_rounded);
                                                       await Future.delayed(const Duration(seconds: 2), () =>
                                                         ScaffoldMessenger.of(context).hideCurrentMaterialBanner()                                                       
                                                       );
@@ -172,7 +175,8 @@ class _Login extends State<LoginPage> {
                                 Positioned(right: 0, 
                                   child: GestureDetector(
                                     onTap: (){
-                                      user.mobileEmailController.clear(); user.passwordController.clear();
+                                      user.mobileEmailController.clear(); user.passwordController.clear(); 
+                                      user.usernameController.clear(); user.confirmPassController.clear();
                                       setState(() => isRegistered = !isRegistered);
                                     },
                                     child: TextItem().textItem(isRegistered? 'Not Registered?': 'Already Registered?', 13, FontWeight.w800, Colors.blueGrey.shade700,)
@@ -190,85 +194,59 @@ class _Login extends State<LoginPage> {
                               if(isRegistered){
                                 if(loginFields){
                                   ProgressIndicatorDialog().alert(context);
-                                  if(user.dataBase.containsKey(user.mobileEmailController.text) &&
-                                    (user.passwordController.text == user.dataBase[user.mobileEmailController.text]![1])){
-                                      user.login(user.mobileEmailController.text);
-                                      user.mobileEmailController.clear(); user.passwordController.clear();
-                                      await Future.delayed(const Duration(seconds: 3), () {
-                                        Navigator.of(context).pop(); 
-                                        MaterialBannerAlert1(context:context).materialBannerAlert1('Login Successful...', Colors.green, Icons.check);
-                                      });
-                                      await Future.delayed(const Duration(seconds: 2), () {
-                                        ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-                                        Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
-                                      });
-                                    } else {
-                                      await Future.delayed(const Duration(seconds: 3), () {
-                                        Navigator.of(context).pop(); 
-                                        MaterialBannerAlert1(context:context).materialBannerAlert1('Invalid Login Credentials!!!', Colors.red, Icons.warning_rounded);
-                                      });
-                                      await Future.delayed(const Duration(seconds: 2), () =>
-                                        ScaffoldMessenger.of(context).hideCurrentMaterialBanner()
-                                      );
-                                    }
-                                } else{
-                                  MaterialBannerAlert1(context:context).materialBannerAlert1('Fields Cannot be Empty!!!', Colors.red, Icons.warning_rounded);
-                                  await Future.delayed(const Duration(seconds: 2), () =>
-                                    ScaffoldMessenger.of(context).hideCurrentMaterialBanner()
+                                  FirebaseAuthLogin(context).firebaseLogin(
+                                    user.mobileEmailController.text.trim(), user.passwordController.text.trim(),
+                                    (text, color) {
+                                      Navigator.of(context).pop();
+                                      MaterialBannerAlert1(context).materialBannerAlert1(text, color, Icons.warning_rounded);
+                                    } 
                                   );
-                                }                                
+                                  user.mobileEmailController.clear(); user.passwordController.clear();
+                                  Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
+                                }  else{
+                                  MaterialBannerAlert1(context).materialBannerAlert1(
+                                    'Fields Cannot be Empty!!!', Colors.red, Icons.warning_rounded
+                                  );
+                                }                               
                               }
+
                               //User Registration
                               else {
                                 bool registrationFields = [user.mobileEmailController, user.passwordController,
                                 user.confirmPassController, user.usernameController].every((controller) => controller.text.isNotEmpty);
                                 if(registrationFields){
-                                  if(user.dataBase.containsKey(user.mobileEmailController.text)){
-                                    ProgressIndicatorDialog().alert(context);
-                                    await Future.delayed(const Duration(seconds: 3), () {
-                                      Navigator.of(context).pop(); 
-                                      MaterialBannerAlert1(context:context).materialBannerAlert1('User Already Exists!!!', Colors.red, Icons.warning_rounded);
-                                    });
-                                    await Future.delayed(const Duration(seconds: 2), () =>
-                                      ScaffoldMessenger.of(context).hideCurrentMaterialBanner()
+                                  ProgressIndicatorDialog().alert(context);
+                                  if(user.passwordController.text == user.confirmPassController.text){
+                                    FirebaseAuthRegister(context).firebaseRegister(
+                                      user.mobileEmailController.text.trim(), user.passwordController.text.trim(),
+                                      (text, color) {
+                                        Navigator.of(context).pop();
+                                        MaterialBannerAlert1(context).materialBannerAlert1(text, color, Icons.warning_rounded);
+                                      } 
                                     );
-                                  }                                 
-                                  else {
-                                    if(user.passwordController.text == user.confirmPassController.text){
-                                      ProgressIndicatorDialog().alert(context);
-                                      //firebaseRegister(user.mobileEmailController.text, user.passwordController.text);
-                                      user.register(user.mobileEmailController.text, user.usernameController.text, user.passwordController.text);
-                                      await Future.delayed(const Duration(seconds: 3), () {
-                                        Navigator.of(context).pop(); 
-                                        MaterialBannerAlert1(context:context).materialBannerAlert1('Registration Successful...', Colors.green, Icons.check);
-                                      });
-                                      await Future.delayed(const Duration(seconds: 2), () =>
-                                        ScaffoldMessenger.of(context).hideCurrentMaterialBanner()
-                                      );
-                                      setState(() => isRegistered = true);
-                                      user.mobileEmailController.clear(); user.passwordController.clear(); user.usernameController.clear();
-                                      user.confirmPassController.clear();
-                                    } else{
-                                      MaterialBannerAlert1(context:context).materialBannerAlert1('Password Confirmation Error!!!', Colors.red, Icons.warning_rounded);
-                                      await Future.delayed(const Duration(seconds: 2), () =>
-                                        ScaffoldMessenger.of(context).hideCurrentMaterialBanner()
-                                      );
-                                    }                                    
+                                    user.mobileEmailController.clear(); user.passwordController.clear(); 
+                                    user.usernameController.clear(); user.confirmPassController.clear();
+                                    setState(() => isRegistered = true);
+                                  } else {
+                                    Navigator.of(context).pop();
+                                    MaterialBannerAlert1(context).materialBannerAlert1(
+                                      'Password Confirmation Error!!!', Colors.red, Icons.warning_rounded
+                                    );
                                   }
                                 } else{
-                                  MaterialBannerAlert1(context:context).materialBannerAlert1('Fields Cannot be Empty!!!', Colors.red, Icons.warning_rounded);
-                                  await Future.delayed(const Duration(seconds: 2), () =>
-                                    ScaffoldMessenger.of(context).hideCurrentMaterialBanner()
+                                  MaterialBannerAlert1(context).materialBannerAlert1(
+                                    'Fields Cannot be Empty!!!', Colors.red, Icons.warning_rounded
                                   );
-                                }                                
+                                }
                               }
-                            },                          
+                            },
+
                             style: ButtonStyle(
                               fixedSize: MaterialStatePropertyAll(Size(w, 30)),
                               side: const MaterialStatePropertyAll(BorderSide(width: 1, strokeAlign: 3, color: Colors.green))
                             ),
                             child: TextItem().textItem(isRegistered? 'Login': 'Register', 15, FontWeight.w700, Colors.green)
-                          )
+                          ),
                         ],
                       )
                     ),
