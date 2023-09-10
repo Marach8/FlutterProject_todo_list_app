@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -5,11 +6,14 @@ class FirebaseAuthRegister{
   final BuildContext context;
   FirebaseAuthRegister(this.context);
 
-  firebaseRegister(String email, String password, void Function(String text, Color color) firebaseAlert) async{
+  firebaseRegister(
+    String username, String email, String password, void Function(String text, Color color) firebaseAlert
+  ) async{
     try{
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email, password: password
       );
+      FirebaseFirestore.instance.collection('Users').doc(username).set({'title':'', 'date': '', 'content': ''});
       firebaseAlert('Registration Successful...', Colors.green);
     } on FirebaseAuthException catch(e){
       if (e.code == 'weak-password'){
@@ -21,6 +25,7 @@ class FirebaseAuthRegister{
     } catch (e){ firebaseAlert(e.toString(), Colors.red);}
   }
 }
+
 
 class FirebaseAuthLogin{
   final BuildContext context;

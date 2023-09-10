@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_app/custom_widgets/alert_widget.dart';
 import 'package:todo_list_app/custom_widgets/textfield_widget.dart';
@@ -188,6 +187,7 @@ class _Login extends State<LoginPage> {
                           const SizedBox(height: 25), const Divider(height:1, color: Colors.green), const SizedBox(height: 25),
                           ElevatedButton(
                             onPressed: () async{
+
                               //user Login
                               bool loginFields = [user.mobileEmailController, user.passwordController]
                               .every((controller) => controller.text.isNotEmpty);
@@ -201,8 +201,8 @@ class _Login extends State<LoginPage> {
                                       MaterialBannerAlert1(context).materialBannerAlert1(text, color, Icons.warning_rounded);
                                     } 
                                   );
-                                  user.mobileEmailController.clear(); user.passwordController.clear();
-                                  Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
+                                  //Navigator.of(context).pushNamedAndemRoveUntil('/home', (route) => false);
+                                  //user.mobileEmailController.clear(); user.passwordController.clear();
                                 }  else{
                                   MaterialBannerAlert1(context).materialBannerAlert1(
                                     'Fields Cannot be Empty!!!', Colors.red, Icons.warning_rounded
@@ -217,11 +217,12 @@ class _Login extends State<LoginPage> {
                                 if(registrationFields){
                                   ProgressIndicatorDialog().alert(context);
                                   if(user.passwordController.text == user.confirmPassController.text){
-                                    FirebaseAuthRegister(context).firebaseRegister(
+                                    await FirebaseAuthRegister(context).firebaseRegister(
+                                      user.usernameController.text.trim(),
                                       user.mobileEmailController.text.trim(), user.passwordController.text.trim(),
-                                      (text, color) {
+                                      (text, color) async {
                                         Navigator.of(context).pop();
-                                        MaterialBannerAlert1(context).materialBannerAlert1(text, color, Icons.warning_rounded);
+                                        await MaterialBannerAlert1(context).materialBannerAlert1(text, color, Icons.warning_rounded);
                                       } 
                                     );
                                     user.mobileEmailController.clear(); user.passwordController.clear(); 

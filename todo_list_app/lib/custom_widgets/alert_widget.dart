@@ -22,27 +22,8 @@ class SnackBarAlert {
       )
     );
   }
-
-//   void elevatedSnackBarAlert(VoidCallback function){
-//     ScaffoldMessenger.of(context).showSnackBar(
-//       SnackBar(
-//         behavior: SnackBarBehavior.floating, margin: const EdgeInsets.only(bottom:100),
-//         shape: const RoundedRectangleBorder(
-//           borderRadius: BorderRadius.all(Radius.circular(10))
-//         ),
-//         content: Text(
-//           'Item deleted!', 
-//           style: GoogleFonts.getFont('Nunito', fontSize:20, color: Colors.black, fontWeight: FontWeight.w300)
-//         ),
-//         action: SnackBarAction(
-//           onPressed: function, label: 'Undo', textColor: Colors.blue, 
-//         ),
-//         duration: const Duration(seconds: 4), backgroundColor: Colors.white,
-//       )
-//     ); 
-//   }
-
 }
+
 
 
 class MaterialBannerAlert{
