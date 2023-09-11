@@ -14,7 +14,7 @@ class FirebaseAuthRegister{
       UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email, password: password
       );
-      FirebaseFirestore.instance.collection('Users').doc(userCredential.user!.uid).set({'username': username});
+      await FirebaseFirestore.instance.collection('Users').doc(userCredential.user!.uid).set({'username': username});
       //FirebaseFirestore.instance.collection('Users').doc(username).set({'title': {'date': '', 'content': ''}});
       firebaseAlert('Registration Successful...', Colors.green);
     } on FirebaseAuthException catch(e){
@@ -31,28 +31,32 @@ class FirebaseAuthRegister{
 
 class FirebaseAuthLogin{
   final BuildContext context;
-  FirebaseAuthLogin(this.context);
+  FirebaseAuthLogin(this.context);  
 
-  firebaseLogin(String email, String password, void Function(String text, Color color) firebaseAlert) async{
+  Future<String> firebaseLogin(String email, String password, Function(String text, Color color, IconData icon) firebaseAlert
+  ) async{
     try{
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email, password: password
-      );
-      firebaseAlert('Login Successful...', Colors.green);
+      );      
       User? user = FirebaseAuth.instance.currentUser;
       DocumentSnapshot<Map<String, dynamic>> userData = await FirebaseFirestore.instance.collection('Users').doc(user!.uid).get();
       AppUsers().resetUser(userData['username']);
-      print(userData['username']);
-         
+      //AppUsers().loggedInUser = userData['username'];
+      //print(userData['username']);
+      await firebaseAlert('Login Successful...', Colors.green, Icons.check);
+      return 'yes';
     } on FirebaseAuthException catch(e){
       if (e.code == 'user-not-found'){
-        firebaseAlert('This email is not registered!!!', Colors.red);
+        await firebaseAlert('This email is not registered!!!', Colors.red, Icons.warning_rounded);
       } else if(e.code == 'wrong-password'){
-        firebaseAlert('Incorrect login credentials!!!', Colors.red);
+        await firebaseAlert('Incorrect login credentials!!!', Colors.red, Icons.warning_rounded);
       }
-    } catch (e){ print(e);
-      firebaseAlert(e.toString(), Colors.red);
-    }    
+      return 'no';
+    } catch (e){
+      await firebaseAlert(e.toString(), Colors.red, Icons.warning_rounded);
+    }
+    return 'no';
   }
 }
 

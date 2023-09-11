@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_app/custom_widgets/alert_widget.dart';
@@ -194,15 +195,26 @@ class _Login extends State<LoginPage> {
                               if(isRegistered){
                                 if(loginFields) {
                                   ProgressIndicatorDialog().alert(context);
-                                  FirebaseAuthLogin(context).firebaseLogin(
+                                  await FirebaseAuthLogin(context).firebaseLogin(
                                     user.mobileEmailController.text.trim(), user.passwordController.text.trim(),
-                                    (text, color) {
+                                    (text, color, icon) async{
                                       Navigator.of(context).pop();
-                                      MaterialBannerAlert1(context).materialBannerAlert1(text, color, Icons.check);
+                                      await MaterialBannerAlert1(context).materialBannerAlert1(text, color, icon);
                                     } 
-                                  );
-                                  Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
-                                  user.mobileEmailController.clear(); user.passwordController.clear();
+                                  ).then((result) async{
+                                    if(result == 'yes'){
+                                      user.mobileEmailController.clear(); user.passwordController.clear();
+                                      Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
+                                  } else if(result == 'no'){
+                                    await MaterialBannerAlert1(context).materialBannerAlert1(
+                                      "Couldn't Login!!!", Colors.red, Icons.close_rounded
+                                    );
+                                  }
+                                  },);
+                                  // if(result == 'yes'){
+                                  //   user.mobileEmailController.clear(); user.passwordController.clear();
+                                  //   Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
+                                  // } else if(result == 'no'){}
                                 }  else{
                                   MaterialBannerAlert1(context).materialBannerAlert1(
                                     'Fields Cannot be Empty!!!', Colors.red, Icons.warning_rounded

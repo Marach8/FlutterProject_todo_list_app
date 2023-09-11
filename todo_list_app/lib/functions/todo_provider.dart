@@ -15,7 +15,7 @@ class AppUsers extends ChangeNotifier{
   //   controllerB.dispose(); super.dispose();
   // }
 
-  void resetUser(String text){print('Thsi $text'); loggedInUser = text;}
+  void resetUser(String text){print('$text'); print('This is $loggedInUser');}
   
   void addTodo(){
     List<String> newList = [controller1.text, controller2.text, controller3.text]; 
