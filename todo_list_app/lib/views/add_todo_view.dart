@@ -20,7 +20,7 @@ class _AU extends State<AddUpdate> {
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;    
     
-    return Consumer<User>(
+    return Consumer<AppUsers>(
       builder: (context, user, child)
       => Scaffold(
         appBar: AppBar(centerTitle: true, title: Text(

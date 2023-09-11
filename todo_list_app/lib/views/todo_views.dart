@@ -40,7 +40,7 @@ class _Views extends State<Views> {
   
   @override
   Widget build(BuildContext context){
-    return Consumer<User>(
+    return Consumer<AppUsers>(
       builder: (context, user, child) 
       => Scaffold(
           backgroundColor: Colors.blueGrey.withOpacity(0.25),

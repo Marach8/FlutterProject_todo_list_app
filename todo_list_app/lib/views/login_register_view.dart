@@ -36,7 +36,7 @@ class _Login extends State<LoginPage> {
     
     var w = MediaQuery.of(context).size.width;
 
-    return Consumer<User>(
+    return Consumer<AppUsers>(
       builder: ((context, user, child) =>
         Scaffold(
           appBar: AppBar(
@@ -192,17 +192,17 @@ class _Login extends State<LoginPage> {
                               bool loginFields = [user.mobileEmailController, user.passwordController]
                               .every((controller) => controller.text.isNotEmpty);
                               if(isRegistered){
-                                if(loginFields){
+                                if(loginFields) {
                                   ProgressIndicatorDialog().alert(context);
                                   FirebaseAuthLogin(context).firebaseLogin(
                                     user.mobileEmailController.text.trim(), user.passwordController.text.trim(),
                                     (text, color) {
                                       Navigator.of(context).pop();
-                                      MaterialBannerAlert1(context).materialBannerAlert1(text, color, Icons.warning_rounded);
+                                      MaterialBannerAlert1(context).materialBannerAlert1(text, color, Icons.check);
                                     } 
                                   );
-                                  //Navigator.of(context).pushNamedAndemRoveUntil('/home', (route) => false);
-                                  //user.mobileEmailController.clear(); user.passwordController.clear();
+                                  Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
+                                  user.mobileEmailController.clear(); user.passwordController.clear();
                                 }  else{
                                   MaterialBannerAlert1(context).materialBannerAlert1(
                                     'Fields Cannot be Empty!!!', Colors.red, Icons.warning_rounded

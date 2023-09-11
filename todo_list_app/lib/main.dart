@@ -19,7 +19,7 @@ class TodoApp extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (context) => User())],
+      providers: [ChangeNotifierProvider(create: (context) => AppUsers())],
       child: MaterialApp(
         theme: ThemeData(
           useMaterial3: true, brightness: Brightness.dark

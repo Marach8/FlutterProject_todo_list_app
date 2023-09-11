@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_app/custom_widgets/alert_widget.dart';
 import 'package:todo_list_app/custom_widgets/button_widget.dart';
+import 'package:todo_list_app/functions/firebase_functions.dart';
 import 'package:todo_list_app/functions/todo_provider.dart';
 
 class TodoHome extends StatefulWidget{
@@ -17,7 +18,7 @@ class _Td extends State<TodoHome>{
   @override 
   Widget build(BuildContext context){
     
-    return Consumer<User>(
+    return Consumer<AppUsers>(
       builder: ((context, user, child)
         => Scaffold(
           appBar: AppBar( 
@@ -25,7 +26,10 @@ class _Td extends State<TodoHome>{
               PopupMenuButton(
                 color: Colors.blueGrey.shade100,        
                 onSelected: (value) {
-                  if(value == 'logout'){Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);}
+                  if(value == 'logout'){
+                    FirebaseAuthLogout().firebaseLogout();
+                    Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
+                  }
                 },
                 itemBuilder: (context) => [
                   const PopupMenuItem(value:'logout', height: 20, child: Text('Logout', style:TextStyle(color: Colors.black)),),
@@ -54,14 +58,14 @@ class _Td extends State<TodoHome>{
                       TextSpan(
                         children: [
                           TextSpan(
-                            text: 'Hello ${user.dataBase[user.loggedInUser]![0]}, Welcome To Your Todo Manager. You currently have ',
+                            text: 'Hello ${user.loggedInUser}, Welcome To Your Todo Manager. You currently have ',
                             style: const TextStyle(
                             fontFamily: 'monospace', fontSize: 40,
                             fontWeight: FontWeight.bold, color: Colors.blueGrey
                             )
                           ),
                           TextSpan(
-                            text: '${user.dataBase[user.loggedInUser]![2].length}',
+                            text: '${user.dataBase.length}',
                             style: TextStyle(
                             fontFamily: 'monospace', fontSize: 40,
                             fontWeight: FontWeight.bold, color: Colors.blueGrey.shade200
