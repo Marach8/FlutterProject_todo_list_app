@@ -25,10 +25,17 @@ class _Td extends State<TodoHome>{
             actions: [
               PopupMenuButton(
                 color: Colors.blueGrey.shade100,        
-                onSelected: (value) {
+                onSelected: (value) async {
                   if(value == 'logout'){
-                    FirebaseAuthLogout().firebaseLogout();
-                    Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
+                    ProgressIndicatorDialog().alert(context);
+                    await FirebaseAuthLogout().firebaseLogout(
+                      (text, color, icon) async {
+                        Navigator.of(context).pop();
+                        await MaterialBannerAlert1(context).materialBannerAlert1(text, color, icon);
+                      }
+                    ).then((value) => 
+                      Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false)
+                    );                    
                   }
                 },
                 itemBuilder: (context) => [

@@ -99,9 +99,12 @@ class ProgressIndicatorDialog{
   alert(BuildContext context){
     showDialog(
       context: context,
-      builder: (context) => const AlertDialog(
-        content:  LinearProgressIndicator(),
-        title: Text('Please Wait...'),
+      builder: (context) => AlertDialog(
+        content:  const LinearProgressIndicator(),
+        title: Text(
+          'Please Wait...',
+          style: GoogleFonts.getFont('Nunito',fontSize: 25)
+        ),
       )
     );
   }
@@ -124,6 +127,6 @@ class MaterialBannerAlert1{
         ]
       )
     );
-    await Future.delayed(const Duration(seconds: 2), () => ScaffoldMessenger.of(context).hideCurrentMaterialBanner());
+    await Future.delayed(const Duration(seconds: 3), () => ScaffoldMessenger.of(context).hideCurrentMaterialBanner());
   }
 }

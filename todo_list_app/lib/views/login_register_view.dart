@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_app/custom_widgets/alert_widget.dart';
@@ -15,16 +14,8 @@ class LoginPage extends StatefulWidget{
 }
 
 class _Login extends State<LoginPage> {
-  bool forgotPassword = false; bool isRegistered = true;  
+  bool forgotPassword = false; bool isRegistered = true; 
   
-
-  // Widget text(textItem, double fontSize, FontWeight font, Color color,){
-  //   return Padding(
-  //     padding: const EdgeInsets.all(10.0),
-  //     child: Text(textItem, style: GoogleFonts.getFont('Quicksand', fontWeight: font, color: color, fontSize: fontSize)),
-  //   );
-  // }
-
   String appBarText(){
     if(isRegistered && !forgotPassword){return 'User Login';} 
     else if (isRegistered && forgotPassword){return 'User Password Reset';}
@@ -119,20 +110,26 @@ class _Login extends State<LoginPage> {
                                                   ]
                                                 ),
                                                 const SizedBox(height:20),const Divider(height: 1), const SizedBox(height:20),
-                                                TextFields1().textField(true, Colors.blueGrey.shade300, 'Enter mobile number or email', user.controllerA, false), 
+                                                TextFields1().textField(
+                                                  true, Colors.blueGrey.shade300, 'Enter mobile number or email', user.controllerA, false
+                                                ), 
                                                 const SizedBox(height:30), 
                                                 TextFields1().textField(true, Colors.blueGrey.shade300, 'Enter new password', user.controllerB, true), 
                                                 const SizedBox(height:20),const Divider(height: 1), const SizedBox(height:20), 
                                                 ElevatedButton(
                                                   onPressed: () async{
-                                                    bool passwordResetFields = [user.controllerA, user.controllerB].every((controller) => controller.text.isNotEmpty);                                                    
+                                                    bool passwordResetFields = [user.controllerA, user.controllerB].every(
+                                                      (controller) => controller.text.isNotEmpty
+                                                    );                                                    
                                                     if(passwordResetFields){
                                                       ProgressIndicatorDialog().alert(context);
                                                       if(user.dataBase.containsKey(user.controllerA.text)){
                                                         user.dataBase[user.controllerA.text]![1] == user.controllerB.text;
                                                         await Future.delayed(const Duration(seconds: 3), () {
                                                           Navigator.of(context).pop();
-                                                          MaterialBannerAlert1(context).materialBannerAlert1('Password Changed!!!', Colors.green, Icons.check);
+                                                          MaterialBannerAlert1(context).materialBannerAlert1(
+                                                            'Password Changed!!!', Colors.green, Icons.check
+                                                          );
                                                         });
                                                         await Future.delayed(const Duration(seconds: 2), (){
                                                           ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
@@ -143,14 +140,18 @@ class _Login extends State<LoginPage> {
                                                       } else {
                                                         await Future.delayed(const Duration(seconds: 3), () {
                                                           Navigator.of(context).pop();
-                                                          MaterialBannerAlert1(context).materialBannerAlert1('User "${user.controllerA.text}" not found!!!', Colors.red, Icons.warning_rounded);
+                                                          MaterialBannerAlert1(context).materialBannerAlert1(
+                                                            'User "${user.controllerA.text}" not found!!!', Colors.red, Icons.warning_rounded
+                                                          );
                                                         });
                                                         await Future.delayed(const Duration(seconds: 2), (){
                                                           ScaffoldMessenger.of(context).hideCurrentMaterialBanner();                                                        
                                                         });
                                                       }
                                                     } else{
-                                                      MaterialBannerAlert1(context).materialBannerAlert1('Fields Cannot be Empty!!!', Colors.red, Icons.warning_rounded);
+                                                      MaterialBannerAlert1(context).materialBannerAlert1(
+                                                        'Fields Cannot be Empty!!!', Colors.red, Icons.warning_rounded
+                                                      );
                                                       await Future.delayed(const Duration(seconds: 2), () =>
                                                         ScaffoldMessenger.of(context).hideCurrentMaterialBanner()                                                       
                                                       );
@@ -179,7 +180,9 @@ class _Login extends State<LoginPage> {
                                       user.usernameController.clear(); user.confirmPassController.clear();
                                       setState(() => isRegistered = !isRegistered);
                                     },
-                                    child: TextItem().textItem(isRegistered? 'Not Registered?': 'Already Registered?', 13, FontWeight.w800, Colors.blueGrey.shade700,)
+                                    child: TextItem().textItem(
+                                      isRegistered? 'Not Registered?': 'Already Registered?', 13, FontWeight.w800, Colors.blueGrey.shade700,
+                                    )
                                   )
                                 ),
                               ] 
@@ -211,10 +214,6 @@ class _Login extends State<LoginPage> {
                                     );
                                   }
                                   },);
-                                  // if(result == 'yes'){
-                                  //   user.mobileEmailController.clear(); user.passwordController.clear();
-                                  //   Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
-                                  // } else if(result == 'no'){}
                                 }  else{
                                   MaterialBannerAlert1(context).materialBannerAlert1(
                                     'Fields Cannot be Empty!!!', Colors.red, Icons.warning_rounded

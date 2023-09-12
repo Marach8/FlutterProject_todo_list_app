@@ -7,15 +7,25 @@ class AppUsers extends ChangeNotifier{
   TextEditingController controller2 = TextEditingController();  TextEditingController passwordController = TextEditingController();
   TextEditingController controller3 = TextEditingController();  TextEditingController usernameController = TextEditingController(); 
   TextEditingController controllerA = TextEditingController();  TextEditingController controllerB = TextEditingController();
-  TextEditingController confirmPassController = TextEditingController(); String? loggedInUser;
+  TextEditingController confirmPassController = TextEditingController(); String loggedInUser = 'YOu';
 
-  // @override
-  // void dispose(){controller1.dispose(); controller2.dispose(); controller3.dispose(); mobileEmailController.dispose(); 
-  //   passwordController.dispose();  usernameController.dispose();  confirmPassController.dispose(); controllerA.dispose(); 
-  //   controllerB.dispose(); super.dispose();
-  // }
+  @override
+  void dispose(){controller1.dispose(); controller2.dispose(); controller3.dispose(); mobileEmailController.dispose(); 
+    passwordController.dispose();  usernameController.dispose();  confirmPassController.dispose(); controllerA.dispose(); 
+    controllerB.dispose(); super.dispose();
+  }
 
-  void resetUser(String text){print('$text'); print('This is $loggedInUser');}
+  String get name => loggedInUser;
+
+  set resetUser(String text) {
+    loggedInUser = text; 
+    //String get name => text;
+    // notifyListeners(); 
+    print('This is a $loggedInUser'); 
+    print('No $text');
+    print(name);
+    }
+   
   
   void addTodo(){
     List<String> newList = [controller1.text, controller2.text, controller3.text]; 
