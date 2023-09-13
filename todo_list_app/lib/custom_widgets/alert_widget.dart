@@ -96,13 +96,13 @@ class DialogBox{
 
 
 class ProgressIndicatorDialog{
-  alert(BuildContext context){
+  alert(BuildContext context, String text){
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         content:  const LinearProgressIndicator(),
         title: Text(
-          'Please Wait...',
+          text,
           style: GoogleFonts.getFont('Nunito',fontSize: 25)
         ),
       )

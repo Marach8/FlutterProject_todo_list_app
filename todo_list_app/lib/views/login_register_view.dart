@@ -122,7 +122,7 @@ class _Login extends State<LoginPage> {
                                                       (controller) => controller.text.isNotEmpty
                                                     );                                                    
                                                     if(passwordResetFields){
-                                                      ProgressIndicatorDialog().alert(context);
+                                                      ProgressIndicatorDialog().alert(context, 'Please Wait...');
                                                       if(user.dataBase.containsKey(user.controllerA.text)){
                                                         user.dataBase[user.controllerA.text]![1] == user.controllerB.text;
                                                         await Future.delayed(const Duration(seconds: 3), () {
@@ -197,7 +197,7 @@ class _Login extends State<LoginPage> {
                               .every((controller) => controller.text.isNotEmpty);
                               if(isRegistered){
                                 if(loginFields) {
-                                  ProgressIndicatorDialog().alert(context);
+                                  ProgressIndicatorDialog().alert(context, 'Please Wait...');
                                   await FirebaseAuthLogin().firebaseLogin(
                                     user.mobileEmailController.text.trim(), user.passwordController.text.trim(),
                                     (text, color, icon) async{
@@ -205,18 +205,30 @@ class _Login extends State<LoginPage> {
                                       await MaterialBannerAlert1(context).materialBannerAlert1(text, color, icon);
                                     } 
                                   ).then((result) async{
-                                    if(result == 'yes'){
-                                     String finalUser = await FirebaseCurentUser().getCurrentUser();
-                                      user.loggedInUser = finalUser;
-                                      print(user.loggedInUser);
-                                      user.mobileEmailController.clear(); user.passwordController.clear();
+                                    if(result.isNotEmpty){
+                                      user.loggedInUser = result;
                                       Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
-                                  } else if(result == 'no'){
-                                    await MaterialBannerAlert1(context).materialBannerAlert1(
-                                      "Couldn't Login!!!", Colors.red, Icons.close_rounded
-                                    );
-                                  }
+                                      // ProgressIndicatorDialog().alert(context, 'Fetching Details...');
+                                      // await FirebaseGetUserDetails().getCurrentUser(result).then((userDetails){
+                                      //   // if(userDetails.toString().isNotEmpty){
+                                      //     user.dataBase = userDetails;
+                                      //     Navigator.of(context).pop();
+                                      //     Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
+                                      //   // } else{
+
+                                      //   // }                                        
+                                      // });
+                                    } else if(result == 'no'){
+                                      await MaterialBannerAlert1(context).materialBannerAlert1(
+                                        "Couldn't Login!!!", Colors.red, Icons.close_rounded
+                                      );
+                                    }
                                   },);
+                                  // //ProgressIndicatorDialog().alert(context, 'Fetching Details...');
+                                  //   Map<String, dynamic> userDetails = await FirebaseGetUserDetails().getCurrentUser(user.loggedInUser);
+                                  //   user.dataBase = userDetails;
+                                  //   user.mobileEmailController.clear(); user.passwordController.clear();
+                                  //   //Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
                                 }  else{
                                   MaterialBannerAlert1(context).materialBannerAlert1(
                                     'Fields Cannot be Empty!!!', Colors.red, Icons.warning_rounded
@@ -229,7 +241,7 @@ class _Login extends State<LoginPage> {
                                 bool registrationFields = [user.mobileEmailController, user.passwordController,
                                 user.confirmPassController, user.usernameController].every((controller) => controller.text.isNotEmpty);
                                 if(registrationFields){
-                                  ProgressIndicatorDialog().alert(context);
+                                  ProgressIndicatorDialog().alert(context, 'Please Wait...');
                                   if(user.passwordController.text == user.confirmPassController.text){
                                     await FirebaseAuthRegister().firebaseRegister(
                                       user.usernameController.text.trim(),

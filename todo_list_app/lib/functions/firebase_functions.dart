@@ -35,9 +35,11 @@ class FirebaseAuthLogin{
     try{
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email, password: password
-      );      
+      );
+      User? user = FirebaseAuth.instance.currentUser;
+      DocumentSnapshot<Map<String, dynamic>> userData = await FirebaseFirestore.instance.collection('Users').doc(user!.uid).get();
       await firebaseAlert('Login Successful...', Colors.green, Icons.check);
-      return 'yes';
+      return userData['username'];
     } on FirebaseAuthException catch(e){
       if (e.code == 'user-not-found'){
         await firebaseAlert('This email is not registered!!!', Colors.red, Icons.warning_rounded);
@@ -52,12 +54,16 @@ class FirebaseAuthLogin{
   }
 }
 
-class FirebaseCurentUser{
+class FirebaseGetUserDetails{
 
-  Future<String> getCurrentUser()async{
-    User? user = FirebaseAuth.instance.currentUser;
-    DocumentSnapshot<Map<String, dynamic>> userData = await FirebaseFirestore.instance.collection('Users').doc(user!.uid).get();
-    return userData['username'];
+  getCurrentUser(String currentUser)async{
+    try{
+      User? user = FirebaseAuth.instance.currentUser;
+      await FirebaseFirestore.instance.collection(currentUser).doc(user!.uid).get();
+      // return userData;
+    } catch (e){
+      //return e.toString();
+    }
   }
 }
 
