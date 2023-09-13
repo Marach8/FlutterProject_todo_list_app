@@ -1,31 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:todo_list_app/functions/firebase_functions.dart';
 
 class AppUsers extends ChangeNotifier{
   Map<String, List<dynamic>> dataBase = {};
+  //FirebaseAuthLogin firebaseAuthLogin = FirebaseAuthLogin();
 
   TextEditingController controller1 = TextEditingController();  TextEditingController mobileEmailController = TextEditingController();
   TextEditingController controller2 = TextEditingController();  TextEditingController passwordController = TextEditingController();
   TextEditingController controller3 = TextEditingController();  TextEditingController usernameController = TextEditingController(); 
   TextEditingController controllerA = TextEditingController();  TextEditingController controllerB = TextEditingController();
-  TextEditingController confirmPassController = TextEditingController(); String loggedInUser = 'YOu';
+  TextEditingController confirmPassController = TextEditingController(); String? loggedInUser ;
 
   @override
   void dispose(){controller1.dispose(); controller2.dispose(); controller3.dispose(); mobileEmailController.dispose(); 
     passwordController.dispose();  usernameController.dispose();  confirmPassController.dispose(); controllerA.dispose(); 
-    controllerB.dispose(); super.dispose();
+    controllerB.dispose(); super.dispose(); 
   }
 
-  String get name => loggedInUser;
 
-  set resetUser(String text) {
-    loggedInUser = text; 
-    //String get name => text;
-    // notifyListeners(); 
-    print('This is a $loggedInUser'); 
-    print('No $text');
-    print(name);
-    }
-   
+  // set resetUser(String text) {
+  //   loggedInUser = text; 
+  //   //String get name => text;
+  //   // notifyListeners(); 
+  //   print('This is a $loggedInUser'); 
+  //   print('No $text');
+  //   print(name);
+  //   }   
   
   void addTodo(){
     List<String> newList = [controller1.text, controller2.text, controller3.text]; 
@@ -56,8 +56,8 @@ class AppUsers extends ChangeNotifier{
     notifyListeners();
   }
   
-  void login(String mobileEmail){
-    loggedInUser = mobileEmail;
-    notifyListeners();
-  }
+  // void login(String mobileEmail){
+  //   loggedInUser = mobileEmail;
+  //   notifyListeners();
+  // }
 }

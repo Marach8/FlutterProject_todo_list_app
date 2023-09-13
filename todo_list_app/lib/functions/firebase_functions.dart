@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:todo_list_app/functions/todo_provider.dart';
 
 class FirebaseAuthRegister{
-  final BuildContext context;
-  FirebaseAuthRegister(this.context);
+  // final BuildContext context;
+  // FirebaseAuthRegister(this.context);
 
   Future<void> firebaseRegister(
     String username, String email, String password, void Function(String text, Color color) firebaseAlert
@@ -28,13 +28,7 @@ class FirebaseAuthRegister{
   }
 }
 
-
 class FirebaseAuthLogin{
-  final BuildContext? context;
-  FirebaseAuthLogin(this.context);  
-  final appUser = AppUsers();
-
-  String resetUser(String text) => text;
 
   Future<String> firebaseLogin(String email, String password, Function(String text, Color color, IconData icon) firebaseAlert
   ) async{
@@ -42,10 +36,6 @@ class FirebaseAuthLogin{
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email, password: password
       );      
-      User? user = FirebaseAuth.instance.currentUser;
-      DocumentSnapshot<Map<String, dynamic>> userData = await FirebaseFirestore.instance.collection('Users').doc(user!.uid).get();
-      //AppUsers().resetUser = userData['username'];
-      resetUser(userData['username']);
       await firebaseAlert('Login Successful...', Colors.green, Icons.check);
       return 'yes';
     } on FirebaseAuthException catch(e){
@@ -59,6 +49,15 @@ class FirebaseAuthLogin{
       await firebaseAlert(e.toString(), Colors.red, Icons.warning_rounded);
     }
     return 'no';
+  }
+}
+
+class FirebaseCurentUser{
+
+  Future<String> getCurrentUser()async{
+    User? user = FirebaseAuth.instance.currentUser;
+    DocumentSnapshot<Map<String, dynamic>> userData = await FirebaseFirestore.instance.collection('Users').doc(user!.uid).get();
+    return userData['username'];
   }
 }
 

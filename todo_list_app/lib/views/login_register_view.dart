@@ -198,7 +198,7 @@ class _Login extends State<LoginPage> {
                               if(isRegistered){
                                 if(loginFields) {
                                   ProgressIndicatorDialog().alert(context);
-                                  await FirebaseAuthLogin(context).firebaseLogin(
+                                  await FirebaseAuthLogin().firebaseLogin(
                                     user.mobileEmailController.text.trim(), user.passwordController.text.trim(),
                                     (text, color, icon) async{
                                       Navigator.of(context).pop();
@@ -206,6 +206,9 @@ class _Login extends State<LoginPage> {
                                     } 
                                   ).then((result) async{
                                     if(result == 'yes'){
+                                     String finalUser = await FirebaseCurentUser().getCurrentUser();
+                                      user.loggedInUser = finalUser;
+                                      print(user.loggedInUser);
                                       user.mobileEmailController.clear(); user.passwordController.clear();
                                       Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
                                   } else if(result == 'no'){
@@ -228,7 +231,7 @@ class _Login extends State<LoginPage> {
                                 if(registrationFields){
                                   ProgressIndicatorDialog().alert(context);
                                   if(user.passwordController.text == user.confirmPassController.text){
-                                    await FirebaseAuthRegister(context).firebaseRegister(
+                                    await FirebaseAuthRegister().firebaseRegister(
                                       user.usernameController.text.trim(),
                                       user.mobileEmailController.text.trim(), user.passwordController.text.trim(),
                                       (text, color) async {
