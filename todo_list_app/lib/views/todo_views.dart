@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_list_app/custom_widgets/alert_widget.dart';
+//import 'package:todo_list_app/custom_widgets/alert_widget.dart';
 import 'package:todo_list_app/functions/todo_provider.dart';
 
 class Views extends StatefulWidget{
@@ -53,11 +53,11 @@ class _Views extends State<Views> {
             backgroundColor: const Color.fromARGB(59, 106, 106, 106), foregroundColor: Colors.white,
           ),
           body: ListView.builder(
-            itemCount: user.dataBase[user.loggedInUser]![2].length,
+            itemCount: user.dataBase.length,
             itemBuilder: (context, index) {
-              final title = user.dataBase[user.loggedInUser]![2].elementAt(index)[0];             
-              final date = user.dataBase[user.loggedInUser]![2].elementAt(index)[1]; 
-              final content = user.dataBase[user.loggedInUser]![2].elementAt(index)[2];                            
+              final title = user.dataBase.elementAt(index)[0];
+              final date = user.dataBase.elementAt(index)[1]; 
+              final content = user.dataBase.elementAt(index)[2];                            
               return Dismissible(                
                 key: Key(title),
                 onDismissed: (direction){

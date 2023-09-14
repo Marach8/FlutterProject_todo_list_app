@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -28,6 +29,13 @@ class _Td extends State<TodoHome>{
                 onSelected: (value) async {
                   if(value == 'logout'){
                     ProgressIndicatorDialog().alert(context, 'Logging Out...');
+                    if(user.dataBase.isNotEmpty){
+                      for(List item in user.dataBase){
+                        await FirebaseFirestore.instance.collection(user.loggedInUser).doc(item[0]).set({
+                          'title': item[0], 'dateORtime': item[1], 'content':item[2]
+                        });
+                      }
+                    }
                     await FirebaseAuthLogout().firebaseLogout(
                       (text, color, icon) async {
                         Navigator.of(context).pop();
@@ -49,13 +57,19 @@ class _Td extends State<TodoHome>{
             ),
             backgroundColor: const Color.fromARGB(255, 19, 19, 19), foregroundColor: Colors.blueGrey.shade300,          
           ),
-          body: FutureBuilder(
-            future: FirebaseGetUserDetails().getCurrentUser(user.loggedInUser),
+          body: StreamBuilder(
+            stream: FirebaseFirestore.instance.collection(user.loggedInUser).snapshots(),
             builder: (context, snapshot)  {
-              if(snapshot.connectionState == ConnectionState.waiting){
-                return ProgressIndicatorDialog().alert(context, 'Fetching Details...');
-              } else if(snapshot.connectionState == ConnectionState.done) { 
-                user.dataBase = snapshot.data;
+              if(snapshot.connectionState == ConnectionState.waiting){                
+                return const Center(child: CircularProgressIndicator());                
+              } else {  
+                final document = snapshot.data!.docs;              
+                if(document.isNotEmpty){                  
+                  for(dynamic items in document){
+                    List<String> newList = [items['title'], items['date/time'], items['content']];
+                    user.dataBase.add(newList);
+                  }                  
+                } else{}               
                 return Center(
                   child: SingleChildScrollView(
                     child: Column(
@@ -79,7 +93,7 @@ class _Td extends State<TodoHome>{
                                   )
                                 ),
                                 TextSpan(
-                                  text: '${user.dataBase}',
+                                  text: '${user.dataBase.length}',
                                   style: TextStyle(
                                   fontFamily: 'monospace', fontSize: 40,
                                   fontWeight: FontWeight.bold, color: Colors.blueGrey.shade200
@@ -104,7 +118,7 @@ class _Td extends State<TodoHome>{
                             HomeButtons().homeButton(Icons.add, 'Add', () => Navigator.of(context).pushNamed('/add')),
                             HomeButtons().homeButton(
                               Icons.view_array, 'View', (){
-                                if (user.dataBase[user.loggedInUser]![2].isNotEmpty) {
+                                if (user.dataBase.isNotEmpty) {
                                   MaterialBannerAlert(context: context).materialBannerAlert(
                                     'To view an item in detail, tap on the item.', Icons.view_array_rounded
                                   );
@@ -119,7 +133,7 @@ class _Td extends State<TodoHome>{
                             ),
                             HomeButtons().homeButton(
                               Icons.delete, 'Delete', (){
-                                if (user.dataBase[user.loggedInUser]![2].isNotEmpty) {
+                                if (user.dataBase.isNotEmpty) {
                                   MaterialBannerAlert(context: context).materialBannerAlert(
                                     'To delete an item, swipe the item to the left or right.', Icons.delete
                                   );
@@ -134,7 +148,7 @@ class _Td extends State<TodoHome>{
                             ),
                             HomeButtons().homeButton(
                               Icons.update_rounded, 'Update', (){
-                                if (user.dataBase[user.loggedInUser]![2].isNotEmpty) {
+                                if (user.dataBase.isNotEmpty) {
                                   MaterialBannerAlert(context: context).materialBannerAlert(
                                     'To update an item, longpress on it to enter update mode.', Icons.update_sharp
                                   );
@@ -147,14 +161,14 @@ class _Td extends State<TodoHome>{
                               }
                             ),                    
                           ]
-                        ),                  
+                        ),
                       ]
                     ),
                   ),
                 );
-              } else {return const SizedBox.shrink();}
+              } 
             }                    
-          )          
+          )
         )
       )
     );

@@ -54,18 +54,21 @@ class FirebaseAuthLogin{
   }
 }
 
-class FirebaseGetUserDetails{
+// class FirebaseGetUserDetails{
 
-  getCurrentUser(String currentUser)async{
-    try{
-      User? user = FirebaseAuth.instance.currentUser;
-      await FirebaseFirestore.instance.collection(currentUser).doc(user!.uid).get();
-      // return userData;
-    } catch (e){
-      //return e.toString();
-    }
-  }
-}
+//   QuerySnapshot getCurrentUser(String currentUser){
+//     try{
+//       //User? user = FirebaseAuth.instance.currentUser;
+//       //await Future.delayed(const Duration(seconds:3), () 
+//       FirebaseFirestore.instance.collection(currentUser).snapshots().docs;
+      
+//       // return userData;
+//     } catch (e){
+//       //return e.toString();
+//       print('This is the error ${e.toString()}');
+//     }
+//   }
+// }
 
 
 class FirebaseAuthLogout{

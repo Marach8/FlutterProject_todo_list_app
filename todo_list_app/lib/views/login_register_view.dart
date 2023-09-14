@@ -118,44 +118,44 @@ class _Login extends State<LoginPage> {
                                                 const SizedBox(height:20),const Divider(height: 1), const SizedBox(height:20), 
                                                 ElevatedButton(
                                                   onPressed: () async{
-                                                    bool passwordResetFields = [user.controllerA, user.controllerB].every(
-                                                      (controller) => controller.text.isNotEmpty
-                                                    );                                                    
-                                                    if(passwordResetFields){
-                                                      ProgressIndicatorDialog().alert(context, 'Please Wait...');
-                                                      if(user.dataBase.containsKey(user.controllerA.text)){
-                                                        user.dataBase[user.controllerA.text]![1] == user.controllerB.text;
-                                                        await Future.delayed(const Duration(seconds: 3), () {
-                                                          Navigator.of(context).pop();
-                                                          MaterialBannerAlert1(context).materialBannerAlert1(
-                                                            'Password Changed!!!', Colors.green, Icons.check
-                                                          );
-                                                        });
-                                                        await Future.delayed(const Duration(seconds: 2), (){
-                                                          ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-                                                          user.controllerA.clear(); user.controllerB.clear();
-                                                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                                                        });
-                                                        setState(() => forgotPassword = false);
-                                                      } else {
-                                                        await Future.delayed(const Duration(seconds: 3), () {
-                                                          Navigator.of(context).pop();
-                                                          MaterialBannerAlert1(context).materialBannerAlert1(
-                                                            'User "${user.controllerA.text}" not found!!!', Colors.red, Icons.warning_rounded
-                                                          );
-                                                        });
-                                                        await Future.delayed(const Duration(seconds: 2), (){
-                                                          ScaffoldMessenger.of(context).hideCurrentMaterialBanner();                                                        
-                                                        });
-                                                      }
-                                                    } else{
-                                                      MaterialBannerAlert1(context).materialBannerAlert1(
-                                                        'Fields Cannot be Empty!!!', Colors.red, Icons.warning_rounded
-                                                      );
-                                                      await Future.delayed(const Duration(seconds: 2), () =>
-                                                        ScaffoldMessenger.of(context).hideCurrentMaterialBanner()                                                       
-                                                      );
-                                                    }                                                    
+                                                  //   bool passwordResetFields = [user.controllerA, user.controllerB].every(
+                                                  //     (controller) => controller.text.isNotEmpty
+                                                  //   );                                                    
+                                                  //   if(passwordResetFields){
+                                                  //     ProgressIndicatorDialog().alert(context, 'Please Wait...');
+                                                  //     if(user.dataBase.contains(user.controllerA.text)){
+                                                  //       //user.dataBase[user.controllerA.text]![1] == user.controllerB.text;
+                                                  //       await Future.delayed(const Duration(seconds: 3), () {
+                                                  //         Navigator.of(context).pop();
+                                                  //         MaterialBannerAlert1(context).materialBannerAlert1(
+                                                  //           'Password Changed!!!', Colors.green, Icons.check
+                                                  //         );
+                                                  //       });
+                                                  //       await Future.delayed(const Duration(seconds: 2), (){
+                                                  //         ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                                                  //         user.controllerA.clear(); user.controllerB.clear();
+                                                  //         ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                                                  //       });
+                                                  //       setState(() => forgotPassword = false);
+                                                  //     } else {
+                                                  //       await Future.delayed(const Duration(seconds: 3), () {
+                                                  //         Navigator.of(context).pop();
+                                                  //         MaterialBannerAlert1(context).materialBannerAlert1(
+                                                  //           'User "${user.controllerA.text}" not found!!!', Colors.red, Icons.warning_rounded
+                                                  //         );
+                                                  //       });
+                                                  //       await Future.delayed(const Duration(seconds: 2), (){
+                                                  //         ScaffoldMessenger.of(context).hideCurrentMaterialBanner();                                                        
+                                                  //       });
+                                                  //     }
+                                                  //   } else{
+                                                  //     MaterialBannerAlert1(context).materialBannerAlert1(
+                                                  //       'Fields Cannot be Empty!!!', Colors.red, Icons.warning_rounded
+                                                  //     );
+                                                  //     await Future.delayed(const Duration(seconds: 2), () =>
+                                                  //       ScaffoldMessenger.of(context).hideCurrentMaterialBanner()                                                       
+                                                  //     );
+                                                  //   }                                                    
                                                   },                          
                                                   style: ButtonStyle(
                                                     backgroundColor: MaterialStatePropertyAll(Colors.green.shade300),
@@ -207,28 +207,14 @@ class _Login extends State<LoginPage> {
                                   ).then((result) async{
                                     if(result.isNotEmpty){
                                       user.loggedInUser = result;
-                                      Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
-                                      // ProgressIndicatorDialog().alert(context, 'Fetching Details...');
-                                      // await FirebaseGetUserDetails().getCurrentUser(result).then((userDetails){
-                                      //   // if(userDetails.toString().isNotEmpty){
-                                      //     user.dataBase = userDetails;
-                                      //     Navigator.of(context).pop();
-                                      //     Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
-                                      //   // } else{
-
-                                      //   // }                                        
-                                      // });
+                                      user.mobileEmailController.clear(); user.passwordController.clear();
+                                      Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);                                      
                                     } else if(result == 'no'){
                                       await MaterialBannerAlert1(context).materialBannerAlert1(
                                         "Couldn't Login!!!", Colors.red, Icons.close_rounded
                                       );
                                     }
-                                  },);
-                                  // //ProgressIndicatorDialog().alert(context, 'Fetching Details...');
-                                  //   Map<String, dynamic> userDetails = await FirebaseGetUserDetails().getCurrentUser(user.loggedInUser);
-                                  //   user.dataBase = userDetails;
-                                  //   user.mobileEmailController.clear(); user.passwordController.clear();
-                                  //   //Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
+                                  },);                                  
                                 }  else{
                                   MaterialBannerAlert1(context).materialBannerAlert1(
                                     'Fields Cannot be Empty!!!', Colors.red, Icons.warning_rounded
