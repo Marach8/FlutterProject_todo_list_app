@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-//import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_app/custom_widgets/alert_widget.dart';
 import 'package:todo_list_app/custom_widgets/button_widget.dart';
@@ -35,6 +34,7 @@ class _Td extends State<TodoHome>{
                           'title': item[0], 'datetime': item[1], 'content': item[2]
                         });
                       }
+                      user.dataBase.clear();
                     }
                     await FirebaseAuthLogout().firebaseLogout(
                       (text, color, icon) async {
@@ -58,43 +58,30 @@ class _Td extends State<TodoHome>{
             backgroundColor: const Color.fromARGB(255, 19, 19, 19), foregroundColor: Colors.blueGrey.shade300,          
           ),
           body: FutureBuilder<QuerySnapshot>(
-            future: FirebaseGetUserDetails().getCurrentUser(user.loggedInUser),//FirebaseFirestore.instance.collection(user.loggedInUser).snapshots(),
+            future: FirebaseGetUserDetails().getCurrentUser(user.loggedInUser),
             builder: (context, snapshot)  {
               if(snapshot.connectionState == ConnectionState.waiting){                
                 return const Center(child: CircularProgressIndicator());                
               } else if(snapshot.hasError) {
-                // return MaterialBannerAlert1(context).materialBannerAlert1(
-                //   'An Erro Occured While Fetching Your Details...', Colors.yellow, Icons.warning_rounded
-                // );
-                return const Center(child: CircularProgressIndicator()); 
-              } else if(snapshot.data == null || snapshot.data!.docs.isEmpty){
-                // return MaterialBannerAlert1(context).materialBannerAlert1(
-                //   'An Erro Occured While Fetching Your Details...', Colors.yellow, Icons.warning_rounded
-                // );
-                return const Center(child: CircularProgressIndicator()); 
-              } else{
-                for(dynamic items in snapshot.data!.docs){
-                  List<String> newList = [items['title'], items['datetime'], items['content']];
-                  if(!user.dataBase.contains(newList)){
-                    user.dataBase.add(newList);
-                  }                     
-                } 
+                return MaterialBannerAlert1(context).materialBannerAlert1(
+                  'An Erro Occured While Fetching Your Details...', Colors.yellow, Icons.warning_rounded
+                );
+                //return const Center(child: CircularProgressIndicator()); 
+               } //else if(snapshot.data == null || snapshot.data!.docs.isEmpty){
+              //   return const Center(child: CircularProgressIndicator()); }
+              else{
+                if(snapshot.data == null || snapshot.data!.docs.isEmpty){
 
-                // if (snapshot.hasError){
-                //   print(snapshot.error.toString());
-                // } else if(snapshot.data == null || snapshot.data!.docs.isEmpty){
-
-                //   // //final document = snapshot.data!.docs;
-                //   // if(snapshot.data != null){                  
-                //   //   for(dynamic items in snapshot.data!.docs){
-                //   //     List<String> newList = [items['title'], items['datetime'], items['content']];
-                //   //     if(!user.dataBase.contains(newList)){
-                //   //        user.dataBase.add(newList);
-                //   //     }                     
-                //   //   }                  
-                //   // } else{}
-                // }
-                               
+                } else{
+                    for(var items in snapshot.data!.docs){                  
+                    List<String> newList = [items['title'], items['datetime'], items['content']];
+                    if(!user.dataBase.contains(newList)){
+                      if (user.done){user.dataBase.add(newList);}                    
+                    }                     
+                  }
+                  user.done = false;
+                }
+                
                 return Center(
                   child: SingleChildScrollView(
                     child: Column(

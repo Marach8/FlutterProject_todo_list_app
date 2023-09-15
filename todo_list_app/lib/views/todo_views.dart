@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-//import 'package:todo_list_app/custom_widgets/alert_widget.dart';
 import 'package:todo_list_app/functions/todo_provider.dart';
 
 class Views extends StatefulWidget{
@@ -74,7 +73,7 @@ class _Views extends State<Views> {
                           style: GoogleFonts.getFont('Nunito', fontSize:20, color: Colors.black, fontWeight: FontWeight.w300)
                         ),
                         action: SnackBarAction(
-                          onPressed: () {}, label: 'Undo', textColor: Colors.blue, 
+                          onPressed: () {user.undo(title, date, content, index);}, label: 'Undo', textColor: Colors.blue, 
                         ),
                         duration: const Duration(seconds: 4), backgroundColor: Colors.white,
                       )
@@ -92,7 +91,7 @@ class _Views extends State<Views> {
                              style: GoogleFonts.getFont('Nunito', fontSize:20, color: Colors.black, fontWeight: FontWeight.w300)
                           ),
                           action: SnackBarAction(
-                            onPressed: () {}, label: 'Undo', textColor: Colors.blue, 
+                            onPressed: () {user.undo(title, date, content, index);}, label: 'Undo', textColor: Colors.blue, 
                           ),
                           duration: const Duration(seconds: 2), backgroundColor: Colors.white,
                         )

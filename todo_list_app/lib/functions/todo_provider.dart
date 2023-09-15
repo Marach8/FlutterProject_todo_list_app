@@ -8,13 +8,12 @@ class AppUsers extends ChangeNotifier{
   TextEditingController controller2 = TextEditingController();  TextEditingController passwordController = TextEditingController();
   TextEditingController controller3 = TextEditingController();  TextEditingController usernameController = TextEditingController(); 
   TextEditingController controllerA = TextEditingController();  TextEditingController controllerB = TextEditingController();
-  TextEditingController confirmPassController = TextEditingController(); String loggedInUser = '';
+  TextEditingController confirmPassController = TextEditingController(); String loggedInUser = ''; bool done = true;
 
   @override
   void dispose(){controller1.dispose(); controller2.dispose(); controller3.dispose(); mobileEmailController.dispose(); 
     passwordController.dispose();  usernameController.dispose();  confirmPassController.dispose(); controllerA.dispose(); 
-    controllerB.dispose(); super.dispose(); 
-  }
+    controllerB.dispose(); super.dispose();}
   
   void addTodo(){
     List<String> newList = [controller1.text, controller2.text, controller3.text]; 
