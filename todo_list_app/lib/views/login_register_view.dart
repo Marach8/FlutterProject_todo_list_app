@@ -205,11 +205,11 @@ class _Login extends State<LoginPage> {
                                       await MaterialBannerAlert1(context).materialBannerAlert1(text, color, icon);
                                     } 
                                   ).then((result) async{
-                                    if(result.isNotEmpty){
+                                    if(result != 'no'){
                                       user.loggedInUser = result;
                                       user.mobileEmailController.clear(); user.passwordController.clear();
-                                      Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);                                      
-                                    } else if(result == 'no'){
+                                      Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
+                                    } else{
                                       await MaterialBannerAlert1(context).materialBannerAlert1(
                                         "Couldn't Login!!!", Colors.red, Icons.close_rounded
                                       );

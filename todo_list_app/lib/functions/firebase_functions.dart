@@ -54,21 +54,21 @@ class FirebaseAuthLogin{
   }
 }
 
-// class FirebaseGetUserDetails{
+class FirebaseGetUserDetails{
 
-//   QuerySnapshot getCurrentUser(String currentUser){
-//     try{
-//       //User? user = FirebaseAuth.instance.currentUser;
-//       //await Future.delayed(const Duration(seconds:3), () 
-//       FirebaseFirestore.instance.collection(currentUser).snapshots().docs;
+  Future<QuerySnapshot<Map<String, dynamic>>> getCurrentUser(String currentUser) async {
+    //try{
+      //User? user = FirebaseAuth.instance.currentUser;
+      //await Future.delayed(const Duration(seconds:3), () 
+      return await FirebaseFirestore.instance.collection(currentUser).get();
       
-//       // return userData;
-//     } catch (e){
-//       //return e.toString();
-//       print('This is the error ${e.toString()}');
-//     }
-//   }
-// }
+      // return userData;
+    //} catch (e){
+      //return e.toString();
+      //print('This is the error ${e.toString()}');
+    //}
+  }
+}
 
 
 class FirebaseAuthLogout{
