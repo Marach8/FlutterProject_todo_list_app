@@ -64,11 +64,9 @@ class _Td extends State<TodoHome>{
                 return const Center(child: CircularProgressIndicator());                
               } else if(snapshot.hasError) {
                 return MaterialBannerAlert1(context).materialBannerAlert1(
-                  'An Erro Occured While Fetching Your Details...', Colors.yellow, Icons.warning_rounded
+                  'An Error Occured While Fetching Your Details...', Colors.yellow, Icons.warning_rounded
                 );
-                //return const Center(child: CircularProgressIndicator()); 
-               } //else if(snapshot.data == null || snapshot.data!.docs.isEmpty){
-              //   return const Center(child: CircularProgressIndicator()); }
+              }
               else{
                 if(snapshot.data == null || snapshot.data!.docs.isEmpty){
 

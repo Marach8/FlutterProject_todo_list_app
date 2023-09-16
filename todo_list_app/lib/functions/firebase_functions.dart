@@ -1,11 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:todo_list_app/functions/todo_provider.dart';
 
 class FirebaseAuthRegister{
-  // final BuildContext context;
-  // FirebaseAuthRegister(this.context);
 
   Future<void> firebaseRegister(
     String username, String email, String password, void Function(String text, Color color) firebaseAlert
@@ -15,7 +12,6 @@ class FirebaseAuthRegister{
         email: email, password: password
       );
       await FirebaseFirestore.instance.collection('Users').doc(userCredential.user!.uid).set({'username': username});
-      //FirebaseFirestore.instance.collection('Users').doc(username).set({'title': {'date': '', 'content': ''}});
       firebaseAlert('Registration Successful...', Colors.green);
     } on FirebaseAuthException catch(e){
       if (e.code == 'weak-password'){
@@ -54,19 +50,27 @@ class FirebaseAuthLogin{
   }
 }
 
+class FirebaseResetPassword{
+  Future<String> resetPassword(
+    email, void Function(String text, Color color, IconData icon) firebaseResetPasswordAlert
+    ) async{
+    try{
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      firebaseResetPasswordAlert('Password Reset Link Sent To Email...', Colors.blue, Icons.check);
+      return 'yes';
+    } on FirebaseAuthException catch(e){
+      if(e.code == 'invalid-email'){
+        firebaseResetPasswordAlert('Email is invalid!!!', Colors.red, Icons.warning_rounded);
+      }
+      return 'no';
+    } catch (e){print('This is the error ${e.toString()}'); return 'no';}
+  }
+}
+
 class FirebaseGetUserDetails{
 
-  Future<QuerySnapshot<Map<String, dynamic>>> getCurrentUser(String currentUser) async {
-    //try{
-      //User? user = FirebaseAuth.instance.currentUser;
-      //await Future.delayed(const Duration(seconds:3), () 
-      return await FirebaseFirestore.instance.collection(currentUser).get();
-      
-      // return userData;
-    //} catch (e){
-      //return e.toString();
-      //print('This is the error ${e.toString()}');
-    //}
+  Future<QuerySnapshot<Map<String, dynamic>>> getCurrentUser(String currentUser) async { 
+    return await FirebaseFirestore.instance.collection(currentUser).get();
   }
 }
 
