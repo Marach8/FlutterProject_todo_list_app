@@ -30,19 +30,27 @@ class _Td extends State<TodoHome>{
                     ProgressIndicatorDialog().alert(context, 'Logging Out...');
                     if(user.dataBase.isNotEmpty){
                       for(List item in user.dataBase){
-                        await FirebaseFirestore.instance.collection(user.loggedInUser).doc(item[0]).set({
-                          'title': item[0], 'datetime': item[1], 'content': item[2]
-                        });
+                        await FirestoreInteraction().createTodo(
+                          user.loggedInUser, item[0], {'title': item[0], 'datetime': item[1], 'content': item[2]}
+                        );                        
                       }
                       user.dataBase.clear();
+                    }
+                    if(user.wasteBin.isNotEmpty){
+                      for(List item in user.wasteBin){
+                        await FirestoreInteraction().deleteTodo(user.loggedInUser, item[0]);
+                      }
+                      user.wasteBin.clear();                      
                     }
                     await FirebaseAuthLogout().firebaseLogout(
                       (text, color, icon) async {
                         Navigator.of(context).pop();
                         await MaterialBannerAlert1(context).materialBannerAlert1(text, color, icon);
                       }
-                    ).then((value) => 
-                      Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false)
+                    ).then((value) {
+                        user.done = true;
+                        Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
+                      }                     
                     );                    
                   }
                 },
@@ -69,7 +77,7 @@ class _Td extends State<TodoHome>{
               }
               else{
                 if(snapshot.data == null || snapshot.data!.docs.isEmpty){
-
+                  //return const CircularProgressIndicator();
                 } else{
                     for(var items in snapshot.data!.docs){                  
                     List<String> newList = [items['title'], items['datetime'], items['content']];

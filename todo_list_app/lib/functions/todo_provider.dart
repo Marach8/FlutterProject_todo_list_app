@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class AppUsers extends ChangeNotifier{
 
   List<List<String>> dataBase = [];
+  List<List<String>> wasteBin = [];
 
   TextEditingController controller1 = TextEditingController();  TextEditingController mobileEmailController = TextEditingController();
   TextEditingController controller2 = TextEditingController();  TextEditingController passwordController = TextEditingController();
@@ -21,13 +22,15 @@ class AppUsers extends ChangeNotifier{
     notifyListeners();
   }
 
-  void updateTodo(String keyItem, String dateItem, String todoItem, int removeIndex){
+  void updateTodo(String keyItem, String dateItem, String todoItem, int removeIndex,){
     controller1.text = keyItem; controller2.text = dateItem; controller3.text = todoItem;
+    wasteBin.add([keyItem, dateItem, todoItem]);
     dataBase.removeAt(removeIndex);
     notifyListeners();
   }
 
-  void delete(int removeIndex){
+  void delete(String keyItem, String dateItem, String todoItem, int removeIndex,){
+    wasteBin.add([keyItem, dateItem, todoItem]);
     dataBase.removeAt(removeIndex);
     notifyListeners();
   }

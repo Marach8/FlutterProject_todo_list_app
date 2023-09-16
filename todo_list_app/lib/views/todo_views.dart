@@ -61,7 +61,7 @@ class _Views extends State<Views> {
                 key: Key(title),
                 onDismissed: (direction){
                   if(direction == DismissDirection.endToStart){
-                    user.delete(index);                    
+                    user.delete(title, date, content, index);                    
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         behavior: SnackBarBehavior.floating, margin: const EdgeInsets.only(bottom:100),
@@ -79,7 +79,7 @@ class _Views extends State<Views> {
                       )
                     );                    
                   } else if(direction == DismissDirection.startToEnd){
-                      user.delete(index);
+                      user.delete(title, date, content, index);
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           behavior: SnackBarBehavior.floating, margin: const EdgeInsets.only(bottom:100),

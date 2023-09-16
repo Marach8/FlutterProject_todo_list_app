@@ -63,7 +63,7 @@ class FirebaseResetPassword{
         firebaseResetPasswordAlert('Email is invalid!!!', Colors.red, Icons.warning_rounded);
       }
       return 'no';
-    } catch (e){print('This is the error ${e.toString()}'); return 'no';}
+    } catch (e){return 'no';}
   }
 }
 
@@ -82,5 +82,15 @@ class FirebaseAuthLogout{
   )async{
     await FirebaseAuth.instance.signOut();
     await firebaseAlert('LogOut Successful...', Colors.blue, Icons.check_box_rounded);
+  }
+}
+
+class FirestoreInteraction{
+  Future<void> createTodo(String colName, String docName, Map<String, dynamic> info) async{
+    await FirebaseFirestore.instance.collection(colName).doc(docName).set(info);
+  }
+
+  Future<void> deleteTodo(String colName, String docName) async{
+    await FirebaseFirestore.instance.collection(colName).doc(docName).delete();
   }
 }
