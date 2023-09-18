@@ -10,10 +10,11 @@ class AppUsers extends ChangeNotifier{
   TextEditingController controller3 = TextEditingController();  TextEditingController usernameController = TextEditingController(); 
   TextEditingController controllerA = TextEditingController();  TextEditingController controllerB = TextEditingController();
   TextEditingController confirmPassController = TextEditingController(); String loggedInUser = ''; bool done = true;
+  bool updateMode = false; String initialTitle = ''; String initialDate = ''; String initialTodo = '';
 
   @override
   void dispose(){controller1.dispose(); controller2.dispose(); controller3.dispose(); mobileEmailController.dispose(); 
-    passwordController.dispose();  usernameController.dispose();  confirmPassController.dispose(); controllerA.dispose(); 
+    passwordController.dispose();  usernameController.dispose(); confirmPassController.dispose(); controllerA.dispose(); 
     controllerB.dispose(); super.dispose();}
   
   void addTodo(){
@@ -23,8 +24,8 @@ class AppUsers extends ChangeNotifier{
   }
 
   void updateTodo(String keyItem, String dateItem, String todoItem, int removeIndex,){
+    initialTitle = keyItem; initialDate = dateItem; initialTodo = todoItem;
     controller1.text = keyItem; controller2.text = dateItem; controller3.text = todoItem;
-    wasteBin.add([keyItem, dateItem, todoItem]);
     dataBase.removeAt(removeIndex);
     notifyListeners();
   }

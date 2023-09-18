@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TextFields{
-  Widget textFields(String text, TextEditingController control){
+  Widget textFields(String text, TextEditingController control, Function(String)? onChanged){
     return Container(
       padding: const EdgeInsets.all(10), margin: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -11,6 +11,7 @@ class TextFields{
       ),
       child: SingleChildScrollView(
         child: TextField( 
+          onChanged: onChanged,
           controller: control,
           maxLines: null, autocorrect: true, 
           cursorColor: Colors.blue,              

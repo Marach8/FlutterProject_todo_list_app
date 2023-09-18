@@ -33,8 +33,16 @@ class _AU extends State<AddUpdate> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                TextFields().textFields('Title', user.controller1), TextFields().textFields('Date/Time', user.controller2), 
-                TextFields().textFields('Content', user.controller3),
+                TextFields().textFields('Title', user.controller1,
+                (newTitle){
+                  if(user.updateMode){
+                      if (newTitle != user.initialTitle){
+                      user.wasteBin.add([user.initialTitle, user.initialDate, user.initialTodo]);
+                    }
+                    user.updateMode = false;
+                  }                  
+                }), TextFields().textFields('Date/Time', user.controller2, null), 
+                TextFields().textFields('Content', user.controller3, null),
         
                 SizedBox(height: h*0.02),
             

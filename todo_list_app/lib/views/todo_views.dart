@@ -136,6 +136,7 @@ class _Views extends State<Views> {
                     );
                   },
                   onLongPress: (){
+                    user.updateMode = true;
                     user.updateTodo(title, date, content, index);
                     Navigator.of(context).pop(); Navigator.of(context).pushNamed('/add');
                   },
