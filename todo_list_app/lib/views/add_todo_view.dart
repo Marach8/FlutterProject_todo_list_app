@@ -39,7 +39,6 @@ class _AU extends State<AddUpdate> {
                       if (newTitle != user.initialTitle){
                       user.wasteBin.add([user.initialTitle, user.initialDate, user.initialTodo]);
                     }
-                    user.updateMode = false;
                   }                  
                 }), TextFields().textFields('Date/Time', user.controller2, null), 
                 TextFields().textFields('Content', user.controller3, null),
@@ -50,7 +49,8 @@ class _AU extends State<AddUpdate> {
                   onPressed: () async{
                     bool hasData = [user.controller1, user.controller2, user.controller3].every((controller) => controller.text.isNotEmpty);
                     if(hasData){
-                      user.addTodo();
+                      if(user.updateMode){user.addTodo(user.updateIndex); user.updateMode = false;} 
+                      else{user.addTodo(user.dataBase.length);}
                       await DialogBox(context: context).dialogBox(user.controller1, user.controller2, user.controller3);                      
                     } else {
                       SnackBarAlert(context: context).snackBarAlert('Oops!!! Fields cannot be empty!');                      
