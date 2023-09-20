@@ -78,7 +78,7 @@ class FirebaseGetUserDetails{
     User? firebaseCurrentUser = FirebaseAuth.instance.currentUser;
     final username = await FirebaseFirestore.instance.collection('Users').doc(firebaseCurrentUser!.uid).get();
     final userDetails = await FirebaseFirestore.instance.collection(firebaseCurrentUser.uid).get();
-    return [username, userDetails];
+    return [username, userDetails, firebaseCurrentUser];
   }
 }
 

@@ -12,7 +12,7 @@ class AppUsers extends ChangeNotifier{
   TextEditingController controllerA = TextEditingController();  TextEditingController controllerB = TextEditingController();
   TextEditingController confirmPassController = TextEditingController(); String loggedInUser = ''; bool done = true;
   bool updateMode = false; String initialTitle = ''; String initialDate = ''; String initialTodo = ''; int updateIndex = 0;
-  User? firebaseCurrentUser = FirebaseAuth.instance.currentUser;
+  dynamic firebaseCurrentUser ;
 
   @override
   void dispose(){controller1.dispose(); controller2.dispose(); controller3.dispose(); mobileEmailController.dispose(); 
