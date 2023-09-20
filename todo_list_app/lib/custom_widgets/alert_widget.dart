@@ -81,7 +81,8 @@ class DialogBox{
             ),
             TextButton(
               onPressed: () {
-                control1.clear(); control2.clear(); control3.clear(); Navigator.of(context).popUntil(ModalRoute.withName('/home'));
+                control1.clear(); control2.clear(); control3.clear(); 
+                Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
               }, 
               child: Text('No', style: GoogleFonts.getFont('Nunito', color: Colors.blue, fontSize: 15, fontWeight: FontWeight.w400,))
             )

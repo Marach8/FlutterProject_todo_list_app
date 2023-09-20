@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_app/custom_widgets/alert_widget.dart';
@@ -25,20 +24,20 @@ class _Td extends State<TodoHome>{
             actions: [
               PopupMenuButton(
                 color: Colors.blueGrey.shade100,        
-                onSelected: (value) async {
+                onSelected: (value) async {                  
                   if(value == 'logout'){
                     ProgressIndicatorDialog().alert(context, 'Logging Out...');
-                    if(user.dataBase.isNotEmpty){
+                    if(user.dataBase.isNotEmpty){                      
                       for(List item in user.dataBase){
                         await FirestoreInteraction().createTodo(
-                          user.loggedInUser, item[0], {'title': item[0], 'datetime': item[1], 'content': item[2]}
+                          user.firebaseCurrentUser!.uid, item[0], {'title': item[0], 'datetime': item[1], 'content': item[2]}
                         );                        
                       }
                       user.dataBase.clear();
                     }
                     if(user.wasteBin.isNotEmpty){
                       for(List item in user.wasteBin){
-                        await FirestoreInteraction().deleteTodo(user.loggedInUser, item[0]);
+                        await FirestoreInteraction().deleteTodo(user.firebaseCurrentUser!.uid, item[0]);
                       }
                       user.wasteBin.clear();                      
                     }
@@ -49,7 +48,7 @@ class _Td extends State<TodoHome>{
                       }
                     ).then((value) {
                         user.done = true;
-                        Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
+                        Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
                       }                     
                     );                    
                   }
@@ -65,21 +64,15 @@ class _Td extends State<TodoHome>{
             ),
             backgroundColor: const Color.fromARGB(255, 19, 19, 19), foregroundColor: Colors.blueGrey.shade300,          
           ),
-          body: FutureBuilder<QuerySnapshot>(
-            future: FirebaseGetUserDetails().getCurrentUser(user.loggedInUser),
+          body: FutureBuilder<List<dynamic>>(
+            future: FirebaseGetUserDetails().getCurrentUserDetails(),
             builder: (context, snapshot)  {
-              if(snapshot.connectionState == ConnectionState.waiting){                
-                return const Center(child: CircularProgressIndicator());                
-              } else if(snapshot.hasError) {
-                return MaterialBannerAlert1(context).materialBannerAlert1(
-                  'An Error Occured While Fetching Your Details...', Colors.yellow, Icons.warning_rounded
-                );
-              }
+              if(snapshot.connectionState == ConnectionState.waiting){return const Center(child: CircularProgressIndicator());} 
+              else if(snapshot.hasError) {return const Text('An error occured !!!');}
               else{
-                if(snapshot.data == null || snapshot.data!.docs.isEmpty){
-                  //return const CircularProgressIndicator();
-                } else{
-                    for(var items in snapshot.data!.docs){                  
+                if(snapshot.data == null){} else{
+                    user.loggedInUser = snapshot.data![0]['username'];
+                    for(var items in snapshot.data![1].docs){                  
                     List<String> newList = [items['title'], items['datetime'], items['content']];
                     if(!user.dataBase.contains(newList)){
                       if (user.done){user.dataBase.add(newList);}                    

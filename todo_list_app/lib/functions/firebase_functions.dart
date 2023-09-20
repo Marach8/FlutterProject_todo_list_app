@@ -24,6 +24,7 @@ class FirebaseAuthRegister{
   }
 }
 
+
 class FirebaseAuthLogin{
 
   Future<String> firebaseLogin(String email, String password, Function(String text, Color color, IconData icon) firebaseAlert
@@ -68,9 +69,16 @@ class FirebaseResetPassword{
 }
 
 class FirebaseGetUserDetails{
+  Future<dynamic> firebaseCurrentUser() async{
+    User? user = FirebaseAuth.instance.currentUser;
+    return user;
+  }
 
-  Future<QuerySnapshot<Map<String, dynamic>>> getCurrentUser(String currentUser) async { 
-    return await FirebaseFirestore.instance.collection(currentUser).get();
+  Future<List<dynamic>> getCurrentUserDetails() async { 
+    User? firebaseCurrentUser = FirebaseAuth.instance.currentUser;
+    final username = await FirebaseFirestore.instance.collection('Users').doc(firebaseCurrentUser!.uid).get();
+    final userDetails = await FirebaseFirestore.instance.collection(firebaseCurrentUser.uid).get();
+    return [username, userDetails];
   }
 }
 
