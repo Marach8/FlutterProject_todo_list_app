@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_list_app/constants/routes.dart';
 import 'package:todo_list_app/custom_widgets/alert_widget.dart';
 import 'package:todo_list_app/custom_widgets/button_widget.dart';
 import 'package:todo_list_app/functions/firebase_functions.dart';
@@ -48,7 +49,7 @@ class _Td extends State<TodoHome>{
                       }
                     ).then((value) {
                         user.done = true;
-                        Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
+                        Navigator.of(context).pushNamedAndRemoveUntil(loginPageRoute, (route) => false);
                       }                     
                     );                    
                   }
@@ -127,7 +128,7 @@ class _Td extends State<TodoHome>{
                   
                         Wrap(
                           children: [
-                            HomeButtons().homeButton(Icons.add, 'Add', () => Navigator.of(context).pushNamed('/add')),
+                            HomeButtons().homeButton(Icons.add, 'Add', () => Navigator.of(context).pushNamed(addTodoPageRoute)),
                             HomeButtons().homeButton(
                               Icons.view_array, 'View', (){
                                 if (user.dataBase.isNotEmpty) {
@@ -150,7 +151,7 @@ class _Td extends State<TodoHome>{
                                     'To delete an item, swipe the item to the left or right.', Icons.delete
                                   );
                                   Future.delayed(const Duration(seconds:5), () =>ScaffoldMessenger.of(context).hideCurrentMaterialBanner());
-                                  Navigator.of(context).pushNamed('/view');
+                                  Navigator.of(context).pushNamed(viewPageRoute);
                                 } else {
                                   SnackBarAlert(context: context).snackBarAlert(
                                     'Oops!!! seems like you currently have no Todos. Add Todos first!'

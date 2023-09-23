@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_list_app/constants/routes.dart';
 import 'package:todo_list_app/functions/firebase_functions.dart';
 import 'package:todo_list_app/views/add_todo_view.dart';
 import 'package:todo_list_app/views/login_register_view.dart';
@@ -36,10 +37,10 @@ class TodoApp extends StatelessWidget{
           },
         ),
         routes: {
-          '/login': (context) => const LoginPage(),
-          '/home': (context) => const TodoHome(),
-          '/add': (context) => const AddUpdate(),
-          '/view': (context) => const Views()
+          loginPageRoute: (context) => const LoginPage(),
+          homePageRoute: (context) => const TodoHome(),
+          addTodoPageRoute: (context) => const AddUpdate(),
+          viewPageRoute: (context) => const Views()
         }
       ),
     );

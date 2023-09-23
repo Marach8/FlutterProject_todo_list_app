@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_list_app/constants/routes.dart';
 import 'package:todo_list_app/custom_widgets/alert_widget.dart';
 import 'package:todo_list_app/custom_widgets/textfield_widget.dart';
 import 'package:todo_list_app/custom_widgets/textitem_widget.dart';
@@ -188,7 +189,7 @@ class _Login extends State<LoginPage> {
                                     if(result != 'no'){
                                       user.loggedInUser = result;
                                       user.mobileEmailController.clear(); user.passwordController.clear();
-                                      Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
+                                      Navigator.of(context).pushNamedAndRemoveUntil(homePageRoute, (route) => false);
                                     } else{
                                       await MaterialBannerAlert1(context).materialBannerAlert1(
                                         "Couldn't Login!!!", Colors.red, Icons.close_rounded

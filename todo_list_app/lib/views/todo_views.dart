@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_list_app/constants/routes.dart';
 import 'package:todo_list_app/functions/todo_provider.dart';
 
 class Views extends StatefulWidget{
@@ -138,7 +139,7 @@ class _Views extends State<Views> {
                   onLongPress: (){
                     user.updateMode = true;
                     user.updateTodo(title, date, content, index);
-                    Navigator.of(context).pop(); Navigator.of(context).pushNamed('/add');
+                    Navigator.of(context).pop(); Navigator.of(context).pushNamed(addTodoPageRoute);
                   },
                   leading: const Icon(Icons.create, size: 40, color: Colors.blue,),
                   trailing: Text(
