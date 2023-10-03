@@ -126,54 +126,64 @@ class _Td extends State<TodoHome>{
                   
                         const SizedBox(height: 20),
                   
-                        Wrap(
-                          children: [
-                            HomeButtons().homeButton(Icons.add, 'Add', () => Navigator.of(context).pushNamed(addTodoPageRoute)),
-                            HomeButtons().homeButton(
-                              Icons.view_array, 'View', (){
-                                if (user.dataBase.isNotEmpty) {
-                                  MaterialBannerAlert(context: context).materialBannerAlert(
-                                    'To view an item in detail, tap on the item.', Icons.view_array_rounded
-                                  );
-                                  Future.delayed(const Duration(seconds:5), () =>ScaffoldMessenger.of(context).hideCurrentMaterialBanner());
-                                  Navigator.of(context).pushNamed('/view');
-                                } else {
-                                  SnackBarAlert(context: context).snackBarAlert(
-                                    'Oops!!! seems like you currently have no Todos. Add Todos first!'
-                                  );
-                                }
-                              }
+                        Container(
+                          width: double.infinity,
+                          margin: const EdgeInsets.all(20),                  
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(20)
+                          ),
+                          child: Center(
+                            child: Wrap(
+                              children: [
+                                HomeButtons().homeButton(Icons.add, 'Add', () => Navigator.of(context).pushNamed(addTodoPageRoute)),
+                                HomeButtons().homeButton(
+                                  Icons.view_array, 'View', (){
+                                    if (user.dataBase.isNotEmpty) {
+                                      MaterialBannerAlert(context: context).materialBannerAlert(
+                                        'To view an item in detail, tap on the item.', Icons.view_array_rounded
+                                      );
+                                      Future.delayed(const Duration(seconds:5), () =>ScaffoldMessenger.of(context).hideCurrentMaterialBanner());
+                                      Navigator.of(context).pushNamed('/view');
+                                    } else {
+                                      SnackBarAlert(context: context).snackBarAlert(
+                                        'Oops!!! seems like you currently have no Todos. Add Todos first!'
+                                      );
+                                    }
+                                  }
+                                ),
+                                HomeButtons().homeButton(
+                                  Icons.delete, 'Delete', (){
+                                    if (user.dataBase.isNotEmpty) {
+                                      MaterialBannerAlert(context: context).materialBannerAlert(
+                                        'To delete an item, swipe the item to the left or right.', Icons.delete
+                                      );
+                                      Future.delayed(const Duration(seconds:5), () =>ScaffoldMessenger.of(context).hideCurrentMaterialBanner());
+                                      Navigator.of(context).pushNamed(viewPageRoute);
+                                    } else {
+                                      SnackBarAlert(context: context).snackBarAlert(
+                                        'Oops!!! seems like you currently have no Todos. Add Todos first!'
+                                      );
+                                    }
+                                  }
+                                ),
+                                HomeButtons().homeButton(
+                                  Icons.update_rounded, 'Update', (){
+                                    if (user.dataBase.isNotEmpty) {
+                                      MaterialBannerAlert(context: context).materialBannerAlert(
+                                        'To update an item, longpress on it to enter update mode.', Icons.update_sharp
+                                      );
+                                      Future.delayed(const Duration(seconds:5), () =>ScaffoldMessenger.of(context).hideCurrentMaterialBanner());
+                                      Navigator.of(context).pushNamed('/view');
+                                    } else {
+                                      SnackBarAlert(context: context)
+                                      .snackBarAlert('Oops!!! seems like you currently have no Todos. Add Todos first!');
+                                    }
+                                  }
+                                ),                    
+                              ]
                             ),
-                            HomeButtons().homeButton(
-                              Icons.delete, 'Delete', (){
-                                if (user.dataBase.isNotEmpty) {
-                                  MaterialBannerAlert(context: context).materialBannerAlert(
-                                    'To delete an item, swipe the item to the left or right.', Icons.delete
-                                  );
-                                  Future.delayed(const Duration(seconds:5), () =>ScaffoldMessenger.of(context).hideCurrentMaterialBanner());
-                                  Navigator.of(context).pushNamed(viewPageRoute);
-                                } else {
-                                  SnackBarAlert(context: context).snackBarAlert(
-                                    'Oops!!! seems like you currently have no Todos. Add Todos first!'
-                                  );
-                                }
-                              }
-                            ),
-                            HomeButtons().homeButton(
-                              Icons.update_rounded, 'Update', (){
-                                if (user.dataBase.isNotEmpty) {
-                                  MaterialBannerAlert(context: context).materialBannerAlert(
-                                    'To update an item, longpress on it to enter update mode.', Icons.update_sharp
-                                  );
-                                  Future.delayed(const Duration(seconds:5), () =>ScaffoldMessenger.of(context).hideCurrentMaterialBanner());
-                                  Navigator.of(context).pushNamed('/view');
-                                } else {
-                                  SnackBarAlert(context: context)
-                                  .snackBarAlert('Oops!!! seems like you currently have no Todos. Add Todos first!');
-                                }
-                              }
-                            ),                    
-                          ]
+                          ),
                         ),
                       ]
                     ),
