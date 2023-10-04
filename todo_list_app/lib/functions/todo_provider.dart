@@ -10,7 +10,7 @@ class AppUsers extends ChangeNotifier{
   TextEditingController controller3 = TextEditingController();  TextEditingController usernameController = TextEditingController(); 
   TextEditingController controllerA = TextEditingController();  TextEditingController controllerB = TextEditingController();
   TextEditingController confirmPassController = TextEditingController(); String loggedInUser = ''; bool done = true;
-  bool updateMode = false; String initialTitle = ''; String initialDate = ''; String initialTodo = ''; int updateIndex = 0;
+  bool isInUpdateMode = false; String initialTitle = ''; String initialDate = ''; String initialTodo = ''; int updateIndex = 0;
   dynamic firebaseCurrentUser ;
 
   @override

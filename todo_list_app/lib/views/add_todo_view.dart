@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_app/custom_widgets/alert_widget.dart';
 import 'package:todo_list_app/custom_widgets/textfield_widget.dart';
+import 'package:todo_list_app/functions/firebase_functions.dart';
 import 'package:todo_list_app/functions/todo_provider.dart';
 
 class AddUpdate extends StatefulWidget{
@@ -33,14 +34,20 @@ class _AU extends State<AddUpdate> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                TextFields().textFields('Title', user.controller1,
-                (newTitle){
-                  if(user.updateMode){
+                TextFields().textFields(
+                  'Title', user.controller1,
+                  (newTitle){
+                    if(user.isInUpdateMode){
                       if (newTitle != user.initialTitle){
-                      user.wasteBin.add([user.initialTitle, user.initialDate, user.initialTodo]);
-                    }
-                  }                  
-                }), TextFields().textFields('Date/Time', user.controller2, null), 
+                        user.wasteBin.add([user.initialTitle, user.initialDate, user.initialTodo]);                        
+                        for(List item in user.wasteBin){
+                          FirestoreInteraction().deleteTodo(user.firebaseCurrentUser!.uid, item[0]);
+                        }
+                      }
+                    }                  
+                  }
+                ), 
+                TextFields().textFields('Date/Time', user.controller2, null), 
                 TextFields().textFields('Content', user.controller3, null),
         
                 SizedBox(height: h*0.02),
@@ -49,8 +56,27 @@ class _AU extends State<AddUpdate> {
                   onPressed: () async{
                     bool hasData = [user.controller1, user.controller2, user.controller3].every((controller) => controller.text.isNotEmpty);
                     if(hasData){
-                      if(user.updateMode){user.addTodo(user.updateIndex); user.updateMode = false;} 
-                      else{user.addTodo(user.dataBase.length);}
+                      if(user.isInUpdateMode){
+                        user.addTodo(user.updateIndex); 
+                        if(user.dataBase.isNotEmpty){                      
+                          for(List item in user.dataBase){
+                            FirestoreInteraction().createTodo(
+                              user.firebaseCurrentUser!.uid, item[0], {'title': item[0], 'datetime': item[1], 'content': item[2]}
+                            );                        
+                          }                          
+                        }
+                        user.isInUpdateMode = false;
+                      } 
+                      else{
+                        user.addTodo(user.dataBase.length);
+                        if(user.dataBase.isNotEmpty){                      
+                          for(List item in user.dataBase){
+                            FirestoreInteraction().createTodo(
+                              user.firebaseCurrentUser!.uid, item[0], {'title': item[0], 'datetime': item[1], 'content': item[2]}
+                            );                        
+                          }                          
+                        }
+                      }
                       await DialogBox(context: context).dialogBox(user.controller1, user.controller2, user.controller3);                      
                     } else {
                       SnackBarAlert(context: context).snackBarAlert('Oops!!! Fields cannot be empty!');                      
