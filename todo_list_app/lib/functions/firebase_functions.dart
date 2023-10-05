@@ -4,23 +4,47 @@ import 'package:flutter/material.dart';
 
 class FirebaseAuthRegister{
 
-  Future<void> firebaseRegister(
-    String username, String email, String password, void Function(String text, Color color) firebaseAlert
+  Future<String> firebaseRegister(
+    String username, String email, String password, Function(String text, Color color, IconData icon) firebaseAlert
   ) async{
     try{
       UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email, password: password
       );
       await FirebaseFirestore.instance.collection('Users').doc(userCredential.user!.uid).set({'username': username});
-      firebaseAlert('Registration Successful...', Colors.green);
+      await firebaseAlert('Registration Successful...', Colors.green, Icons.check);
+      return 'yes';
     } on FirebaseAuthException catch(e){
       if (e.code == 'weak-password'){
-        firebaseAlert('Password must contain at least 6 characters!!!', Colors.red);
+        await firebaseAlert('Password must contain at least 6 characters!!!', Colors.red, Icons.warning_rounded);
       }
       else if(e.code == 'email-already-in-use'){
-        firebaseAlert('This email is already registered!!!', Colors.red);
+        await firebaseAlert('This email is already registered!!!', Colors.red, Icons.warning_rounded);
       }
-    } catch (e){ firebaseAlert(e.toString(), Colors.red);}
+      return 'no';
+    } catch (e){
+      await firebaseAlert(
+        "Registration Failed!!! Please Check Your Network Connection And Try Again.", Colors.red, Icons.error_rounded
+      );
+      return 'no';
+    }
+  }
+}
+
+
+class FirebaseEmailVerification{
+  Future<void> verifyEmail(Function(String text, Color color, IconData icon) firebaseAlert) async{
+    try{
+      final registeredUser = FirebaseAuth.instance.currentUser;
+      await registeredUser!.sendEmailVerification();
+      await firebaseAlert(
+        'An Email Verification Link has been sent to your email. Please, go and verify your email!', Colors.blue, Icons.check
+      );
+    } catch (e){
+      await firebaseAlert(
+        'An Error Occured!!! Please Check Your Network Connection And Try Again.', Colors.red, Icons.cancel_rounded
+      );
+    }   
   }
 }
 
@@ -34,20 +58,24 @@ class FirebaseAuthLogin{
         email: email, password: password
       );
       User? user = FirebaseAuth.instance.currentUser;
-      DocumentSnapshot<Map<String, dynamic>> userData = await FirebaseFirestore.instance.collection('Users').doc(user!.uid).get();
-      await firebaseAlert('Login Successful...', Colors.green, Icons.check);
-      return userData['username'];
+      if (user!.emailVerified){
+        DocumentSnapshot<Map<String, dynamic>> userData = await FirebaseFirestore.instance.collection('Users').doc(user!.uid).get();
+        await firebaseAlert('Login Successful...', Colors.green, Icons.check);
+        return userData['username'];
+      } else {return 'email not verified';}
+
     } on FirebaseAuthException catch(e){
       if (e.code == 'user-not-found'){
         await firebaseAlert('This email is not registered!!!', Colors.red, Icons.warning_rounded);
       } else if(e.code == 'wrong-password'){
-        await firebaseAlert('Incorrect login credentials!!!', Colors.red, Icons.warning_rounded);
+        await firebaseAlert('Incorrect login credentials!!!', Colors.red, Icons.cancel_rounded);
       }
       return 'no';
+
     } catch (e){
-      await firebaseAlert(e.toString(), Colors.red, Icons.warning_rounded);
+      await firebaseAlert("Unable To Login!!! Please Check Your Network Connection And Try Again.", Colors.red, Icons.cancel_rounded);
+      return 'no';
     }
-    return 'no';
   }
 }
 

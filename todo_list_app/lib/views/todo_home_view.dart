@@ -81,7 +81,7 @@ class _Td extends State<TodoHome>{
                     }                     
                   }
                   user.done = false;
-                }
+                }             
                 
                 return Center(
                   child: SingleChildScrollView(
@@ -112,9 +112,9 @@ class _Td extends State<TodoHome>{
                                   fontWeight: FontWeight.bold, color: Colors.blueGrey.shade200
                                   )
                                 ),
-                                const TextSpan(
-                                  text: ' Todos',
-                                  style: TextStyle(
+                                TextSpan(
+                                  text: user.dataBase.length == 1? ' Todo' : ' Todos',
+                                  style: const TextStyle(
                                   fontFamily: 'monospace', fontSize: 40,
                                   fontWeight: FontWeight.bold, color: Colors.blueGrey
                                   )
@@ -130,6 +130,10 @@ class _Td extends State<TodoHome>{
                           width: double.infinity,
                           margin: const EdgeInsets.all(20),                  
                           decoration: BoxDecoration(
+                            gradient: const LinearGradient(
+                              colors: [Colors.green, Colors.blueGrey, Colors.blue],
+                              tileMode: TileMode.mirror
+                            ),
                             color: Colors.white.withOpacity(0.1),
                             borderRadius: BorderRadius.circular(20)
                           ),
