@@ -35,7 +35,7 @@ class _AU extends State<AddUpdate> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextFields().textFields(
-                  'Title', user.controller1,
+                  'Title', user.todoTitleController,
                   (newTitle){
                     if(user.isInUpdateMode){
                       if (newTitle != user.initialTitle){
@@ -47,14 +47,14 @@ class _AU extends State<AddUpdate> {
                     }                  
                   }
                 ), 
-                TextFields().textFields('Date/Time', user.controller2, null), 
-                TextFields().textFields('Content', user.controller3, null),
+                TextFields().textFields('Date/Time', user.todoDateTimeController, null), 
+                TextFields().textFields('Content', user.todoContentController, null),
         
                 SizedBox(height: h*0.02),
             
                 ElevatedButton.icon(
                   onPressed: () async{
-                    bool hasData = [user.controller1, user.controller2, user.controller3].every((controller) => controller.text.isNotEmpty);
+                    bool hasData = [user.todoTitleController, user.todoDateTimeController, user.todoContentController].every((controller) => controller.text.isNotEmpty);
                     if(hasData){
                       if(user.isInUpdateMode){
                         user.addTodo(user.updateIndex); 
@@ -77,7 +77,9 @@ class _AU extends State<AddUpdate> {
                           }                          
                         }
                       }
-                      await DialogBox(context: context).dialogBox(user.controller1, user.controller2, user.controller3);                      
+                      await DialogBox(context: context).dialogBox(
+                        user.todoTitleController, user.todoDateTimeController, user.todoContentController
+                      );                      
                     } else {
                       SnackBarAlert(context: context).snackBarAlert('Oops!!! Fields cannot be empty!');                      
                     }

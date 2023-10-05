@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_app/constants/routes.dart';
+import 'package:todo_list_app/functions/firebase_functions.dart';
 import 'package:todo_list_app/functions/todo_provider.dart';
 
 class Views extends StatefulWidget{
@@ -60,10 +61,11 @@ class _Views extends State<Views> {
               final content = user.dataBase.elementAt(index)[2];                            
               return Dismissible(                
                 key: Key(title),
-                onDismissed: (direction){
+                onDismissed: (direction) async {
                   if(direction == DismissDirection.endToStart){
+                    bool shouldDeleteFromFirestore = true;
                     user.delete(title, date, content, index);                    
-                    ScaffoldMessenger.of(context).showSnackBar(
+                    await ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         behavior: SnackBarBehavior.floating, margin: const EdgeInsets.only(bottom:100),
                         shape: const RoundedRectangleBorder(
@@ -74,14 +76,20 @@ class _Views extends State<Views> {
                           style: GoogleFonts.getFont('Nunito', fontSize:20, color: Colors.black, fontWeight: FontWeight.w300)
                         ),
                         action: SnackBarAction(
-                          onPressed: () {user.undo(title, date, content, index);}, label: 'Undo', textColor: Colors.blue, 
+                          onPressed: () {
+                            user.undo(title, date, content, index);
+                            shouldDeleteFromFirestore = false;
+                          }, 
+                          label: 'Undo', textColor: Colors.blue, 
                         ),
                         duration: const Duration(seconds: 4), backgroundColor: Colors.white,
                       )
-                    );                    
-                  } else if(direction == DismissDirection.startToEnd){
+                    ).closed; 
+                    shouldDeleteFromFirestore? FirestoreInteraction().deleteTodo(user.firebaseCurrentUser!.uid, title): {};                 
+                  } else if(direction == DismissDirection.startToEnd) {
+                      bool shouldDeleteFromFirestore = true;
                       user.delete(title, date, content, index);
-                      ScaffoldMessenger.of(context).showSnackBar(
+                      await ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           behavior: SnackBarBehavior.floating, margin: const EdgeInsets.only(bottom:100),
                           shape: const RoundedRectangleBorder(
@@ -92,11 +100,16 @@ class _Views extends State<Views> {
                              style: GoogleFonts.getFont('Nunito', fontSize:20, color: Colors.black, fontWeight: FontWeight.w300)
                           ),
                           action: SnackBarAction(
-                            onPressed: () {user.undo(title, date, content, index);}, label: 'Undo', textColor: Colors.blue, 
+                            onPressed: () {
+                              user.undo(title, date, content, index);
+                              shouldDeleteFromFirestore = false;
+                            }, 
+                            label: 'Undo', textColor: Colors.blue, 
                           ),
                           duration: const Duration(seconds: 2), backgroundColor: Colors.white,
                         )
-                      ); 
+                      ).closed; 
+                      shouldDeleteFromFirestore? FirestoreInteraction().deleteTodo(user.firebaseCurrentUser!.uid, title): {};
                     }
                 },
                 background: Container(
@@ -114,8 +127,7 @@ class _Views extends State<Views> {
                   contentPadding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
                   onTap: (){
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        //animation: ,                        
+                      SnackBar(                                                
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20))
                         ),
@@ -139,7 +151,7 @@ class _Views extends State<Views> {
                   onLongPress: (){
                     user.isInUpdateMode = true;
                     user.updateTodo(title, date, content, index);
-                    Navigator.of(context).pop(); Navigator.of(context).pushNamed(addTodoPageRoute);
+                    Navigator.of(context).pushNamed(addTodoPageRoute);
                   },
                   leading: const Icon(Icons.create, size: 40, color: Colors.blue,),
                   trailing: Text(

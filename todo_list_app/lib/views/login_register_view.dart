@@ -34,7 +34,7 @@ class _Login extends State<LoginPage> {
         Scaffold(
           appBar: AppBar(
             title: Text(appBarText()), centerTitle: true,
-            backgroundColor: Colors.white, elevation: 10, foregroundColor: Colors.black,
+            backgroundColor: forgotPassword? Colors.blueGrey.shade700: Colors.white, elevation: 10, foregroundColor: Colors.black,
           ),
           backgroundColor: forgotPassword? Colors.white24: Colors.white,
           body: Container(
@@ -59,7 +59,7 @@ class _Login extends State<LoginPage> {
                       : const SizedBox(), 
                       !isRegistered? TextFields1().textField(true, Colors.white, '', user.usernameController, false): const SizedBox(), 
                       Row(children:[TextItem().textItem('Email', 15, FontWeight.w600, Colors.black45)]), 
-                      TextFields1().textField(forgotPassword? false: true, Colors.white, '', user.mobileEmailController, false), 
+                      TextFields1().textField(forgotPassword? false: true, Colors.white, '', user.emailController, false), 
                       Row(children:[TextItem().textItem('Password', 15, FontWeight.w600, Colors.black45)]), 
                       TextFields1().textField(forgotPassword? false : true, Colors.white, '', user.passwordController, true),
                       !isRegistered? Row(children:[TextItem().textItem('Confirm password', 15, FontWeight.w600, Colors.black45)])
@@ -72,7 +72,7 @@ class _Login extends State<LoginPage> {
                             Positioned(left: 0, 
                               child: !isRegistered? const SizedBox(): GestureDetector(
                                 onTap: (){
-                                  user.mobileEmailController.clear(); user.passwordController.clear(); 
+                                  user.emailController.clear(); user.passwordController.clear(); 
                                   setState(() => forgotPassword = true);
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
@@ -103,7 +103,7 @@ class _Login extends State<LoginPage> {
                                                     child: Center(
                                                       child: IconButton(
                                                         onPressed: () {
-                                                          user.controllerA.clear(); user.controllerB.clear();
+                                                          user.forgotPasswordController.clear();
                                                           ScaffoldMessenger.of(context).hideCurrentSnackBar();
                                                           setState(() => forgotPassword = false);
                                                         }, icon: const Icon(Icons.arrow_downward_rounded, color: Colors.black)
@@ -115,15 +115,15 @@ class _Login extends State<LoginPage> {
                                             ),
                                             const SizedBox(height:20),const Divider(height: 1), const SizedBox(height:20),
                                             TextFields1().textField(
-                                              true, Colors.blueGrey.shade300, 'Enter email', user.controllerA, false
+                                              true, Colors.blueGrey.shade300, 'Enter email', user.forgotPasswordController, false
                                             ), 
                                             const SizedBox(height:20),const Divider(height: 1), const SizedBox(height:20), 
                                             ElevatedButton(
                                               onPressed: () async{                                                                                                        
-                                                if(user.controllerA.text.isNotEmpty){
+                                                if(user.forgotPasswordController.text.isNotEmpty){
                                                   ProgressIndicatorDialog().alert(context, 'Please Wait...');
                                                   await FirebaseResetPassword().resetPassword(
-                                                    user.controllerA.text,
+                                                    user.forgotPasswordController.text,
                                                     (text, color, icon) async{
                                                       Navigator.of(context).pop();
                                                       await MaterialBannerAlert1(context).materialBannerAlert1(
@@ -131,7 +131,7 @@ class _Login extends State<LoginPage> {
                                                       );
                                                     }
                                                    ).then((value) {
-                                                    user.controllerA.clear();
+                                                    user.forgotPasswordController.clear();
                                                     ScaffoldMessenger.of(context).hideCurrentSnackBar();
                                                     setState(() => forgotPassword = false);
                                                   });
@@ -160,7 +160,7 @@ class _Login extends State<LoginPage> {
                             Positioned(right: 0, 
                               child: GestureDetector(
                                 onTap: (){
-                                  user.mobileEmailController.clear(); user.passwordController.clear(); 
+                                  user.emailController.clear(); user.passwordController.clear(); 
                                   user.usernameController.clear(); user.confirmPassController.clear();
                                   setState(() => isRegistered = !isRegistered);
                                 },
@@ -177,13 +177,13 @@ class _Login extends State<LoginPage> {
                         onPressed: () async{
                 
                           //user Login
-                          bool loginFields = [user.mobileEmailController, user.passwordController]
+                          bool loginFields = [user.emailController, user.passwordController]
                           .every((controller) => controller.text.isNotEmpty);
                           if(isRegistered){
                             if(loginFields) {
                               ProgressIndicatorDialog().alert(context, 'Please Wait...');
                               await FirebaseAuthLogin().firebaseLogin(
-                                user.mobileEmailController.text.trim(), user.passwordController.text.trim(),
+                                user.emailController.text.trim(), user.passwordController.text.trim(),
                                 (text, color, icon) async{
                                   Navigator.of(context).pop();
                                   await MaterialBannerAlert1(context).materialBannerAlert1(text, color, icon);
@@ -191,7 +191,7 @@ class _Login extends State<LoginPage> {
                               ).then((result) async{
                                 if(result != 'no' && result != 'email not verified'){
                                   user.loggedInUser = result;
-                                  user.mobileEmailController.clear(); user.passwordController.clear();
+                                  user.emailController.clear(); user.passwordController.clear();
                                   Navigator.of(context).pushNamedAndRemoveUntil(homePageRoute, (route) => false);
                                 } else if (result == 'email not verified'){
                                   await FirebaseEmailVerification().verifyEmail(
@@ -211,28 +211,26 @@ class _Login extends State<LoginPage> {
                 
                           //User Registration
                           else {
-                            bool registrationFields = [user.mobileEmailController, user.passwordController,
+                            bool registrationFields = [user.emailController, user.passwordController,
                             user.confirmPassController, user.usernameController].every((controller) => controller.text.isNotEmpty);
                             if(registrationFields){
                               ProgressIndicatorDialog().alert(context, 'Please Wait...');
                               if(user.passwordController.text == user.confirmPassController.text){
                                 await FirebaseAuthRegister().firebaseRegister(
                                   user.usernameController.text.trim(),
-                                  user.mobileEmailController.text.trim(), user.passwordController.text.trim(),
+                                  user.emailController.text.trim(), user.passwordController.text.trim(),
                                   (text, color, icon) async {
                                     Navigator.of(context).pop();
                                     await MaterialBannerAlert1(context).materialBannerAlert1(text, color, icon);
                                   } 
                                 ).then((registrationResult) async {
                                   registrationResult == 'yes'? await FirebaseEmailVerification().verifyEmail(
-                                    (text, color, icon) async{
-                                      //Navigator.of(context).pop();
+                                    (text, color, icon) async{                                      
                                       await MaterialBannerAlert1(context).materialBannerAlert1(text, color, icon);
                                     }
                                   ): {};
                                 });
-
-                                user.mobileEmailController.clear(); user.passwordController.clear(); 
+                                user.emailController.clear(); user.passwordController.clear(); 
                                 user.usernameController.clear(); user.confirmPassController.clear();
                                 setState(() => isRegistered = true);
                               } else {

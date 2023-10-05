@@ -38,7 +38,8 @@ class FirebaseEmailVerification{
       final registeredUser = FirebaseAuth.instance.currentUser;
       await registeredUser!.sendEmailVerification();
       await firebaseAlert(
-        'An Email Verification Link has been sent to your email. Please, go and verify your email!', Colors.blue, Icons.check
+        'EMAIL NOT VERIFIED!!! An Email Verification Link has been sent to your email. Please, go and verify your email!', 
+        Colors.red, Icons.warning_rounded
       );
     } catch (e){
       await firebaseAlert(
