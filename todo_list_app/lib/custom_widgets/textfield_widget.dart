@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class TextFields{
-  Widget textFields(String text, TextEditingController control, Function(String)? onChanged){
+class AddTodoTextFields{
+  Widget addTodoTextFields(String text, TextEditingController control, Function(String)? onChanged){
     return Container(
       padding: const EdgeInsets.all(10), margin: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -33,8 +33,10 @@ class TextFields{
   }
 }
 
-class TextFields1{
-  Widget textField(bool enabled, Color color, String hintText, TextEditingController controller, obscureText){
+class LoginAndSignUpTextFields{
+  Widget loginAndSignUpTextField(
+      bool enabled, Color color, String hintText, TextEditingController controller, bool obscureText, Widget? suffixIcon
+    ){
     return  Container(
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 0), 
       decoration: BoxDecoration(
@@ -47,6 +49,7 @@ class TextFields1{
           autocorrect: true, cursorColor: Colors.black,
           style: GoogleFonts.getFont('Quicksand', color: Colors.blueGrey.shade900, fontWeight: FontWeight.w500,), 
           decoration: InputDecoration(
+            suffixIcon: suffixIcon,
             border: InputBorder.none, hintText: hintText,
             hintStyle: GoogleFonts.getFont('Nunito', color: Colors.black45, fontWeight: FontWeight.w500,),
           ),

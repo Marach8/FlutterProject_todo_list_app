@@ -27,7 +27,7 @@ class _Login extends State<LoginPage> {
   @override
   Widget build(BuildContext context){
     
-    var w = MediaQuery.of(context).size.width;
+    var w = MediaQuery.of(context).size.width; bool obscureText = true;
 
     return Consumer<AppUsers>(
       builder: ((context, user, child) =>
@@ -57,14 +57,30 @@ class _Login extends State<LoginPage> {
                       const SizedBox(height: 10), const Divider(height:1, color: Colors.green), const SizedBox(height:10),
                       !isRegistered? Row(children:[TextItem().textItem('Username', 15, FontWeight.w600, Colors.black45)])
                       : const SizedBox(), 
-                      !isRegistered? TextFields1().textField(true, Colors.white, '', user.usernameController, false): const SizedBox(), 
+                      !isRegistered? LoginAndSignUpTextFields().loginAndSignUpTextField(
+                        true, Colors.white, '', user.usernameController, false, null
+                      ): const SizedBox(), 
                       Row(children:[TextItem().textItem('Email', 15, FontWeight.w600, Colors.black45)]), 
-                      TextFields1().textField(forgotPassword? false: true, Colors.white, '', user.emailController, false), 
+                      LoginAndSignUpTextFields().loginAndSignUpTextField(
+                        forgotPassword? false: true, Colors.white, '', user.emailController, false, null
+                      ), 
                       Row(children:[TextItem().textItem('Password', 15, FontWeight.w600, Colors.black45)]), 
-                      TextFields1().textField(forgotPassword? false : true, Colors.white, '', user.passwordController, true),
+                      LoginAndSignUpTextFields().loginAndSignUpTextField(
+                        forgotPassword? false : true, Colors.white, '', user.passwordController, obscureText, 
+                        IconButton(
+                          onPressed: () => setState(()=> obscureText == !obscureText),
+                          icon: const Icon(Icons.remove_red_eye_sharp)
+                        ),
+                      ),
                       !isRegistered? Row(children:[TextItem().textItem('Confirm password', 15, FontWeight.w600, Colors.black45)])
                       : const SizedBox(), 
-                      !isRegistered? TextFields1().textField(true, Colors.white, '', user.confirmPassController, true): const SizedBox(),
+                      !isRegistered? LoginAndSignUpTextFields().loginAndSignUpTextField(
+                        true, Colors.white, '', user.confirmPassController, obscureText,
+                        IconButton(
+                          onPressed: () => setState(()=> obscureText == !obscureText),
+                          icon: const Icon(Icons.remove_red_eye_sharp)
+                        ),
+                      ): const SizedBox(),
                       SizedBox(
                         height: 40,
                         child: Stack(                        
@@ -114,8 +130,8 @@ class _Login extends State<LoginPage> {
                                               ]
                                             ),
                                             const SizedBox(height:20),const Divider(height: 1), const SizedBox(height:20),
-                                            TextFields1().textField(
-                                              true, Colors.blueGrey.shade300, 'Enter email', user.forgotPasswordController, false
+                                            LoginAndSignUpTextFields().loginAndSignUpTextField(
+                                              true, Colors.blueGrey.shade300, 'Enter email', user.forgotPasswordController, false, null
                                             ), 
                                             const SizedBox(height:20),const Divider(height: 1), const SizedBox(height:20), 
                                             ElevatedButton(

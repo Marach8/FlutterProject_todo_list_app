@@ -34,7 +34,7 @@ class _AU extends State<AddUpdate> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                TextFields().textFields(
+                AddTodoTextFields().addTodoTextFields(
                   'Title', user.todoTitleController,
                   (newTitle){
                     if(user.isInUpdateMode){
@@ -47,8 +47,8 @@ class _AU extends State<AddUpdate> {
                     }                  
                   }
                 ), 
-                TextFields().textFields('Date/Time', user.todoDateTimeController, null), 
-                TextFields().textFields('Content', user.todoContentController, null),
+                AddTodoTextFields().addTodoTextFields('Date/Time', user.todoDateTimeController, null), 
+                AddTodoTextFields().addTodoTextFields('Content', user.todoContentController, null),
         
                 SizedBox(height: h*0.02),
             
