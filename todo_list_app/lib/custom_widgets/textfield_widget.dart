@@ -35,7 +35,7 @@ class AddTodoTextFields{
 
 class LoginAndSignUpTextFields{
   Widget loginAndSignUpTextField(
-      bool enabled, Color color, String hintText, TextEditingController controller, bool obscureText, Widget? suffixIcon
+      Widget? suffixIcon, bool enabled, Color color, String hintText, TextEditingController controller, bool obscureText,
     ){
     return  Container(
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 0), 

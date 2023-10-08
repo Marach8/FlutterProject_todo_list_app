@@ -27,7 +27,7 @@ class _Login extends State<LoginPage> {
   @override
   Widget build(BuildContext context){
     
-    var w = MediaQuery.of(context).size.width; bool obscureText = true;
+    var w = MediaQuery.of(context).size.width; bool obscureText1 = true;
 
     return Consumer<AppUsers>(
       builder: ((context, user, child) =>
@@ -58,32 +58,32 @@ class _Login extends State<LoginPage> {
                       !isRegistered? Row(children:[TextItem().textItem('Username', 15, FontWeight.w600, Colors.black45)])
                       : const SizedBox(), 
                       !isRegistered? LoginAndSignUpTextFields().loginAndSignUpTextField(
-                        true, Colors.white, '', user.usernameController, false, null
+                        null, true, Colors.white, '', user.usernameController, false,
                       ): const SizedBox(), 
                       Row(children:[TextItem().textItem('Email', 15, FontWeight.w600, Colors.black45)]), 
                       LoginAndSignUpTextFields().loginAndSignUpTextField(
-                        forgotPassword? false: true, Colors.white, '', user.emailController, false, null
+                        null, forgotPassword? false: true, Colors.white, '', user.emailController, false,
                       ), 
                       Row(children:[TextItem().textItem('Password', 15, FontWeight.w600, Colors.black45)]), 
                       LoginAndSignUpTextFields().loginAndSignUpTextField(
-                        forgotPassword? false : true, Colors.white, '', user.passwordController, obscureText, 
                         IconButton(
-                          onPressed: () => setState(()=> obscureText == !obscureText),
+                          onPressed: () => setState(()=> obscureText1 == !obscureText1),
                           icon: const Icon(Icons.remove_red_eye_sharp)
                         ),
+                        forgotPassword? false : true, Colors.white, '', user.passwordController, obscureText1,                        
                       ),
                       !isRegistered? Row(children:[TextItem().textItem('Confirm password', 15, FontWeight.w600, Colors.black45)])
                       : const SizedBox(), 
                       !isRegistered? LoginAndSignUpTextFields().loginAndSignUpTextField(
-                        true, Colors.white, '', user.confirmPassController, obscureText,
                         IconButton(
-                          onPressed: () => setState(()=> obscureText == !obscureText),
+                          onPressed: () {setState(() {obscureText1 == !obscureText1; print(obscureText1);});},
                           icon: const Icon(Icons.remove_red_eye_sharp)
                         ),
+                        true, Colors.white, '', user.confirmPassController, obscureText1,                       
                       ): const SizedBox(),
                       SizedBox(
                         height: 40,
-                        child: Stack(                        
+                        child: Stack(
                           children:[
                             Positioned(left: 0, 
                               child: !isRegistered? const SizedBox(): GestureDetector(
@@ -131,7 +131,7 @@ class _Login extends State<LoginPage> {
                                             ),
                                             const SizedBox(height:20),const Divider(height: 1), const SizedBox(height:20),
                                             LoginAndSignUpTextFields().loginAndSignUpTextField(
-                                              true, Colors.blueGrey.shade300, 'Enter email', user.forgotPasswordController, false, null
+                                              null, true, Colors.blueGrey.shade300, 'Enter email', user.forgotPasswordController, false,
                                             ), 
                                             const SizedBox(height:20),const Divider(height: 1), const SizedBox(height:20), 
                                             ElevatedButton(
