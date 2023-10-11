@@ -15,7 +15,7 @@ class LoginPage extends StatefulWidget{
 }
 
 class _Login extends State<LoginPage> {
-  bool forgotPassword = false; bool isRegistered = true; 
+  bool forgotPassword = false; bool isRegistered = true; bool obscureText1 = true;
   
   String appBarText(){
     if(isRegistered && !forgotPassword){return 'User Login';} 
@@ -27,7 +27,7 @@ class _Login extends State<LoginPage> {
   @override
   Widget build(BuildContext context){
     
-    var w = MediaQuery.of(context).size.width; bool obscureText1 = true;
+    var w = MediaQuery.of(context).size.width; 
 
     return Consumer<AppUsers>(
       builder: ((context, user, child) =>
@@ -67,7 +67,7 @@ class _Login extends State<LoginPage> {
                       Row(children:[TextItem().textItem('Password', 15, FontWeight.w600, Colors.black45)]), 
                       LoginAndSignUpTextFields().loginAndSignUpTextField(
                         IconButton(
-                          onPressed: () => setState(()=> obscureText1 == !obscureText1),
+                          onPressed: () => setState(()=> obscureText1 = !obscureText1),
                           icon: const Icon(Icons.remove_red_eye_sharp)
                         ),
                         forgotPassword? false : true, Colors.white, '', user.passwordController, obscureText1,                        
@@ -76,7 +76,7 @@ class _Login extends State<LoginPage> {
                       : const SizedBox(), 
                       !isRegistered? LoginAndSignUpTextFields().loginAndSignUpTextField(
                         IconButton(
-                          onPressed: () {setState(() {obscureText1 == !obscureText1; print(obscureText1);});},
+                          onPressed: () => setState(() => obscureText1 = !obscureText1),
                           icon: const Icon(Icons.remove_red_eye_sharp)
                         ),
                         true, Colors.white, '', user.confirmPassController, obscureText1,                       
