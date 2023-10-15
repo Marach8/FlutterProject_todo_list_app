@@ -84,112 +84,120 @@ class _Td extends State<TodoHome>{
                 }             
                 
                 return Center(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.all(20), padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(221, 30, 30, 30),
-                            boxShadow: const [BoxShadow(color: Colors.blueGrey, blurRadius: 10, spreadRadius: 1,)],
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: Text.rich(
-                            TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: 'Hello ${user.loggedInUser}, Welcome To Your Todo Manager. You currently have ',
-                                  style: const TextStyle(
-                                  fontFamily: 'monospace', fontSize: 40,
-                                  fontWeight: FontWeight.bold, color: Colors.blueGrey
-                                  )
-                                ),
-                                TextSpan(
-                                  text: '${user.dataBase.length}',
-                                  style: TextStyle(
-                                  fontFamily: 'monospace', fontSize: 40,
-                                  fontWeight: FontWeight.bold, color: Colors.blueGrey.shade200
-                                  )
-                                ),
-                                TextSpan(
-                                  text: user.dataBase.length == 1? ' Todo' : ' Todos',
-                                  style: const TextStyle(
-                                  fontFamily: 'monospace', fontSize: 40,
-                                  fontWeight: FontWeight.bold, color: Colors.blueGrey
-                                  )
-                                ),
-                              ]
+                  child: SingleChildScrollView(                    
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/hills-2836301_1280.jpg'),
+                          fit: BoxFit.cover
+                        )
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.all(20), padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(221, 30, 30, 30),
+                              boxShadow: const [BoxShadow(color: Colors.blueGrey, blurRadius: 10, spreadRadius: 1,)],
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            child: Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: 'Hello ${user.loggedInUser}, Welcome To Your Todo Manager. You currently have ',
+                                    style: const TextStyle(
+                                    fontFamily: 'monospace', fontSize: 40,
+                                    fontWeight: FontWeight.bold, color: Colors.blueGrey
+                                    )
+                                  ),
+                                  TextSpan(
+                                    text: '${user.dataBase.length}',
+                                    style: TextStyle(
+                                    fontFamily: 'monospace', fontSize: 40,
+                                    fontWeight: FontWeight.bold, color: Colors.blueGrey.shade200
+                                    )
+                                  ),
+                                  TextSpan(
+                                    text: user.dataBase.length == 1? ' Todo' : ' Todos',
+                                    style: const TextStyle(
+                                    fontFamily: 'monospace', fontSize: 40,
+                                    fontWeight: FontWeight.bold, color: Colors.blueGrey
+                                    )
+                                  ),
+                                ]
+                              )
                             )
-                          )
-                        ),
-                  
-                        const SizedBox(height: 20),
-                  
-                        Container(
-                          width: double.infinity,
-                          margin: const EdgeInsets.all(20),                  
-                          decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                              colors: [Colors.green, Colors.blueGrey, Colors.blue],
-                              tileMode: TileMode.mirror
-                            ),
-                            color: Colors.white.withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(20)
                           ),
-                          child: Center(
-                            child: Wrap(
-                              children: [
-                                HomeButtons().homeButton(Icons.add, 'Add', () => Navigator.of(context).pushNamed(addTodoPageRoute)),
-                                HomeButtons().homeButton(
-                                  Icons.view_array, 'View', (){
-                                    if (user.dataBase.isNotEmpty) {
-                                      MaterialBannerAlert(context: context).materialBannerAlert(
-                                        'To view an item in detail, tap on the item.', Icons.view_array_rounded
-                                      );
-                                      Future.delayed(const Duration(seconds:5), () =>ScaffoldMessenger.of(context).hideCurrentMaterialBanner());
-                                      Navigator.of(context).pushNamed('/view');
-                                    } else {
-                                      SnackBarAlert(context: context).snackBarAlert(
-                                        'Oops!!! seems like you currently have no Todos. Add Todos first!'
-                                      );
+                                      
+                          const SizedBox(height: 20),
+                                      
+                          Container(
+                            width: double.infinity,
+                            margin: const EdgeInsets.all(20),                  
+                            decoration: BoxDecoration(
+                              gradient: const LinearGradient(
+                                colors: [Colors.green, Colors.blueGrey, Colors.blue],
+                                tileMode: TileMode.mirror
+                              ),
+                              color: Colors.white.withOpacity(0.4),
+                              borderRadius: BorderRadius.circular(20)
+                            ),
+                            child: Center(
+                              child: Wrap(
+                                children: [
+                                  HomeButtons().homeButton(Icons.add, 'Add', () => Navigator.of(context).pushNamed(addTodoPageRoute)),
+                                  HomeButtons().homeButton(
+                                    Icons.view_array, 'View', (){
+                                      if (user.dataBase.isNotEmpty) {
+                                        MaterialBannerAlert(context: context).materialBannerAlert(
+                                          'To view an item in detail, tap on the item.', Icons.view_array_rounded
+                                        );
+                                        Future.delayed(const Duration(seconds:5), () =>ScaffoldMessenger.of(context).hideCurrentMaterialBanner());
+                                        Navigator.of(context).pushNamed('/view');
+                                      } else {
+                                        SnackBarAlert(context: context).snackBarAlert(
+                                          'Oops!!! seems like you currently have no Todos. Add Todos first!'
+                                        );
+                                      }
                                     }
-                                  }
-                                ),
-                                HomeButtons().homeButton(
-                                  Icons.delete, 'Delete', (){
-                                    if (user.dataBase.isNotEmpty) {
-                                      MaterialBannerAlert(context: context).materialBannerAlert(
-                                        'To delete an item, swipe the item to the left or right.', Icons.delete
-                                      );
-                                      Future.delayed(const Duration(seconds:5), () =>ScaffoldMessenger.of(context).hideCurrentMaterialBanner());
-                                      Navigator.of(context).pushNamed(viewPageRoute);
-                                    } else {
-                                      SnackBarAlert(context: context).snackBarAlert(
-                                        'Oops!!! seems like you currently have no Todos. Add Todos first!'
-                                      );
+                                  ),
+                                  HomeButtons().homeButton(
+                                    Icons.delete, 'Delete', (){
+                                      if (user.dataBase.isNotEmpty) {
+                                        MaterialBannerAlert(context: context).materialBannerAlert(
+                                          'To delete an item, swipe the item to the left or right.', Icons.delete
+                                        );
+                                        Future.delayed(const Duration(seconds:5), () =>ScaffoldMessenger.of(context).hideCurrentMaterialBanner());
+                                        Navigator.of(context).pushNamed(viewPageRoute);
+                                      } else {
+                                        SnackBarAlert(context: context).snackBarAlert(
+                                          'Oops!!! seems like you currently have no Todos. Add Todos first!'
+                                        );
+                                      }
                                     }
-                                  }
-                                ),
-                                HomeButtons().homeButton(
-                                  Icons.update_rounded, 'Update', (){
-                                    if (user.dataBase.isNotEmpty) {
-                                      MaterialBannerAlert(context: context).materialBannerAlert(
-                                        'To update an item, longpress on it to enter update mode.', Icons.update_sharp
-                                      );
-                                      Future.delayed(const Duration(seconds:5), () =>ScaffoldMessenger.of(context).hideCurrentMaterialBanner());
-                                      Navigator.of(context).pushNamed('/view');
-                                    } else {
-                                      SnackBarAlert(context: context)
-                                      .snackBarAlert('Oops!!! seems like you currently have no Todos. Add Todos first!');
+                                  ),
+                                  HomeButtons().homeButton(
+                                    Icons.update_rounded, 'Update', (){
+                                      if (user.dataBase.isNotEmpty) {
+                                        MaterialBannerAlert(context: context).materialBannerAlert(
+                                          'To update an item, longpress on it to enter update mode.', Icons.update_sharp
+                                        );
+                                        Future.delayed(const Duration(seconds:5), () =>ScaffoldMessenger.of(context).hideCurrentMaterialBanner());
+                                        Navigator.of(context).pushNamed('/view');
+                                      } else {
+                                        SnackBarAlert(context: context)
+                                        .snackBarAlert('Oops!!! seems like you currently have no Todos. Add Todos first!');
+                                      }
                                     }
-                                  }
-                                ),                    
-                              ]
+                                  ),                    
+                                ]
+                              ),
                             ),
                           ),
-                        ),
-                      ]
+                        ]
+                      ),
                     ),
                   ),
                 );
