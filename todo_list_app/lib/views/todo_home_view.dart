@@ -98,8 +98,8 @@ class _Td extends State<TodoHome>{
                           Container(
                             margin: const EdgeInsets.all(20), padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                              color: const Color.fromARGB(221, 30, 30, 30),
-                              boxShadow: const [BoxShadow(color: Colors.blueGrey, blurRadius: 10, spreadRadius: 1,)],
+                              color: const Color.fromARGB(221, 30, 30, 30).withOpacity(0.3),
+                              boxShadow: [BoxShadow(color: Colors.blueGrey.withOpacity(0.1), blurRadius: 10, spreadRadius: 1,)],
                               borderRadius: BorderRadius.circular(50),
                             ),
                             child: Text.rich(
@@ -107,9 +107,9 @@ class _Td extends State<TodoHome>{
                                 children: [
                                   TextSpan(
                                     text: 'Hello ${user.loggedInUser}, Welcome To Your Todo Manager. You currently have ',
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                     fontFamily: 'monospace', fontSize: 40,
-                                    fontWeight: FontWeight.bold, color: Colors.blueGrey
+                                    fontWeight: FontWeight.bold, color: Colors.blueGrey.shade800
                                     )
                                   ),
                                   TextSpan(
