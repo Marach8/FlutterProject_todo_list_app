@@ -38,9 +38,9 @@ class _Login extends State<LoginPage> {
           ),
           backgroundColor: forgotPassword? Colors.white24: Colors.white,
           body: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [Colors.black87, Colors.yellow.shade300, Colors.black]
+                colors: [Colors.black87, Colors.black45, Colors.black]
               ),
             ),
             child: Center(
