@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppUsers extends ChangeNotifier{
 
-  List<List<String>> dataBase = [];
-  List<List<String>> wasteBin = [];
+  List<List<String>> dataBase = [], wasteBin = [];
 
   TextEditingController todoTitleController = TextEditingController();  
   TextEditingController emailController = TextEditingController();
@@ -16,7 +15,7 @@ class AppUsers extends ChangeNotifier{
   String loggedInUser = ''; bool done = true;
   bool isInUpdateMode = false; String initialTitle = ''; String initialDate = ''; String initialTodo = ''; 
   int updateIndex = 0;  dynamic firebaseCurrentUser ;
-
+  
   @override
   void dispose(){todoTitleController.dispose(); todoDateTimeController.dispose();
     todoContentController.dispose(); emailController.dispose(); 
