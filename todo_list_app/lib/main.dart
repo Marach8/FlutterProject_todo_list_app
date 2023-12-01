@@ -10,9 +10,7 @@ import 'package:todo_list_app/functions/todo_provider.dart';
 import 'package:todo_list_app/views/todo_views.dart';
 
 void main() async{
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(const TodoApp());
+  WidgetsFlutterBinding.ensureInitialized(); await Firebase.initializeApp(); runApp(const TodoApp());
 }
 
 class TodoApp extends StatelessWidget{
@@ -20,8 +18,8 @@ class TodoApp extends StatelessWidget{
 
   @override
   Widget build(BuildContext context){
-    return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (context) => AppUsers())],
+    return 
+      ChangeNotifierProvider(create: (_) => AppUsers(),
       child: MaterialApp(
         theme: ThemeData(
           useMaterial3: true, brightness: Brightness.dark
