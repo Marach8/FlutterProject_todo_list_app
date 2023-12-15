@@ -65,6 +65,7 @@ class _Td extends State<TodoHome>{
             ),
             backgroundColor: const Color.fromARGB(255, 19, 19, 19), foregroundColor: Colors.blueGrey.shade300,          
           ),
+          
           body: FutureBuilder<List<dynamic>>(
             future: FirebaseGetUserDetails().getCurrentUserDetails(),
             builder: (context, snapshot)  {

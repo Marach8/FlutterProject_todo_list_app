@@ -10,7 +10,9 @@ import 'package:todo_list_app/functions/todo_provider.dart';
 import 'package:todo_list_app/views/todo_views.dart';
 
 void main() async{
-  WidgetsFlutterBinding.ensureInitialized(); await Firebase.initializeApp(); runApp(const TodoApp());
+  WidgetsFlutterBinding.ensureInitialized(); 
+  await Firebase.initializeApp(); 
+  runApp(const TodoApp());
 }
 
 class TodoApp extends StatelessWidget{

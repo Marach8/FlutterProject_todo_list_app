@@ -74,7 +74,9 @@ class FirebaseAuthLogin{
       return 'no';
 
     } catch (e){
-      await firebaseAlert("Unable To Login!!! Please Check Your Network Connection And Try Again.", Colors.red, Icons.cancel_rounded);
+      await firebaseAlert(
+        "Unable To Login!!! Please Check Your Network Connection And Try Again.", Colors.red, Icons.cancel_rounded
+      );
       return 'no';
     }
   }
