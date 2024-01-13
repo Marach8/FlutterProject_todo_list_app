@@ -1,1 +1,1 @@
-This is a Todo manager Application with firebase Database where you can perform CRUD operation
+This is a Todo manager Application with firebase Database. It supports CRUD operations
