@@ -31,7 +31,7 @@ class TodoApp extends StatelessWidget{
           future: FirebaseGetUserDetails().firebaseCurrentUser(),
           builder:(context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done){
-              if(snapshot.hasData && snapshot.data.emailVerified){return const TodoHome();}
+              if(snapshot.hasData && snapshot.data!.emailVerified){return const TodoHome();}
               else {return const LoginPage();}
             } else{return const CircularProgressIndicator();}
           },

@@ -60,7 +60,7 @@ class FirebaseAuthLogin{
       );
       User? user = FirebaseAuth.instance.currentUser;
       if (user!.emailVerified){
-        DocumentSnapshot<Map<String, dynamic>> userData = await FirebaseFirestore.instance.collection('Users').doc(user!.uid).get();
+        final userData = await FirebaseFirestore.instance.collection('Users').doc(user.uid).get();
         await firebaseAlert('Login Successful...', Colors.green, Icons.check);
         return userData['username'];
       } else {return 'email not verified';}
@@ -100,7 +100,7 @@ class FirebaseResetPassword{
 }
 
 class FirebaseGetUserDetails{
-  Future<dynamic> firebaseCurrentUser() async{
+  Future<User?> firebaseCurrentUser() async{
     User? user = FirebaseAuth.instance.currentUser;
     return user;
   }
