@@ -13,25 +13,44 @@ class AppUsers extends ChangeNotifier{
   TextEditingController forgotPasswordController = TextEditingController(); 
   TextEditingController confirmPassController = TextEditingController();
   String loggedInUser = ''; bool done = true;
-  bool isInUpdateMode = false; String initialTitle = ''; String initialDate = ''; String initialTodo = ''; 
-  int updateIndex = 0;  dynamic firebaseCurrentUser ;
+  bool isInUpdateMode = false; 
+  String initialTitle = ''; 
+  String initialDate = ''; 
+  String initialTodo = ''; 
+  int updateIndex = 0;  
+  dynamic firebaseCurrentUser ;
   
   @override
-  void dispose(){todoTitleController.dispose(); todoDateTimeController.dispose();
-    todoContentController.dispose(); emailController.dispose(); 
-    passwordController.dispose();  usernameController.dispose(); 
-    confirmPassController.dispose(); forgotPasswordController.dispose(); 
-    super.dispose();}
+  void dispose(){
+    todoTitleController.dispose(); 
+    todoDateTimeController.dispose();
+    todoContentController.dispose(); 
+    emailController.dispose(); 
+    passwordController.dispose();  
+    usernameController.dispose(); 
+    confirmPassController.dispose(); 
+    forgotPasswordController.dispose(); 
+    super.dispose();
+    }
   
   void addTodo(int index){
-    List<String> newList = [todoTitleController.text, todoDateTimeController.text, todoContentController.text]; 
+    List<String> newList = [
+      todoTitleController.text, 
+      todoDateTimeController.text, 
+      todoContentController.text
+    ]; 
     dataBase.insert(index, newList);
     notifyListeners();
   }
 
   void updateTodo(String keyItem, String dateItem, String todoItem, int removeIndex,){
-    initialTitle = keyItem; initialDate = dateItem; initialTodo = todoItem; updateIndex = removeIndex;
-    todoTitleController.text = keyItem; todoDateTimeController.text = dateItem; todoContentController.text = todoItem;
+    initialTitle = keyItem; 
+    initialDate = dateItem; 
+    initialTodo = todoItem; 
+    updateIndex = removeIndex;
+    todoTitleController.text = keyItem;
+    todoDateTimeController.text = dateItem; 
+    todoContentController.text = todoItem;
     dataBase.removeAt(removeIndex);
     notifyListeners();
   }
