@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_app/constants/routes.dart';
 import 'package:todo_list_app/custom_widgets/alert_widget.dart';
@@ -15,7 +16,9 @@ class LoginPage extends StatefulWidget{
 }
 
 class _Login extends State<LoginPage> {
-  bool forgotPassword = false; bool isRegistered = true; bool obscureText1 = true;
+  bool forgotPassword = false; 
+  bool isRegistered = true; 
+  bool obscureText1 = true;
   
   String appBarText(){
     if(isRegistered && !forgotPassword){return 'User Login';} 
@@ -34,9 +37,11 @@ class _Login extends State<LoginPage> {
         Scaffold(
           appBar: AppBar(
             title: Text(appBarText()), centerTitle: true,
-            backgroundColor: forgotPassword? Colors.blueGrey.shade700: Colors.white, elevation: 10, foregroundColor: Colors.black,
+            backgroundColor: forgotPassword? Colors.blueGrey.shade700: Colors.white, 
+            elevation: 10, 
+            foregroundColor: Colors.black,
           ),
-          backgroundColor: forgotPassword? Colors.white24: Colors.white,
+          backgroundColor: forgotPassword ? Colors.white24: Colors.white,
           body: Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
@@ -46,35 +51,49 @@ class _Login extends State<LoginPage> {
             child: Center(
               child: SingleChildScrollView(
                 child: Container(                    
-                  margin: const EdgeInsets.only(left: 20, right: 20), padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                  margin: const EdgeInsets.only(left: 20, right: 20), 
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                   decoration: BoxDecoration(                    
-                    color: Colors.white70, borderRadius: BorderRadius.circular(10),
+                    color: Colors.white70, 
+                    borderRadius: BorderRadius.circular(10),
                     boxShadow: const [BoxShadow(blurRadius: 10, spreadRadius:1, color: Colors.black38)]                      
                   ),
                   child: Column(
                     children: [                          
-                      TextItem().textItem(isRegistered? 'Sign In': 'Sign Up', 25, FontWeight.w800, Colors.green.shade900),
-                      const SizedBox(height: 10), const Divider(height:1, color: Colors.green), const SizedBox(height:10),
-                      !isRegistered? Row(children:[TextItem().textItem('Username', 15, FontWeight.w600, Colors.black45)])
+                      TextItem().textItem(
+                        isRegistered? 'Sign In': 'Sign Up', 
+                        25, FontWeight.w800, Colors.green.shade900
+                      ),
+                      const SizedBox(height: 10), 
+                      const Divider(height:1, color: Colors.green), 
+                      const SizedBox(height:10),
+                      !isRegistered? Row(
+                        children:[TextItem().textItem('Username', 15, FontWeight.w600, Colors.black45)])
                       : const SizedBox(), 
-                      !isRegistered? LoginAndSignUpTextFields().loginAndSignUpTextField(
+                      !isRegistered ? LoginAndSignUpTextFields().loginAndSignUpTextField(
                         null, true, Colors.white, '', user.usernameController, false,
                       ): const SizedBox(), 
-                      Row(children:[TextItem().textItem('Email', 15, FontWeight.w600, Colors.black45)]), 
+                      Row(
+                        children:[TextItem().textItem('Email', 15, FontWeight.w600, Colors.black45)]
+                      ), 
                       LoginAndSignUpTextFields().loginAndSignUpTextField(
                         null, forgotPassword? false: true, Colors.white, '', user.emailController, false,
                       ), 
-                      Row(children:[TextItem().textItem('Password', 15, FontWeight.w600, Colors.black45)]), 
+                      Row(
+                        children:[TextItem().textItem('Password', 15, FontWeight.w600, Colors.black45)]
+                      ), 
                       LoginAndSignUpTextFields().loginAndSignUpTextField(
                         IconButton(
                           onPressed: () => setState(()=> obscureText1 = !obscureText1),
                           icon: const Icon(Icons.remove_red_eye_sharp)
                         ),
-                        forgotPassword? false : true, Colors.white, '', user.passwordController, obscureText1,                        
+                        forgotPassword ? false : true, Colors.white, '', user.passwordController, obscureText1,                        
                       ),
-                      !isRegistered? Row(children:[TextItem().textItem('Confirm password', 15, FontWeight.w600, Colors.black45)])
+                      !isRegistered? Row(
+                        children:[TextItem().textItem('Confirm password', 15, FontWeight.w600, Colors.black45)]
+                      )
                       : const SizedBox(), 
-                      !isRegistered? LoginAndSignUpTextFields().loginAndSignUpTextField(
+                      !isRegistered ? LoginAndSignUpTextFields().loginAndSignUpTextField(
                         IconButton(
                           onPressed: () => setState(() => obscureText1 = !obscureText1),
                           icon: const Icon(Icons.remove_red_eye_sharp)
@@ -88,25 +107,36 @@ class _Login extends State<LoginPage> {
                             Positioned(left: 0, 
                               child: !isRegistered? const SizedBox(): GestureDetector(
                                 onTap: (){
-                                  user.emailController.clear(); user.passwordController.clear(); 
+                                  user.emailController.clear(); 
+                                  user.passwordController.clear(); 
                                   setState(() => forgotPassword = true);
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.only(topLeft:Radius.circular(20), topRight: Radius.circular(20),)
+                                        borderRadius: BorderRadius.only(
+                                          topLeft:Radius.circular(20), topRight: Radius.circular(20),
+                                        )
                                       ),
-                                      backgroundColor: Colors.blueGrey.shade700, duration: const Duration(days: 1),
+                                      backgroundColor: Colors.blueGrey.shade700, 
+                                      duration: const Duration(days: 1),
                                       content: Container(
                                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                                         decoration: BoxDecoration(
-                                          color: Colors.white70, borderRadius: BorderRadius.circular(10),
-                                          boxShadow: const [BoxShadow(blurRadius: 10, spreadRadius:1, color: Colors.black54)]                      
+                                          color: Colors.white70, 
+                                          borderRadius: BorderRadius.circular(10),
+                                          boxShadow: const [
+                                            BoxShadow(blurRadius: 10, spreadRadius:1, color: Colors.black54)
+                                          ]                      
                                         ),
                                         child: Column(
                                           children: [
                                             Stack(
                                               children: [
-                                                Center(child: TextItem().textItem('Password Reset', 20, FontWeight.w800, Colors.black,),),
+                                                Center(
+                                                  child: TextItem().textItem(
+                                                    'Password Reset', 20, FontWeight.w800, Colors.black,
+                                                  )
+                                                ),
                                                 Positioned(
                                                   right:0,
                                                   child: Container(
@@ -122,18 +152,27 @@ class _Login extends State<LoginPage> {
                                                           user.forgotPasswordController.clear();
                                                           ScaffoldMessenger.of(context).hideCurrentSnackBar();
                                                           setState(() => forgotPassword = false);
-                                                        }, icon: const Icon(Icons.arrow_downward_rounded, color: Colors.black)
+                                                        }, 
+                                                        icon: const Icon(
+                                                          Icons.arrow_downward_rounded, color: Colors.black
+                                                        )
                                                       ),
                                                     ),
                                                   ),
                                                 )
                                               ]
                                             ),
-                                            const SizedBox(height:20),const Divider(height: 1), const SizedBox(height:20),
+                                            const SizedBox(height:20),
+                                            const Divider(height: 1), const SizedBox(height:20),
                                             LoginAndSignUpTextFields().loginAndSignUpTextField(
-                                              null, true, Colors.blueGrey.shade300, 'Enter email', user.forgotPasswordController, false,
+                                              null, true, 
+                                              Colors.blueGrey.shade300, 
+                                              'Enter email', 
+                                              user.forgotPasswordController, false,
                                             ), 
-                                            const SizedBox(height:20),const Divider(height: 1), const SizedBox(height:20), 
+                                            const Gap(20),
+                                            const Divider(height: 1), 
+                                            const Gap(20),
                                             ElevatedButton(
                                               onPressed: () async{                                                                                                        
                                                 if(user.forgotPasswordController.text.isNotEmpty){
@@ -153,16 +192,21 @@ class _Login extends State<LoginPage> {
                                                   });
                                                 } else{
                                                   MaterialBannerAlert1(context).materialBannerAlert1(
-                                                    'Fields Cannot be Empty!!!', Colors.red, Icons.warning_rounded
+                                                    'Fields Cannot be Empty!!!',
+                                                    Colors.red, Icons.warning_rounded
                                                   );
                                                 }                                                    
                                               },                          
                                               style: ButtonStyle(
                                                 backgroundColor: MaterialStatePropertyAll(Colors.green.shade300),
                                                 fixedSize: MaterialStatePropertyAll(Size(w, 30)),
-                                                side: const MaterialStatePropertyAll(BorderSide(width: 1, strokeAlign: 3, color: Colors.black))
+                                                side: const MaterialStatePropertyAll(
+                                                  BorderSide(width: 1, strokeAlign: 3, color: Colors.black)
+                                                )
                                               ),
-                                              child: TextItem().textItem('Change Password', 15, FontWeight.w700, Colors.black)
+                                              child: TextItem().textItem(
+                                                'Change Password', 15, FontWeight.w700, Colors.black
+                                              )
                                             ),
                                           ],
                                         ),
@@ -170,30 +214,40 @@ class _Login extends State<LoginPage> {
                                     )
                                   );
                                 },
-                                child: TextItem().textItem('Forgot Password?', 13, FontWeight.w800, Colors.blueGrey.shade700,)
+                                child: TextItem().textItem(
+                                  'Forgot Password?', 13, FontWeight.w800, Colors.blueGrey.shade700,
+                                )
                               )
                             ),
                             Positioned(right: 0, 
                               child: GestureDetector(
                                 onTap: (){
-                                  user.emailController.clear(); user.passwordController.clear(); 
-                                  user.usernameController.clear(); user.confirmPassController.clear();
+                                  user.emailController.clear(); 
+                                  user.passwordController.clear(); 
+                                  user.usernameController.clear(); 
+                                  user.confirmPassController.clear();
                                   setState(() => isRegistered = !isRegistered);
                                 },
                                 child: TextItem().textItem(
-                                  isRegistered? 'Not Registered?': 'Already Registered?', 13, FontWeight.w800, Colors.blueGrey.shade700,
+                                  isRegistered? 'Not Registered?': 'Already Registered?',
+                                  13, FontWeight.w800, 
+                                  Colors.blueGrey.shade700,
                                 )
                               )
                             ),
                           ] 
                         ),
                       ),
-                      const SizedBox(height: 25), const Divider(height:1, color: Colors.green), const SizedBox(height: 25),
+                      const Gap(20), 
+                      const Divider(height:1, color: Colors.green), 
+                      const Gap(20),
                       ElevatedButton(
                         onPressed: () async{
                 
                           //user Login
-                          bool loginFields = [user.emailController, user.passwordController]
+                          bool loginFields = [
+                            user.emailController, user.passwordController
+                          ]
                           .every((controller) => controller.text.isNotEmpty);
                           if(isRegistered){
                             if(loginFields) {
@@ -227,14 +281,20 @@ class _Login extends State<LoginPage> {
                 
                           //User Registration
                           else {
-                            bool registrationFields = [user.emailController, user.passwordController,
-                            user.confirmPassController, user.usernameController].every((controller) => controller.text.isNotEmpty);
+                            bool registrationFields = [
+                              user.emailController, 
+                              user.passwordController,
+                              user.confirmPassController, 
+                              user.usernameController
+                            ]
+                            .every((controller) => controller.text.isNotEmpty);
                             if(registrationFields){
                               ProgressIndicatorDialog().alert(context, 'Please Wait...');
                               if(user.passwordController.text == user.confirmPassController.text){
                                 await FirebaseAuthRegister().firebaseRegister(
                                   user.usernameController.text.trim(),
-                                  user.emailController.text.trim(), user.passwordController.text.trim(),
+                                  user.emailController.text.trim(), 
+                                  user.passwordController.text.trim(),
                                   (text, color, icon) async {
                                     Navigator.of(context).pop();
                                     await MaterialBannerAlert1(context).materialBannerAlert1(text, color, icon);
@@ -265,9 +325,13 @@ class _Login extends State<LoginPage> {
                 
                         style: ButtonStyle(
                           fixedSize: MaterialStatePropertyAll(Size(w, 30)),
-                          side: const MaterialStatePropertyAll(BorderSide(width: 1, strokeAlign: 3, color: Colors.green))
+                          side: const MaterialStatePropertyAll(
+                            BorderSide(width: 1, strokeAlign: 3, color: Colors.green)
+                          )
                         ),
-                        child: TextItem().textItem(isRegistered? 'Login': 'Register', 15, FontWeight.w700, Colors.green)
+                        child: TextItem().textItem(
+                          isRegistered? 'Login': 'Register', 15, FontWeight.w700, Colors.green
+                        )
                       ),
                     ],
                   )
