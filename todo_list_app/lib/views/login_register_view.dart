@@ -44,9 +44,10 @@ class _Login extends State<LoginPage> {
           backgroundColor: forgotPassword ? Colors.white24: Colors.white,
           body: Container(
             decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.black87, Colors.black45, Colors.black]
-              ),
+              // gradient: LinearGradient(
+              //   colors: [Colors.black87, Colors.black45, Colors.black]
+              // ),
+              color: Colors.white12
             ),
             child: Center(
               child: SingleChildScrollView(
