@@ -101,7 +101,7 @@ class ProgressIndicatorDialog{
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        content:  const LinearProgressIndicator(),
+        content: const LinearProgressIndicator(color: Colors.green),
         title: Text(
           text,
           style: GoogleFonts.getFont('Nunito',fontSize: 25)

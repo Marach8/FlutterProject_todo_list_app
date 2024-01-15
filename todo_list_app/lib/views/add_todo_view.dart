@@ -54,14 +54,24 @@ class _AU extends State<AddUpdate> {
             
                 ElevatedButton.icon(
                   onPressed: () async{
-                    bool hasData = [user.todoTitleController, user.todoDateTimeController, user.todoContentController].every((controller) => controller.text.isNotEmpty);
+                    bool hasData = [
+                      user.todoTitleController, 
+                      user.todoDateTimeController, 
+                      user.todoContentController
+                    ].every((controller) => controller.text.isNotEmpty);
                     if(hasData){
                       if(user.isInUpdateMode){
                         user.addTodo(user.updateIndex); 
                         if(user.dataBase.isNotEmpty){                      
                           for(List item in user.dataBase){
                             FirestoreInteraction().createTodo(
-                              user.firebaseCurrentUser!.uid, item[0], {'title': item[0], 'datetime': item[1], 'content': item[2]}
+                              user.firebaseCurrentUser!.uid, 
+                              item[0], 
+                              {
+                                'title': item[0], 
+                                'datetime': item[1], 
+                                'content': item[2]
+                              }
                             );                        
                           }                          
                         }

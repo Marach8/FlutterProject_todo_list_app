@@ -44,9 +44,6 @@ class _Login extends State<LoginPage> {
           backgroundColor: forgotPassword ? Colors.white24: Colors.white,
           body: Container(
             decoration: BoxDecoration(
-              // gradient: LinearGradient(
-              //   colors: [Colors.black87, Colors.black45, Colors.black]
-              // ),
               color: Colors.black.withOpacity(0.4)
             ),
             child: Center(
@@ -97,7 +94,7 @@ class _Login extends State<LoginPage> {
                       !isRegistered ? LoginAndSignUpTextFields().loginAndSignUpTextField(
                         IconButton(
                           onPressed: () => setState(() => obscureText1 = !obscureText1),
-                          icon: const Icon(Icons.remove_red_eye_sharp)
+                          icon: Icon(Icons.remove_red_eye_sharp, color: Colors.green.shade900)
                         ),
                         true, Colors.white, '', user.confirmPassController, obscureText1,                       
                       ): const SizedBox(),
