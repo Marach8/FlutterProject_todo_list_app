@@ -39,7 +39,7 @@ class PasswordResetView extends StatelessWidget {
                       onPressed: () {
                         user.forgotPasswordController.clear();
                         ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                        user.forgotPassword = false;
+                        user.callToAction(() => user.forgotPassword = false);
                       }, 
                       icon: const Icon(
                         Icons.arrow_downward_rounded, 
@@ -82,12 +82,13 @@ class PasswordResetView extends StatelessWidget {
                   ).then((_) {
                   user.forgotPasswordController.clear();
                   ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                  user.forgotPassword = false;
+                  user.callToAction(() => user.forgotPassword = false);
                 });
               } else{
                 MaterialBannerAlert1(context).materialBannerAlert1(
                   'Fields Cannot be Empty!!!',
-                  Colors.red, Icons.warning_rounded
+                  redColor,
+                  Icons.warning_rounded
                 );
               }                                                    
             },                          

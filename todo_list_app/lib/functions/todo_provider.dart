@@ -22,6 +22,7 @@ class AppUsers extends ChangeNotifier{
   dynamic firebaseCurrentUser;
   bool forgotPassword = false;
   bool isRegistered = true;
+  bool obscureText = true;
   
   @override
   void dispose(){
@@ -67,6 +68,11 @@ class AppUsers extends ChangeNotifier{
   void undo(String keyItem, dateItem, todoItem, int insertIndex){
     List<String> newList = [keyItem, dateItem, todoItem];    
     dataBase.insert(insertIndex, newList);
+    notifyListeners();
+  }
+
+  void callToAction(VoidCallback action){
+    action();
     notifyListeners();
   }
 }

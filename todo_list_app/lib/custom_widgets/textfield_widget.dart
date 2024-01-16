@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_list_app/constants/fonts_and_colors.dart';
+import 'package:todo_list_app/custom_widgets/textitem_widget.dart';
+import 'package:todo_list_app/functions/todo_provider.dart';
 
 class AddTodoTextFields{
   Widget addTodoTextFields(String text, TextEditingController control, Function(String)? onChanged){
@@ -36,7 +40,8 @@ class AddTodoTextFields{
 
 
 
-class LoginAndSignUpTextFields extends StatefulWidget{
+class LoginAndSignUpTextFields extends StatelessWidget{
+  final String? textItem;
   final bool enabled;
   final bool? showSuffixIcon; 
   final Color color;
@@ -44,6 +49,7 @@ class LoginAndSignUpTextFields extends StatefulWidget{
 
   const LoginAndSignUpTextFields({
     this.showSuffixIcon,
+    this.textItem,
     required this.enabled, 
     required this.color,
     required this.controller,
@@ -51,52 +57,62 @@ class LoginAndSignUpTextFields extends StatefulWidget{
   });
 
   @override
-  State<LoginAndSignUpTextFields> createState() => _LoginAndSignUpTextFieldsState();
-}
-
-class _LoginAndSignUpTextFieldsState extends State<LoginAndSignUpTextFields> {
-  bool obscureText = true;
-
-  @override
-  Widget build(BuildContext context) {
-    return  Container(
-      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0), 
-      decoration: BoxDecoration(
-        color: widget.color, 
-        borderRadius: BorderRadius.circular(30),
-        boxShadow: const [
-          BoxShadow(
-            blurRadius: 3, 
-            spreadRadius: 1, 
-            color: Colors.black
-          )
-        ],                            
-      ),
-      child: SingleChildScrollView(
-        child: TextField(
-          controller: widget.controller, 
-          enabled: widget.enabled, 
-          obscureText: obscureText,
-          cursorColor: blackColor,
-          style: GoogleFonts.getFont(
-            'Quicksand', 
-            color: deepGreenColor,
-            fontWeight: fontWeight1,
-          ), 
-          decoration: InputDecoration(
-            suffixIcon: widget.showSuffixIcon != null && 
-              widget.showSuffixIcon == true ? IconButton(
-                //Will remove setState later and use a stateless wiget
-                onPressed: () => setState(()=> obscureText = !obscureText),
-                icon: Icon(
-                  obscureText ? Icons.visibility_off_rounded: Icons.visibility_rounded, 
-                  color: deepGreenColor
-                )
-              ): const SizedBox.shrink(),
-            border: InputBorder.none,
+  Widget build(BuildContext _) {
+    return Column(
+      //crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        textItem == null ? const SizedBox.shrink() 
+        : TextItem(
+          text: textItem ?? '', 
+          fontSize: fontSize1, 
+          fontWeight: fontWeight1,
+          color: blackColor
+        ),
+        
+        Container(
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0), 
+          decoration: BoxDecoration(
+            color: color, 
+            borderRadius: BorderRadius.circular(30),
+            boxShadow: const [
+              BoxShadow(
+                blurRadius: 3, 
+                spreadRadius: 1, 
+                color: Colors.black
+              )
+            ],                            
+          ),
+          child: Consumer<AppUsers>(
+            builder: (_, user, __) => TextField(
+              controller: controller, 
+              enabled: enabled, 
+              obscureText: user.obscureText,
+              cursorColor: blackColor,
+              style: GoogleFonts.getFont(
+                'Quicksand', 
+                color: deepGreenColor,
+                fontWeight: fontWeight1,
+              ), 
+              decoration: InputDecoration(
+                suffixIcon: showSuffixIcon != null && 
+                  showSuffixIcon == true ? IconButton(
+                    //Will remove setState later and use a stateless wiget
+                    onPressed: () => user.callToAction(
+                      () => user.obscureText = !user.obscureText),
+                    icon: Icon(
+                      user.obscureText 
+                        ? Icons.visibility_rounded
+                        : Icons.visibility_off_rounded, 
+                      color: deepGreenColor
+                    )
+                  ): const SizedBox.shrink(),
+                border: InputBorder.none,
+              ),
+            ),
           ),
         ),
-      ),
+        const Gap(10)
+      ],
     );
   }
 }
