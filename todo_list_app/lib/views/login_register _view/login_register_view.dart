@@ -117,7 +117,7 @@ class LoginPage extends StatelessWidget{
 
                   Consumer<AppUsers>(
                     builder: (_, user, __) => Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children:[
                         user.isRegistered ? GestureDetector(
                           onTap: (){
@@ -135,12 +135,12 @@ class LoginPage extends StatelessWidget{
                                     topRight: Radius.circular(20),
                                   )
                                 ),
-                                backgroundColor: Colors.blueGrey.shade700, 
+                                backgroundColor: darkWhiteColor, 
                                 duration: const Duration(days: 1),
                                 content: Container(
                                   padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                                   decoration: BoxDecoration(
-                                    color: Colors.white70, 
+                                    color: darkWhiteColor, 
                                     borderRadius: BorderRadius.circular(10),
                                     boxShadow: const [
                                       BoxShadow(
@@ -156,7 +156,7 @@ class LoginPage extends StatelessWidget{
                             );
                           },
                           child: const TextItem(
-                            text: 'Forgot Password', 
+                            text: 'Forgot Password?', 
                             fontSize: fontSize1, 
                             fontWeight: fontWeight2,
                             color: blackColor
@@ -181,7 +181,7 @@ class LoginPage extends StatelessWidget{
                       ] 
                     ),
                   ),
-
+                  
                   const Gap(20), 
                   const Divider(height:1, color: greenColor), 
                   const Gap(20),

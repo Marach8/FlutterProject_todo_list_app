@@ -41,7 +41,7 @@ class AddTodoTextFields{
 
 
 class LoginAndSignUpTextFields extends StatelessWidget{
-  final String? textItem;
+  final String? textItem, hintText;
   final bool enabled;
   final bool? showSuffixIcon; 
   final Color color;
@@ -50,6 +50,7 @@ class LoginAndSignUpTextFields extends StatelessWidget{
   const LoginAndSignUpTextFields({
     this.showSuffixIcon,
     this.textItem,
+    this.hintText,
     required this.enabled, 
     required this.color,
     required this.controller,
@@ -96,7 +97,6 @@ class LoginAndSignUpTextFields extends StatelessWidget{
               decoration: InputDecoration(
                 suffixIcon: showSuffixIcon != null && 
                   showSuffixIcon == true ? IconButton(
-                    //Will remove setState later and use a stateless wiget
                     onPressed: () => user.callToAction(
                       () => user.obscureText = !user.obscureText),
                     icon: Icon(
@@ -107,6 +107,11 @@ class LoginAndSignUpTextFields extends StatelessWidget{
                     )
                   ): const SizedBox.shrink(),
                 border: InputBorder.none,
+                hintText: hintText,
+                hintStyle: const TextStyle(
+                  color: blackColor, 
+                  fontSize: fontSize1,
+                )
               ),
             ),
           ),

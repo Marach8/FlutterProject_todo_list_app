@@ -16,7 +16,8 @@ class PasswordResetView extends StatelessWidget {
     final w = MediaQuery.of(context).size.width;
     return Column(
       children: [
-        Stack(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const TextItem(
               text: 'Password Reset', 
@@ -24,28 +25,25 @@ class PasswordResetView extends StatelessWidget {
               fontWeight: fontWeight1,
               color: blackColor
             ),
-            Positioned(
-              right:0,
-              child: Container(
-                width:45,
-                decoration: BoxDecoration(
-                  color: Colors.green.shade300,
-                  shape: BoxShape.circle,                                                          
-                  border: Border.all(width:1)
-                ),
-                child: Consumer<AppUsers>(
-                  builder: (_, user, child) => Center(                    
-                    child: IconButton(
-                      onPressed: () {
-                        user.forgotPasswordController.clear();
-                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                        user.callToAction(() => user.forgotPassword = false);
-                      }, 
-                      icon: const Icon(
-                        Icons.arrow_downward_rounded, 
-                        color: blackColor
-                      )
-                    ),
+            Container(
+              width:45,
+              decoration: BoxDecoration(
+                color: greenColor,
+                shape: BoxShape.circle,                                                          
+                border: Border.all(width:1)
+              ),
+              child: Consumer<AppUsers>(
+                builder: (_, user, __) => Center(                    
+                  child: IconButton(
+                    onPressed: () {
+                      user.forgotPasswordController.clear();
+                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                      user.callToAction(() => user.forgotPassword = false);
+                    }, 
+                    icon: const Icon(
+                      Icons.arrow_downward_rounded, 
+                      color: blackColor
+                    )
                   ),
                 ),
               ),
@@ -54,13 +52,14 @@ class PasswordResetView extends StatelessWidget {
         ),
         const Gap(20),
         const Divider(height: 1), 
-        const Gap(20),
+        const Gap(25),
 
         Consumer<AppUsers>(
           builder: (_, user, __) => LoginAndSignUpTextFields(
+            hintText: 'Enter your email...',
             color: whiteColor,
-            enabled: user.forgotPassword ? false : true,                        
-            controller: user.passwordController,
+            enabled: user.forgotPassword ? true: false,
+            controller: user.forgotPasswordController,
           ),
         ), 
         const Gap(20),
@@ -93,10 +92,10 @@ class PasswordResetView extends StatelessWidget {
               }                                                    
             },                          
             style: ButtonStyle(
-              backgroundColor: MaterialStatePropertyAll(Colors.green.shade300),
+              backgroundColor: const MaterialStatePropertyAll(greenColor),
               fixedSize: MaterialStatePropertyAll(Size(w, 30)),
               side: const MaterialStatePropertyAll(
-                BorderSide(width: 1, strokeAlign: 3, color: Colors.black)
+                BorderSide(width: 1, strokeAlign: 3, color: blackColor)
               )
             ),
             child: const TextItem(
