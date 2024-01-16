@@ -8,6 +8,7 @@ import 'package:todo_list_app/custom_widgets/textfield_widget.dart';
 import 'package:todo_list_app/custom_widgets/textitem_widget.dart';
 import 'package:todo_list_app/functions/firebase_functions.dart';
 import 'package:todo_list_app/functions/todo_provider.dart';
+import 'package:todo_list_app/views/login_register%20_view/password_reset_view.dart';
 
 class LoginPage extends StatefulWidget{
   const LoginPage({super.key});
@@ -143,7 +144,7 @@ class _Login extends State<LoginPage> {
                                 onTap: (){
                                   user.emailController.clear(); 
                                   user.passwordController.clear(); 
-                                  setState(() => forgotPassword = true);
+                                  user.forgotPassword = true;
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       shape: const RoundedRectangleBorder(
@@ -160,95 +161,14 @@ class _Login extends State<LoginPage> {
                                           color: Colors.white70, 
                                           borderRadius: BorderRadius.circular(10),
                                           boxShadow: const [
-                                            BoxShadow(blurRadius: 10, spreadRadius:1, color: Colors.black54)
+                                            BoxShadow(
+                                              blurRadius: 10, 
+                                              spreadRadius:1, 
+                                              color: Colors.black54
+                                            )
                                           ]                      
                                         ),
-                                        child: Column(
-                                          children: [
-                                            Stack(
-                                              children: [
-                                                const TextItem(
-                                                  text: 'Password Reset', 
-                                                  fontSize: fontSize2, 
-                                                  fontWeight: fontWeight1,
-                                                  color: blackColor
-                                                ),
-                                                Positioned(
-                                                  right:0,
-                                                  child: Container(
-                                                    width:45,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.green.shade300,
-                                                      shape: BoxShape.circle,                                                          
-                                                      border: Border.all(width:1)
-                                                    ),
-                                                    child: Center(
-                                                      child: IconButton(
-                                                        onPressed: () {
-                                                          user.forgotPasswordController.clear();
-                                                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                                                          setState(() => forgotPassword = false);
-                                                        }, 
-                                                        icon: const Icon(
-                                                          Icons.arrow_downward_rounded, color: Colors.black
-                                                        )
-                                                      ),
-                                                    ),
-                                                  ),
-                                                )
-                                              ]
-                                            ),
-                                            const SizedBox(height:20),
-                                            const Divider(height: 1), const SizedBox(height:20),
-                                            LoginAndSignUpTextFields(
-                                              showSuffixIcon: true,
-                                              color: whiteColor,
-                                              enabled: forgotPassword ? false : true,                        
-                                              controller: user.passwordController,
-                                            ), 
-                                            const Gap(20),
-                                            const Divider(height: 1), 
-                                            const Gap(20),
-                                            ElevatedButton(
-                                              onPressed: () async{                                                                                                        
-                                                if(user.forgotPasswordController.text.isNotEmpty){
-                                                  ProgressIndicatorDialog().alert(context, 'Please Wait...');
-                                                  await FirebaseResetPassword().resetPassword(
-                                                    user.forgotPasswordController.text,
-                                                    (text, color, icon) async{
-                                                      Navigator.of(context).pop();
-                                                      await MaterialBannerAlert1(context).materialBannerAlert1(
-                                                        text, color, icon
-                                                      );
-                                                    }
-                                                   ).then((value) {
-                                                    user.forgotPasswordController.clear();
-                                                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                                                    setState(() => forgotPassword = false);
-                                                  });
-                                                } else{
-                                                  MaterialBannerAlert1(context).materialBannerAlert1(
-                                                    'Fields Cannot be Empty!!!',
-                                                    Colors.red, Icons.warning_rounded
-                                                  );
-                                                }                                                    
-                                              },                          
-                                              style: ButtonStyle(
-                                                backgroundColor: MaterialStatePropertyAll(Colors.green.shade300),
-                                                fixedSize: MaterialStatePropertyAll(Size(w, 30)),
-                                                side: const MaterialStatePropertyAll(
-                                                  BorderSide(width: 1, strokeAlign: 3, color: Colors.black)
-                                                )
-                                              ),
-                                              child: const TextItem(
-                                                text: 'Change Password', 
-                                                fontSize: fontSize1, 
-                                                fontWeight: fontWeight2,
-                                                color: blackColor
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                        child: const PasswordResetView()
                                       )
                                     )
                                   );
@@ -259,7 +179,7 @@ class _Login extends State<LoginPage> {
                                   fontWeight: fontWeight2,
                                   color: blackColor
                                 ),
-                                        )
+                              )
                             ),
                             Positioned(right: 0, 
                               child: GestureDetector(
@@ -268,10 +188,10 @@ class _Login extends State<LoginPage> {
                                   user.passwordController.clear(); 
                                   user.usernameController.clear(); 
                                   user.confirmPassController.clear();
-                                  setState(() => isRegistered = !isRegistered);
+                                  user.isRegistered = !user.isRegistered;
                                 },
                                 child: TextItem(
-                                  text: isRegistered? 'Not Registered?': 'Already Registered?',
+                                  text: isRegistered ? 'Not Registered?': 'Already Registered?',
                                   fontSize: fontSize1, 
                                   fontWeight: fontWeight2,
                                   color: blackColor

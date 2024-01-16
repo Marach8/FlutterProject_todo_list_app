@@ -12,13 +12,16 @@ class AppUsers extends ChangeNotifier{
   TextEditingController usernameController = TextEditingController(); 
   TextEditingController forgotPasswordController = TextEditingController(); 
   TextEditingController confirmPassController = TextEditingController();
-  String loggedInUser = ''; bool done = true;
+  String loggedInUser = ''; 
+  bool done = true;
   bool isInUpdateMode = false; 
   String initialTitle = ''; 
   String initialDate = ''; 
   String initialTodo = ''; 
   int updateIndex = 0;  
-  dynamic firebaseCurrentUser ;
+  dynamic firebaseCurrentUser;
+  bool forgotPassword = false;
+  bool isRegistered = true;
   
   @override
   void dispose(){
