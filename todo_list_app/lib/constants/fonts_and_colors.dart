@@ -6,6 +6,7 @@ const blackColor = Colors.black;
 const greenColor = Colors.green;
 const whiteColor = Colors.white;
 const redColor = Colors.red;
+final backGroundColor = Colors.blueGrey.withOpacity(0.25);
 const darkWhiteColor = Colors.white54;
 final deepGreenColor = Colors.green.shade900;
 const fontWeight1 = FontWeight.w600;

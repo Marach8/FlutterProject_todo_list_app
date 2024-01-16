@@ -87,7 +87,7 @@ class LoginAndSignUpTextFields extends StatelessWidget{
             builder: (_, user, __) => TextField(
               controller: controller, 
               enabled: enabled, 
-              obscureText: user.obscureText,
+              obscureText: showSuffixIcon == null ? false : user.obscureText,
               cursorColor: blackColor,
               style: GoogleFonts.getFont(
                 'Quicksand', 
