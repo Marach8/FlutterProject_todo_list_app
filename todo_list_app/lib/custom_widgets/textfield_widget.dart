@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:todo_list_app/constants/fonts_and_colors.dart';
 
 class AddTodoTextFields{
   Widget addTodoTextFields(String text, TextEditingController control, Function(String)? onChanged){
@@ -33,25 +34,66 @@ class AddTodoTextFields{
   }
 }
 
-class LoginAndSignUpTextFields{
-  Widget loginAndSignUpTextField(
-      Widget? suffixIcon, bool enabled, Color color, String hintText, TextEditingController controller, bool obscureText,
-    ){
+
+
+class LoginAndSignUpTextFields extends StatefulWidget{
+  final bool enabled;
+  final bool? showSuffixIcon; 
+  final Color color;
+  final TextEditingController controller;
+
+  const LoginAndSignUpTextFields({
+    this.showSuffixIcon,
+    required this.enabled, 
+    required this.color,
+    required this.controller,
+    super.key,
+  });
+
+  @override
+  State<LoginAndSignUpTextFields> createState() => _LoginAndSignUpTextFieldsState();
+}
+
+class _LoginAndSignUpTextFieldsState extends State<LoginAndSignUpTextFields> {
+  bool obscureText = true;
+
+  @override
+  Widget build(BuildContext context) {
     return  Container(
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 0), 
       decoration: BoxDecoration(
-        color: color, borderRadius: BorderRadius.circular(30),
-        boxShadow: const [BoxShadow(blurRadius:3, spreadRadius: 1, color: Colors.black)],                            
+        color: widget.color, 
+        borderRadius: BorderRadius.circular(30),
+        boxShadow: const [
+          BoxShadow(
+            blurRadius: 3, 
+            spreadRadius: 1, 
+            color: Colors.black
+          )
+        ],                            
       ),
       child: SingleChildScrollView(
         child: TextField(
-          controller: controller, enabled: enabled, obscureText: obscureText,
-          autocorrect: true, cursorColor: Colors.black,
-          style: GoogleFonts.getFont('Quicksand', color: Colors.blueGrey.shade900, fontWeight: FontWeight.w500,), 
+          controller: widget.controller, 
+          enabled: widget.enabled, 
+          obscureText: obscureText,
+          cursorColor: blackColor,
+          style: GoogleFonts.getFont(
+            'Quicksand', 
+            color: deepGreenColor,
+            fontWeight: fontWeight1,
+          ), 
           decoration: InputDecoration(
-            suffixIcon: suffixIcon,
-            border: InputBorder.none, hintText: hintText,
-            hintStyle: GoogleFonts.getFont('Nunito', color: Colors.black45, fontWeight: FontWeight.w500,),
+            suffixIcon: widget.showSuffixIcon != null && 
+              widget.showSuffixIcon == true ? IconButton(
+                //Will remove setState later and use a stateless wiget
+                onPressed: () => setState(()=> obscureText = !obscureText),
+                icon: Icon(
+                  obscureText ? Icons.visibility_off_rounded: Icons.visibility_rounded, 
+                  color: deepGreenColor
+                )
+              ): const SizedBox.shrink(),
+            border: InputBorder.none,
           ),
         ),
       ),

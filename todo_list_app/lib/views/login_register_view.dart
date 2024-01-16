@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_list_app/constants/fonts_and_colors.dart';
 import 'package:todo_list_app/constants/routes.dart';
 import 'package:todo_list_app/custom_widgets/alert_widget.dart';
 import 'package:todo_list_app/custom_widgets/textfield_widget.dart';
@@ -33,18 +34,22 @@ class _Login extends State<LoginPage> {
     var w = MediaQuery.of(context).size.width; 
 
     return Consumer<AppUsers>(
-      builder: ((context, user, child) =>
+      builder: ((_, user, __) =>
         Scaffold(
           appBar: AppBar(
-            title: Text(appBarText(), style: const TextStyle(fontWeight: FontWeight.w500)), centerTitle: true,
-            backgroundColor: forgotPassword? Colors.blueGrey.shade700: Colors.black, 
+            title: Text(
+              appBarText(), 
+              style: const TextStyle(fontWeight: fontWeight1)
+            ), 
+            centerTitle: true,
+            backgroundColor: forgotPassword? Colors.blueGrey.shade700: blackColor, 
             elevation: 10, 
-            foregroundColor: Colors.white,
+            foregroundColor: whiteColor
           ),
-          backgroundColor: forgotPassword ? Colors.white24: Colors.white,
+          backgroundColor: forgotPassword ? Colors.white24: whiteColor,
           body: Container(
-            decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.4)
+            decoration: const BoxDecoration(
+              color: blackColor
             ),
             child: Center(
               child: SingleChildScrollView(
@@ -54,56 +59,87 @@ class _Login extends State<LoginPage> {
                   decoration: BoxDecoration(                    
                     color: Colors.white70, 
                     borderRadius: BorderRadius.circular(10),
-                    boxShadow: const [BoxShadow(blurRadius: 10, spreadRadius:1, color: Colors.black38)]                      
+                    boxShadow: const [
+                      BoxShadow(
+                        blurRadius: 10, 
+                        spreadRadius:1, 
+                        color: Colors.black38
+                      )
+                    ]
                   ),
                   child: Column(
                     children: [                          
-                      TextItem().textItem(
-                        isRegistered? 'Sign In': 'Sign Up', 
-                        25, FontWeight.w800, Colors.green.shade900
+                      TextItem(
+                        text: isRegistered ? 'Sign In': 'Sign Up', 
+                        fontSize: fontSize2, 
+                        fontWeight: fontWeight2, 
+                        color: deepGreenColor
                       ),
-                      const SizedBox(height: 10), 
-                      const Divider(height:1, color: Colors.green), 
-                      const SizedBox(height:10),
-                      !isRegistered? Row(
-                        children:[TextItem().textItem('Username', 15, FontWeight.w600, Colors.black)])
-                      : const SizedBox(), 
-                      !isRegistered ? LoginAndSignUpTextFields().loginAndSignUpTextField(
-                        null, true, Colors.white, '', user.usernameController, false,
+                      const Gap(10),
+                      const Divider(height: 1, color: greenColor), 
+                      const Gap(10),
+
+                      !isRegistered ? const TextItem(
+                        text: 'Username', 
+                        fontSize: fontSize1, 
+                        fontWeight: fontWeight1,
+                        color: blackColor
+                      ) : const SizedBox.shrink(),
+                      
+                      !isRegistered ? LoginAndSignUpTextFields(
+                        color: whiteColor,
+                        enabled: true,
+                        controller: user.usernameController,
                       ): const SizedBox(), 
-                      Row(
-                        children:[TextItem().textItem('Email', 15, FontWeight.w600, Colors.black)]
+                      
+                      const TextItem(
+                        text: 'Email', 
+                        fontSize: fontSize1, 
+                        fontWeight: fontWeight1,
+                        color: blackColor
                       ), 
-                      LoginAndSignUpTextFields().loginAndSignUpTextField(
-                        null, forgotPassword? false: true, Colors.white, '', user.emailController, false,
-                      ), 
-                      Row(
-                        children:[TextItem().textItem('Password', 15, FontWeight.w600, Colors.black)]
-                      ), 
-                      LoginAndSignUpTextFields().loginAndSignUpTextField(
-                        IconButton(
-                          onPressed: () => setState(()=> obscureText1 = !obscureText1),
-                          icon: Icon(Icons.remove_red_eye_sharp, color: Colors.green.shade900)
-                        ),
-                        forgotPassword ? false : true, Colors.white, '', user.passwordController, obscureText1,                        
+                      
+                      LoginAndSignUpTextFields(
+                        color: whiteColor,
+                        enabled: forgotPassword ? false : true,
+                        controller: user.emailController,
                       ),
-                      !isRegistered? Row(
-                        children:[TextItem().textItem('Confirm password', 15, FontWeight.w600, Colors.black)]
-                      )
-                      : const SizedBox(), 
-                      !isRegistered ? LoginAndSignUpTextFields().loginAndSignUpTextField(
-                        IconButton(
-                          onPressed: () => setState(() => obscureText1 = !obscureText1),
-                          icon: Icon(Icons.remove_red_eye_sharp, color: Colors.green.shade900)
-                        ),
-                        true, Colors.white, '', user.confirmPassController, obscureText1,                       
-                      ): const SizedBox(),
+                      
+                      const TextItem(
+                        text: 'Password', 
+                        fontSize: fontSize1, 
+                        fontWeight: fontWeight1,
+                        color: blackColor
+                      ),
+                      
+                      LoginAndSignUpTextFields(
+                        showSuffixIcon: true,
+                        color: whiteColor,
+                        enabled: forgotPassword ? false : true,                        
+                        controller: user.passwordController,
+                      ),
+                      
+                      !isRegistered ? const TextItem(
+                        text: 'Confirm Password', 
+                        fontSize: fontSize1, 
+                        fontWeight: fontWeight1,
+                        color: blackColor
+                      ) : const SizedBox.shrink(),
+                      
+                    
+                      !isRegistered ? LoginAndSignUpTextFields(
+                        showSuffixIcon: true,
+                        color: whiteColor,
+                        enabled: true,                        
+                        controller: user.confirmPassController,
+                      ) : const SizedBox(),
+
                       SizedBox(
                         height: 40,
                         child: Stack(
                           children:[
                             Positioned(left: 0, 
-                              child: !isRegistered? const SizedBox(): GestureDetector(
+                              child: !isRegistered ? const SizedBox(): GestureDetector(
                                 onTap: (){
                                   user.emailController.clear(); 
                                   user.passwordController.clear(); 
@@ -112,7 +148,8 @@ class _Login extends State<LoginPage> {
                                     SnackBar(
                                       shape: const RoundedRectangleBorder(
                                         borderRadius: BorderRadius.only(
-                                          topLeft:Radius.circular(20), topRight: Radius.circular(20),
+                                          topLeft:Radius.circular(20), 
+                                          topRight: Radius.circular(20),
                                         )
                                       ),
                                       backgroundColor: Colors.blueGrey.shade700, 
@@ -130,10 +167,11 @@ class _Login extends State<LoginPage> {
                                           children: [
                                             Stack(
                                               children: [
-                                                Center(
-                                                  child: TextItem().textItem(
-                                                    'Password Reset', 20, FontWeight.w800, Colors.black,
-                                                  )
+                                                const TextItem(
+                                                  text: 'Password Reset', 
+                                                  fontSize: fontSize2, 
+                                                  fontWeight: fontWeight1,
+                                                  color: blackColor
                                                 ),
                                                 Positioned(
                                                   right:0,
@@ -162,11 +200,11 @@ class _Login extends State<LoginPage> {
                                             ),
                                             const SizedBox(height:20),
                                             const Divider(height: 1), const SizedBox(height:20),
-                                            LoginAndSignUpTextFields().loginAndSignUpTextField(
-                                              null, true, 
-                                              Colors.blueGrey.shade300, 
-                                              'Enter email', 
-                                              user.forgotPasswordController, false,
+                                            LoginAndSignUpTextFields(
+                                              showSuffixIcon: true,
+                                              color: whiteColor,
+                                              enabled: forgotPassword ? false : true,                        
+                                              controller: user.passwordController,
                                             ), 
                                             const Gap(20),
                                             const Divider(height: 1), 
@@ -202,9 +240,12 @@ class _Login extends State<LoginPage> {
                                                   BorderSide(width: 1, strokeAlign: 3, color: Colors.black)
                                                 )
                                               ),
-                                              child: TextItem().textItem(
-                                                'Change Password', 15, FontWeight.w700, Colors.black
-                                              )
+                                              child: const TextItem(
+                                                text: 'Change Password', 
+                                                fontSize: fontSize1, 
+                                                fontWeight: fontWeight2,
+                                                color: blackColor
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -212,10 +253,13 @@ class _Login extends State<LoginPage> {
                                     )
                                   );
                                 },
-                                child: TextItem().textItem(
-                                  'Forgot Password?', 13, FontWeight.w800, Colors.black,
-                                )
-                              )
+                                child: const TextItem(
+                                  text: 'Forgort Password', 
+                                  fontSize: fontSize1, 
+                                  fontWeight: fontWeight2,
+                                  color: blackColor
+                                ),
+                                        )
                             ),
                             Positioned(right: 0, 
                               child: GestureDetector(
@@ -226,11 +270,12 @@ class _Login extends State<LoginPage> {
                                   user.confirmPassController.clear();
                                   setState(() => isRegistered = !isRegistered);
                                 },
-                                child: TextItem().textItem(
-                                  isRegistered? 'Not Registered?': 'Already Registered?',
-                                  13, FontWeight.w800, 
-                                  Colors.black,
-                                )
+                                child: TextItem(
+                                  text: isRegistered? 'Not Registered?': 'Already Registered?',
+                                  fontSize: fontSize1, 
+                                  fontWeight: fontWeight2,
+                                  color: blackColor
+                                ),
                               )
                             ),
                           ] 
@@ -327,9 +372,12 @@ class _Login extends State<LoginPage> {
                             BorderSide(width: 1, strokeAlign: 3, color: Colors.green)
                           )
                         ),
-                        child: TextItem().textItem(
-                          isRegistered? 'Login': 'Register', 15, FontWeight.w700, Colors.green
-                        )
+                        child: TextItem(
+                          text: isRegistered? 'Login': 'Register', 
+                          fontSize: fontSize1, 
+                          fontWeight: fontWeight2,
+                          color: greenColor
+                        ),
                       ),
                     ],
                   )

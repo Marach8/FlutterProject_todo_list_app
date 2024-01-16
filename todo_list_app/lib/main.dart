@@ -20,20 +20,23 @@ class TodoApp extends StatelessWidget{
 
   @override
   Widget build(BuildContext context){
-    return 
-      ChangeNotifierProvider(create: (_) => AppUsers(),
+    return ChangeNotifierProvider(
+      create: (_) => AppUsers(),
       child: MaterialApp(
         theme: ThemeData(
-          useMaterial3: true, brightness: Brightness.dark
+          useMaterial3: true, 
+          brightness: Brightness.dark
         ),
         debugShowCheckedModeBanner: false,
         home: FutureBuilder(
           future: FirebaseGetUserDetails().firebaseCurrentUser(),
           builder:(context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done){
-              if(snapshot.hasData && snapshot.data!.emailVerified){return const TodoHome();}
+              if(snapshot.hasData && snapshot.data!.emailVerified)
+                {return const TodoHome();}
               else {return const LoginPage();}
-            } else{return const CircularProgressIndicator();}
+            } 
+            else{return const CircularProgressIndicator();}
           },
         ),
         routes: {
