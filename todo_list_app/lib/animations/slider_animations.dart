@@ -36,7 +36,8 @@ with SingleTickerProviderStateMixin{
     )..repeat();
 
     sliderAnimation = Tween<Offset> (
-      begin: const Offset(0, 0), end: Offset(widget.endOffset, 0)
+      begin: const Offset(0, 0), 
+      end: Offset(widget.endOffset, 0)
     ).animate(sliderController);
 
     sliderAnimation.addStatusListener((status) {

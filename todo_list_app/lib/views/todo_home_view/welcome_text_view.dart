@@ -10,22 +10,21 @@ class WelcomeTextView extends StatelessWidget {
   Widget build(BuildContext context) {
     return    
      Text.rich(
-      //maxLines: 1,
       TextSpan(
         children: [
           TextSpan(
-            text: 'Hello ${user.loggedInUser}, Welcome To Your Todo Manager. You currently have ',
+            text: 'Hello ${user.loggedInUser}, Welcome to your Todo Manager. You currently have ',
           ).decorate(whiteColor, fontSize2, fontWeight3),
           TextSpan(text: '${user.dataBase.length}')
             .decorate(
               user.dataBase.isEmpty ? redColor : greenColor,
               fontSize2, 
-              fontWeight3
+              fontWeight1
             ),
-          TextSpan(text: user.dataBase.length == 1? ' Todo' : ' Todos',)
+          TextSpan(text: user.dataBase.length == 1? ' Todo.' : ' Todos.',)
             .decorate(whiteColor, fontSize2, fontWeight3)
         ]
       )
-    );                          
+    );
   }
 }
