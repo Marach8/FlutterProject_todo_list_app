@@ -6,13 +6,16 @@ class SliderAnimationView extends StatefulWidget {
   final TextDirection textDirection;
   final Alignment? alignment;
   final double endOffset;
+  final int? duration;
 
   const SliderAnimationView({
     this.alignment,
+    this.duration,
     required this.textDirection,
     required this.endOffset,
     required this.translationDistance, 
-    required this.child , super.key
+    required this.child, 
+    super.key
   });
 
   @override
@@ -29,7 +32,7 @@ with SingleTickerProviderStateMixin{
     super.initState();
     sliderController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 10)
+      duration: Duration(seconds: widget.duration ?? 5)
     )..repeat();
 
     sliderAnimation = Tween<Offset> (

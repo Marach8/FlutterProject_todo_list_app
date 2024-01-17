@@ -14,6 +14,23 @@ extension DecorateText on Text{
 }
 
 
+extension DecorateTextSpan on TextSpan{
+  TextSpan decorate(
+    //String text,
+    Color color, 
+    double fontSize, 
+    FontWeight fontWeight
+  ) => TextSpan(
+    text: text,
+    style: TextStyle(
+      color: color, 
+      fontSize: fontSize,
+      fontWeight: fontWeight
+    )
+  );
+}
+
+
 extension DecorateTextWithGoogleFont on Text{
   Text decoratewithGoogleFont(
     Color color, 

@@ -11,9 +11,14 @@ import 'package:todo_list_app/functions/firebase_functions.dart';
 import 'package:todo_list_app/functions/todo_provider.dart';
 import 'package:todo_list_app/views/todo_home_view/welcome_text_view.dart';
 
-class TodoHome extends StatelessWidget{
+class TodoHome extends StatefulWidget{
   const TodoHome({super.key});
 
+  @override
+  State<TodoHome> createState() => _TodoHomeState();
+}
+
+class _TodoHomeState extends State<TodoHome> {
   @override 
   Widget build(BuildContext context){
     final screenWidth = MediaQuery.of(context).size.width;
@@ -77,35 +82,8 @@ class TodoHome extends StatelessWidget{
                         //   fit: BoxFit.cover
                         // )
                       ),
-                      child: Wrap(
-                        //mainAxisAlignment: MainAxisAlignment.center,
+                      child: Stack(
                         children: [
-                          OrientationBuilder(
-                            builder: (context, orientation) => SliderAnimationView(
-                              endOffset: orientation == Orientation.landscape
-                                ? 1 : 15,
-                              textDirection: TextDirection.ltr,
-                              translationDistance: 0.0,
-                              //alignment: Alignment.centerRight,
-                              child: Text('hello'),//WelcomeTextView(user: user)
-                            ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.all(20), 
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              //color: const Color.fromARGB(221, 30, 30, 30).withOpacity(0.3),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.blueGrey.withOpacity(0.1), 
-                                  blurRadius: 10, spreadRadius: 1,
-                                )
-                              ],
-                              borderRadius: BorderRadius.circular(50),
-                            ),                            
-                          ),          
-                          const SizedBox(height: 20),
-                                      
                           Container(
                             width: double.infinity,
                             margin: const EdgeInsets.all(20),                  
@@ -189,6 +167,16 @@ class TodoHome extends StatelessWidget{
                                   ),                    
                                 ]
                               ),
+                            ),
+                          ),
+                          Positioned(
+                            top: 0,
+                            child: SliderAnimationView(
+                              duration: 20,
+                              endOffset: 3,
+                              textDirection: TextDirection.rtl,
+                              translationDistance: screenWidth,                            
+                              child: WelcomeTextView(user: user)
                             ),
                           ),
                         ]

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:todo_list_app/constants/fonts_and_colors.dart';
+import 'package:todo_list_app/functions/extensions.dart';
 
 class WelcomeTextView extends StatelessWidget {
   final dynamic user;
@@ -6,39 +8,24 @@ class WelcomeTextView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text.rich(
+    return    
+     Text.rich(
+      //maxLines: 1,
       TextSpan(
         children: [
           TextSpan(
             text: 'Hello ${user.loggedInUser}, Welcome To Your Todo Manager. You currently have ',
-            style: TextStyle(
-              fontFamily: 'monospace', 
-              fontSize: 40,
-              fontWeight: FontWeight.bold, 
-              color: Colors.blueGrey.shade800
-            )
-          ),
-          TextSpan(
-            text: '${user.dataBase.length}',
-            style: TextStyle(
-              fontFamily: 'monospace', 
-              fontSize: 40,
-              fontWeight: FontWeight.bold, 
-              color: Colors.blueGrey.shade200
-            )
-          ),
-          TextSpan(
-            text: user.dataBase.length == 1? ' Todo' : ' Todos',
-            style: const TextStyle(
-              fontFamily: 'monospace', 
-              fontSize: 40,
-              fontWeight: FontWeight.bold, 
-              color: Colors.blueGrey
-            )
-          ),
+          ).decorate(whiteColor, fontSize2, fontWeight3),
+          TextSpan(text: '${user.dataBase.length}')
+            .decorate(
+              user.dataBase.isEmpty ? redColor : greenColor,
+              fontSize2, 
+              fontWeight3
+            ),
+          TextSpan(text: user.dataBase.length == 1? ' Todo' : ' Todos',)
+            .decorate(whiteColor, fontSize2, fontWeight3)
         ]
       )
-    );
-                          
+    );                          
   }
 }
