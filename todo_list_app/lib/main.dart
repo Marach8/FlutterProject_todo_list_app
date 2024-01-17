@@ -5,7 +5,7 @@ import 'package:todo_list_app/constants/routes.dart';
 import 'package:todo_list_app/functions/firebase_functions.dart';
 import 'package:todo_list_app/views/add_todo_view.dart';
 import 'package:todo_list_app/views/login_register%20_view/login_register_view.dart';
-import 'package:todo_list_app/views/todo_home_view.dart';
+import 'package:todo_list_app/views/todo_home_view/main_view.dart';
 import 'package:todo_list_app/functions/todo_provider.dart';
 import 'package:todo_list_app/views/todo_views.dart';
 

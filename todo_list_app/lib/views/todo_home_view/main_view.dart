@@ -1,32 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_list_app/animations/slider_animations.dart';
 import 'package:todo_list_app/constants/fonts_and_colors.dart';
 import 'package:todo_list_app/constants/routes.dart';
 import 'package:todo_list_app/custom_widgets/alert_widget.dart';
 import 'package:todo_list_app/custom_widgets/button_widget.dart';
-import 'package:todo_list_app/custom_widgets/generic_dialog.dart';
 import 'package:todo_list_app/custom_widgets/popup_menu_buttons.dart';
+import 'package:todo_list_app/functions/extensions.dart';
 import 'package:todo_list_app/functions/firebase_functions.dart';
 import 'package:todo_list_app/functions/todo_provider.dart';
+import 'package:todo_list_app/views/todo_home_view/welcome_text_view.dart';
 
-class TodoHome extends StatefulWidget{
+class TodoHome extends StatelessWidget{
   const TodoHome({super.key});
 
   @override 
-  State<TodoHome> createState() => _Td();
-}
-
-class _Td extends State<TodoHome>{
-
-  @override 
   Widget build(BuildContext context){
-    
+    final screenWidth = MediaQuery.of(context).size.width;
     return Consumer<AppUsers>(
       builder: ((context, user, child)
         => Scaffold(
           appBar: AppBar( 
             actions: const [PopUpMenu()],
-            centerTitle: true, title: const Row(
+            centerTitle: true, 
+            title: const Row(
               mainAxisAlignment: MainAxisAlignment.center ,
               children:[
                 Icon(Icons.edit), 
@@ -34,21 +31,27 @@ class _Td extends State<TodoHome>{
                 Text('My Todo')
               ]
             ),
-            backgroundColor: const Color.fromARGB(255, 19, 19, 19), 
-            foregroundColor: Colors.blueGrey.shade300,          
+            backgroundColor: blackColor, 
+            foregroundColor: whiteColor,          
           ),
           
           body: FutureBuilder<List<dynamic>>(
             future: FirebaseGetUserDetails().getCurrentUserDetails(),
             builder: (context, snapshot)  {
               if(snapshot.connectionState == ConnectionState.waiting){
-                return const Center(child: CircularProgressIndicator());
+                return Center(
+                  child: CircularProgressIndicator(
+                    color: deepGreenColor,
+                  )
+                );
               } 
               else if(snapshot.hasError){
-                return const Text('An error occured !!!');
+                return const Text('An error occured !!!')
+                .decoratewithGoogleFont(whiteColor, fontSize1, fontWeight3);
               }
               else{
-                if(snapshot.data == null){} else{
+                if(snapshot.data == null){} 
+                else{
                     user.loggedInUser = snapshot.data![0]['username'];
                     user.firebaseCurrentUser = snapshot.data![2];
                     for(var items in snapshot.data![1].docs){                  
@@ -68,20 +71,30 @@ class _Td extends State<TodoHome>{
                   child: SingleChildScrollView(                    
                     child: Container(
                       decoration: const BoxDecoration(
-                        color: Colors.white38
+                        color: blackColor
                         // image: DecorationImage(
                         //   image: AssetImage('assets/hills-2836301_1280.jpg'),
                         //   fit: BoxFit.cover
                         // )
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                      child: Wrap(
+                        //mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          OrientationBuilder(
+                            builder: (context, orientation) => SliderAnimationView(
+                              endOffset: orientation == Orientation.landscape
+                                ? 1 : 15,
+                              textDirection: TextDirection.ltr,
+                              translationDistance: 0.0,
+                              //alignment: Alignment.centerRight,
+                              child: Text('hello'),//WelcomeTextView(user: user)
+                            ),
+                          ),
                           Container(
                             margin: const EdgeInsets.all(20), 
                             padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                              color: const Color.fromARGB(221, 30, 30, 30).withOpacity(0.3),
+                              //color: const Color.fromARGB(221, 30, 30, 30).withOpacity(0.3),
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.blueGrey.withOpacity(0.1), 
@@ -89,42 +102,8 @@ class _Td extends State<TodoHome>{
                                 )
                               ],
                               borderRadius: BorderRadius.circular(50),
-                            ),
-                            child: Text.rich(
-                              TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: 'Hello ${user.loggedInUser}, Welcome To Your Todo Manager. You currently have ',
-                                    style: TextStyle(
-                                      fontFamily: 'monospace', 
-                                      fontSize: 40,
-                                      fontWeight: FontWeight.bold, 
-                                      color: Colors.blueGrey.shade800
-                                    )
-                                  ),
-                                  TextSpan(
-                                    text: '${user.dataBase.length}',
-                                    style: TextStyle(
-                                      fontFamily: 'monospace', 
-                                      fontSize: 40,
-                                      fontWeight: FontWeight.bold, 
-                                      color: Colors.blueGrey.shade200
-                                    )
-                                  ),
-                                  TextSpan(
-                                    text: user.dataBase.length == 1? ' Todo' : ' Todos',
-                                    style: const TextStyle(
-                                      fontFamily: 'monospace', 
-                                      fontSize: 40,
-                                      fontWeight: FontWeight.bold, 
-                                      color: Colors.blueGrey
-                                    )
-                                  ),
-                                ]
-                              )
-                            )
-                          ),
-                                      
+                            ),                            
+                          ),          
                           const SizedBox(height: 20),
                                       
                           Container(

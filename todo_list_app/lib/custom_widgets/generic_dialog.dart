@@ -36,7 +36,7 @@ Future<T?> showGenericDialog<T>({
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(20)
     ),
-    //scrollable: true,
-    backgroundColor: blackColor    
+    scrollable: true,
+    backgroundColor: backGroundColor   
   )
 );

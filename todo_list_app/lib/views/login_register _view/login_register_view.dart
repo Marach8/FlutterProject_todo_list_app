@@ -17,7 +17,7 @@ class LoginPage extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     late String text;
-    var w = MediaQuery.of(context).size.width; 
+    var screenWidth = MediaQuery.of(context).size.width; 
 
     return Scaffold(
       appBar: AppBar(
@@ -30,7 +30,12 @@ class LoginPage extends StatelessWidget{
             } else {
               text = 'User Password Reset';
             }
-            return SliderAnimationView(child: Text(text));
+            return SliderAnimationView(
+              endOffset: 5.0,
+              textDirection: TextDirection.ltr,
+              translationDistance: -screenWidth/2,
+              child: Text(text),
+            );
           }
         ), 
         //centerTitle: true,
@@ -294,7 +299,7 @@ class LoginPage extends StatelessWidget{
                     },
                               
                     style: ButtonStyle(
-                      fixedSize: MaterialStatePropertyAll(Size(w, 30)),
+                      fixedSize: MaterialStatePropertyAll(Size(screenWidth, 30)),
                       side: const MaterialStatePropertyAll(
                         BorderSide(width: 1, strokeAlign: 3, color: greenColor)
                       )

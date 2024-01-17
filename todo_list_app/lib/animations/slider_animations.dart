@@ -2,13 +2,25 @@ import 'package:flutter/material.dart';
 
 class SliderAnimationView extends StatefulWidget {
   final Widget child;
-  const SliderAnimationView({required this.child , super.key});
+  final num translationDistance;
+  final TextDirection textDirection;
+  final Alignment? alignment;
+  final double endOffset;
+
+  const SliderAnimationView({
+    this.alignment,
+    required this.textDirection,
+    required this.endOffset,
+    required this.translationDistance, 
+    required this.child , super.key
+  });
 
   @override
   State<SliderAnimationView> createState() => _SliderAnimationState();
 }
 
-class _SliderAnimationState extends State<SliderAnimationView> with SingleTickerProviderStateMixin{
+class _SliderAnimationState extends State<SliderAnimationView> 
+with SingleTickerProviderStateMixin{
   late AnimationController sliderController;
   late Animation<Offset> sliderAnimation;
 
@@ -17,11 +29,11 @@ class _SliderAnimationState extends State<SliderAnimationView> with SingleTicker
     super.initState();
     sliderController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 5)
+      duration: const Duration(seconds: 10)
     )..repeat();
 
     sliderAnimation = Tween<Offset> (
-      begin: const Offset(0, 0), end: const Offset(5, 0)
+      begin: const Offset(0, 0), end: Offset(widget.endOffset, 0)
     ).animate(sliderController);
 
     sliderAnimation.addStatusListener((status) {
@@ -40,13 +52,14 @@ class _SliderAnimationState extends State<SliderAnimationView> with SingleTicker
   @override
   Widget build(BuildContext context) {
     sliderController.forward();
-    final w = MediaQuery.of(context).size.width;
+ 
     return Transform(
-      //alignment: Alignment.centerLeft,
-      transform: Matrix4.identity()..translate(-w/2),
+      alignment: widget.alignment,
+      transform: Matrix4.identity()
+        ..translate(widget.translationDistance),
       child: SlideTransition(
         position: sliderAnimation,
-        textDirection: TextDirection.ltr,
+        textDirection: widget.textDirection,
         child: widget.child
       ),
     );
