@@ -9,5 +9,6 @@ const redColor = Colors.red;
 final backGroundColor = Colors.blueGrey.withOpacity(0.25);
 const darkWhiteColor = Colors.white54;
 final deepGreenColor = Colors.green.shade900;
+const fontWeight3 = FontWeight.w200;
 const fontWeight1 = FontWeight.w600;
 const fontWeight2 = FontWeight.w800;

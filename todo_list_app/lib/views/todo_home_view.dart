@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_list_app/constants/fonts_and_colors.dart';
 import 'package:todo_list_app/constants/routes.dart';
 import 'package:todo_list_app/custom_widgets/alert_widget.dart';
 import 'package:todo_list_app/custom_widgets/button_widget.dart';
+import 'package:todo_list_app/custom_widgets/generic_dialog.dart';
+import 'package:todo_list_app/custom_widgets/popup_menu_buttons.dart';
 import 'package:todo_list_app/functions/firebase_functions.dart';
 import 'package:todo_list_app/functions/todo_provider.dart';
 
@@ -22,59 +25,7 @@ class _Td extends State<TodoHome>{
       builder: ((context, user, child)
         => Scaffold(
           appBar: AppBar( 
-            actions: [
-              PopupMenuButton(
-                color: Colors.blueGrey.shade100,        
-                onSelected: (value) async {                  
-                  if(value == 'logout'){
-                    ProgressIndicatorDialog().alert(context, 'Logging Out...');
-                    if(user.dataBase.isNotEmpty){                      
-                      for(List item in user.dataBase){
-                        await FirestoreInteraction().createTodo(
-                          user.firebaseCurrentUser!.uid, 
-                          item[0], 
-                          {
-                            'title': item[0], 
-                            'datetime': item[1], 
-                            'content': item[2]
-                          }
-                        );                        
-                      }
-                      user.dataBase.clear();
-                    }
-                    if(user.wasteBin.isNotEmpty){
-                      for(List item in user.wasteBin){
-                        await FirestoreInteraction()
-                          .deleteTodo(user.firebaseCurrentUser!.uid, item[0]);
-                      }
-                      user.wasteBin.clear();                      
-                    }
-                    await FirebaseAuthLogout().firebaseLogout(
-                      (text, color, icon) async {
-                        Navigator.of(context).pop();
-                        await MaterialBannerAlert1(context)
-                          .materialBannerAlert1(text, color, icon);
-                      }
-                    ).then((value) {
-                        user.done = true;
-                        Navigator.of(context)
-                          .pushNamedAndRemoveUntil(loginPageRoute, (route) => false);
-                      }                     
-                    );                    
-                  }
-                },
-                itemBuilder: (context) => [
-                  const PopupMenuItem(
-                    value:'logout', 
-                    height: 20, 
-                    child: Text(
-                      'Logout', 
-                      style:TextStyle(color: Colors.black)
-                    ),
-                  ),
-                ]
-              ),
-            ],
+            actions: const [PopUpMenu()],
             centerTitle: true, title: const Row(
               mainAxisAlignment: MainAxisAlignment.center ,
               children:[
@@ -117,10 +68,11 @@ class _Td extends State<TodoHome>{
                   child: SingleChildScrollView(                    
                     child: Container(
                       decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/hills-2836301_1280.jpg'),
-                          fit: BoxFit.cover
-                        )
+                        color: Colors.white38
+                        // image: DecorationImage(
+                        //   image: AssetImage('assets/hills-2836301_1280.jpg'),
+                        //   fit: BoxFit.cover
+                        // )
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
