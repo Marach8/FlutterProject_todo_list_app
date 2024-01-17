@@ -21,7 +21,7 @@ class _SliderAnimationState extends State<SliderAnimationView> with SingleTicker
     )..repeat();
 
     sliderAnimation = Tween<Offset> (
-      begin: const Offset(0, 0), end: const Offset(2, 0)
+      begin: const Offset(0, 0), end: const Offset(5, 0)
     ).animate(sliderController);
 
     sliderAnimation.addStatusListener((status) {
@@ -40,11 +40,15 @@ class _SliderAnimationState extends State<SliderAnimationView> with SingleTicker
   @override
   Widget build(BuildContext context) {
     sliderController.forward();
-    //final w = MediaQuery.of(context).size.width;
-    return SlideTransition(
-      position: sliderAnimation,
-      textDirection: TextDirection.ltr,
-      child: widget.child
+    final w = MediaQuery.of(context).size.width;
+    return Transform(
+      //alignment: Alignment.centerLeft,
+      transform: Matrix4.identity()..translate(-w/2),
+      child: SlideTransition(
+        position: sliderAnimation,
+        textDirection: TextDirection.ltr,
+        child: widget.child
+      ),
     );
   }
 }

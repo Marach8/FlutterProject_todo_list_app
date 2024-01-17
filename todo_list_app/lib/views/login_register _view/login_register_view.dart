@@ -16,14 +16,13 @@ class LoginPage extends StatelessWidget{
 
   @override
   Widget build(BuildContext context){
-    
+    late String text;
     var w = MediaQuery.of(context).size.width; 
 
     return Scaffold(
       appBar: AppBar(
         title: Consumer<AppUsers>(
           builder: (_, user, __) {
-            String? text;
             if(!user.forgotPassword && user.isRegistered){
               text = 'User Login';
             } else if(!user.forgotPassword && !user.isRegistered){
