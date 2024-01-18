@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_list_app/constants/fonts_and_colors.dart';
 import 'package:todo_list_app/constants/routes.dart';
 import 'package:todo_list_app/custom_widgets/alert_widget.dart';
 import 'package:todo_list_app/custom_widgets/button_widget.dart';
@@ -13,18 +14,18 @@ class CrudButtonsView extends StatelessWidget {
     
     return Container(
       width: screenWidth,
-      margin: const EdgeInsets.all(10),                  
+      margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),                  
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
+        gradient: LinearGradient(
           colors: [
-            Colors.green, 
-            Colors.blueGrey,
-            Colors.blue
+            greenColor,
+            backGroundColor,
+            blueColor
           ],
           tileMode: TileMode.mirror
         ),
         color: Colors.white.withOpacity(0.4),
-        borderRadius: BorderRadius.circular(20)
+        borderRadius: BorderRadius.circular(10)
       ),
       child: Center(
         child: Wrap(

@@ -4,23 +4,21 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_app/animations/slider_animations.dart';
 import 'package:todo_list_app/constants/fonts_and_colors.dart';
+import 'package:todo_list_app/custom_widgets/divider.dart';
 import 'package:todo_list_app/custom_widgets/popup_menu_buttons.dart';
 import 'package:todo_list_app/functions/extensions.dart';
 import 'package:todo_list_app/functions/firebase_functions.dart';
 import 'package:todo_list_app/functions/todo_provider.dart';
+import 'package:todo_list_app/views/todo_home_view/container_with_text_view.dart';
 import 'package:todo_list_app/views/todo_home_view/crud_buttons_view.dart';
 import 'package:todo_list_app/views/todo_home_view/welcome_text_view.dart';
 
-class TodoHome extends StatefulWidget{
+class TodoHome extends StatelessWidget{
   const TodoHome({super.key});
 
-  @override
-  State<TodoHome> createState() => _TodoHomeState();
-}
-
-class _TodoHomeState extends State<TodoHome> {
   @override 
   Widget build(BuildContext context){
+
     final screenWidth = MediaQuery.of(context).size.width;
     return Consumer<AppUsers>(
       builder: ((context, user, child)
@@ -34,7 +32,7 @@ class _TodoHomeState extends State<TodoHome> {
               children:[
                 Icon(
                   Icons.edit, 
-                  color: Colors.blue, 
+                  color: blueColor, 
                   size: fontSize2,
                 ), 
                 Gap(10), 
@@ -78,40 +76,39 @@ class _TodoHomeState extends State<TodoHome> {
                 }             
                 
                 return SingleChildScrollView(
-                  child: Column(
-                    children: [                      
-                      SizedBox(                       
-                        height: 35,
-                        width: screenWidth,
-                        child: Stack(
-                          children: [
-                            Positioned(
-                              top: 0,
-                              child: SliderAnimationView(
-                                duration: 20,
-                                endOffset: 3,
-                                textDirection: TextDirection.rtl,
-                                translationDistance: screenWidth,                            
-                                child: WelcomeTextView(user: user)
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    child: Column(
+                      children: [                      
+                        SizedBox(                       
+                          height: 35,
+                          width: screenWidth,
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                top: 0,
+                                child: SliderAnimationView(
+                                  duration: 20,
+                                  endOffset: 3,
+                                  textDirection: TextDirection.rtl,
+                                  translationDistance: screenWidth,                            
+                                  child: WelcomeTextView(user: user)
+                                ),
                               ),
-                            ),
-                          ]
+                            ]
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Divider(color: deepGreenColor, thickness: 1,),
-                      ),
-                      Lottie.asset(
-                        'assets/lottie.json',
-                        fit: BoxFit.cover
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Divider(color: deepGreenColor, thickness: 1,),
-                      ),
-                      CrudButtonsView(user: user)
-                    ],
+                        const DividerWidget(),
+                        Lottie.asset(
+                          'assets/lottie.json',
+                          fit: BoxFit.cover
+                        ),
+                        const DividerWidget(),
+                        const ContainerWithTextView(),
+                        const DividerWidget(),
+                        CrudButtonsView(user: user)
+                      ],
+                    ),
                   ),
                 );
               } 

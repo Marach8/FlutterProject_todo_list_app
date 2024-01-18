@@ -23,7 +23,7 @@ class CrudButtonModel extends StatelessWidget {
         )
       ),
       onPressed: function, 
-      icon: Icon(icon, color: Colors.blue,),
+      icon: Icon(icon, color: blueColor,),
       label: Text(text).decoratewithGoogleFont(
         whiteColor, 
         fontSize2, 

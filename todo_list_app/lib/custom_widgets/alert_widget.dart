@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:todo_list_app/constants/fonts_and_colors.dart';
 
 class SnackBarAlert {
   final BuildContext context;  
@@ -166,7 +167,7 @@ class ProgressIndicatorDialog{
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        content: const LinearProgressIndicator(color: Colors.green),
+        content: const LinearProgressIndicator(color: blueColor),
         title: Text(
           text,
           style: GoogleFonts.getFont('Nunito',fontSize: 25)

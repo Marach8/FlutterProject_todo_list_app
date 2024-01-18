@@ -5,6 +5,7 @@ const fontSize2 = 25.0;
 const blackColor = Colors.black;
 const greenColor = Colors.green;
 const whiteColor = Colors.white;
+const blueColor = Colors.blue;
 const redColor = Colors.red;
 final backGroundColor = Colors.blueGrey.withOpacity(0.25);
 const darkWhiteColor = Colors.white54;
