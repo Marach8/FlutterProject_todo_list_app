@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_app/animations/slider_animations.dart';
 import 'package:todo_list_app/constants/fonts_and_colors.dart';
-import 'package:todo_list_app/constants/routes.dart';
-import 'package:todo_list_app/custom_widgets/alert_widget.dart';
-import 'package:todo_list_app/custom_widgets/button_widget.dart';
 import 'package:todo_list_app/custom_widgets/popup_menu_buttons.dart';
 import 'package:todo_list_app/functions/extensions.dart';
 import 'package:todo_list_app/functions/firebase_functions.dart';
@@ -34,8 +32,12 @@ class _TodoHomeState extends State<TodoHome> {
             title: const Row(
               mainAxisAlignment: MainAxisAlignment.center ,
               children:[
-                Icon(Icons.edit, color: Colors.blue), 
-                SizedBox(width:10), 
+                Icon(
+                  Icons.edit, 
+                  color: Colors.blue, 
+                  size: fontSize2,
+                ), 
+                Gap(10), 
                 Text('My Todo')
               ]
             ),
@@ -96,9 +98,17 @@ class _TodoHomeState extends State<TodoHome> {
                           ]
                         ),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Divider(color: deepGreenColor, thickness: 1,),
+                      ),
                       Lottie.asset(
                         'assets/lottie.json',
                         fit: BoxFit.cover
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Divider(color: deepGreenColor, thickness: 1,),
                       ),
                       CrudButtonsView(user: user)
                     ],

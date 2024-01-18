@@ -13,7 +13,7 @@ class CrudButtonsView extends StatelessWidget {
     
     return Container(
       width: screenWidth,
-      margin: const EdgeInsets.all(20),                  
+      margin: const EdgeInsets.all(10),                  
       decoration: BoxDecoration(
         gradient: const LinearGradient(
           colors: [
@@ -29,13 +29,16 @@ class CrudButtonsView extends StatelessWidget {
       child: Center(
         child: Wrap(
           children: [
-            HomeButtons().homeButton(
-              Icons.add, 
-              'Add',
-              () => Navigator.of(context).pushNamed(addTodoPageRoute)
+            CrudButtonModel(
+              icon: Icons.add, 
+              text: 'Add',
+              function: () => Navigator.of(context).pushNamed(addTodoPageRoute)
             ),
-            HomeButtons().homeButton(
-              Icons.view_array, 'View', (){
+
+            CrudButtonModel(
+              icon: Icons.view_array, 
+              text: 'View', 
+              function: (){
                 if (user.dataBase.isNotEmpty) {
                   MaterialBannerAlert(context: context).materialBannerAlert(
                     'To view an item in detail, tap on the item.', 
@@ -53,8 +56,11 @@ class CrudButtonsView extends StatelessWidget {
                 }
               }
             ),
-            HomeButtons().homeButton(
-              Icons.delete, 'Delete', (){
+
+            CrudButtonModel(
+              icon: Icons.delete,
+              text: 'Delete',
+              function: (){
                 if (user.dataBase.isNotEmpty) {
                   MaterialBannerAlert(context: context).materialBannerAlert(
                     'To delete an item, swipe the item to the left or right.', 
@@ -72,8 +78,11 @@ class CrudButtonsView extends StatelessWidget {
                 }
               }
             ),
-            HomeButtons().homeButton(
-              Icons.update_rounded, 'Update', (){
+
+            CrudButtonModel(
+              icon: Icons.update_rounded, 
+              text: 'Update', 
+              function: (){
                 if (user.dataBase.isNotEmpty) {
                   MaterialBannerAlert(context: context).materialBannerAlert(
                     'To update an item, longpress on it to enter update mode.', 
