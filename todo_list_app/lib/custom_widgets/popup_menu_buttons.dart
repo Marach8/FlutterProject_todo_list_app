@@ -4,15 +4,18 @@ import 'package:todo_list_app/constants/fonts_and_colors.dart';
 import 'package:todo_list_app/constants/routes.dart';
 import 'package:todo_list_app/custom_widgets/alert_widget.dart';
 import 'package:todo_list_app/custom_widgets/generic_dialog.dart';
+import 'package:todo_list_app/custom_widgets/loading_screen/loading_screen.dart';
 import 'package:todo_list_app/functions/extensions.dart';
 import 'package:todo_list_app/functions/firebase_functions.dart';
 import 'package:todo_list_app/functions/todo_provider.dart';
 
 class PopUpMenu extends StatelessWidget {
-  const PopUpMenu({super.key});
+  final BuildContext contextForLoadingScreen;
+  const PopUpMenu({required this.contextForLoadingScreen, super.key});
 
   @override
   Widget build(BuildContext context) {
+    final loadingScreen = LoadingScreen();
     return Consumer<AppUsers>(
       builder: (_, user, __) => PopupMenuButton(
         color: whiteColor,        
@@ -28,7 +31,7 @@ class PopUpMenu extends StatelessWidget {
               }
             ).then((shouldLogOut) async {
               if(shouldLogOut == true){
-                ProgressIndicatorDialog().alert(context, 'Logging Out...');
+                loadingScreen.showOverlay(contextForLoadingScreen, 'Logging out...');
                 if(user.dataBase.isNotEmpty){                      
                   for(List item in user.dataBase){
                     await FirestoreInteraction().createTodo(
@@ -52,7 +55,7 @@ class PopUpMenu extends StatelessWidget {
                 }
                 await FirebaseAuthLogout().firebaseLogout(
                   (text, color, icon) async {
-                    Navigator.of(context).pop();
+                    loadingScreen.hideOverlay();
                     await MaterialBannerAlert1(context)
                       .materialBannerAlert1(text, color, icon);
                   }

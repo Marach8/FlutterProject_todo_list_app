@@ -25,7 +25,7 @@ class TodoHome extends StatelessWidget{
         => Scaffold(
           backgroundColor: blackColor,
           appBar: AppBar( 
-            actions: const [PopUpMenu()],
+            actions: [PopUpMenu(contextForLoadingScreen: context)],
             centerTitle: true, 
             title: const Row(
               mainAxisAlignment: MainAxisAlignment.center ,

@@ -5,6 +5,7 @@ import 'package:todo_list_app/animations/slider_animations.dart';
 import 'package:todo_list_app/constants/fonts_and_colors.dart';
 import 'package:todo_list_app/constants/routes.dart';
 import 'package:todo_list_app/custom_widgets/alert_widget.dart';
+import 'package:todo_list_app/custom_widgets/loading_screen/loading_screen.dart';
 import 'package:todo_list_app/custom_widgets/textfield_widget.dart';
 import 'package:todo_list_app/custom_widgets/textitem_widget.dart';
 import 'package:todo_list_app/functions/firebase_functions.dart';
@@ -197,15 +198,16 @@ class LoginPage extends StatelessWidget{
                         user.emailController, 
                         user.passwordController
                       ].every((controller) => controller.text.isNotEmpty);
-      
+                      final loadingScreen = LoadingScreen();
+
                       if(user.isRegistered){
                         if(loginFieldsNotEmpty){
-                          ProgressIndicatorDialog().alert(context, 'Please Wait...');
+                          loadingScreen.showOverlay(context, 'Logging in...');
                           await FirebaseAuthLogin().firebaseLogin(
                             user.emailController.text.trim(), 
                             user.passwordController.text.trim(),
                             (text, color, icon) async{
-                              Navigator.of(context).pop();
+                              loadingScreen.hideOverlay();
                               await MaterialBannerAlert1(context)
                                 .materialBannerAlert1(text, color, icon);
                             } 
@@ -220,7 +222,7 @@ class LoginPage extends StatelessWidget{
                             else{
                               await FirebaseEmailVerification().verifyEmail(
                                 (text, color, icon) async{
-                                  Navigator.of(context).pop();
+                                  loadingScreen.hideOverlay();
                                   await MaterialBannerAlert1(context)
                                     .materialBannerAlert1(text, color, icon);
                                 }
@@ -248,14 +250,15 @@ class LoginPage extends StatelessWidget{
                         ].every((controller) => controller.text.isNotEmpty);
       
                         if(registrationFieldsNotEmpty){
-                          ProgressIndicatorDialog().alert(context, 'Please Wait...');
+                          loadingScreen.showOverlay(context, 'Registering...');
+
                           if(user.passwordController.text == user.confirmPassController.text){
                             await FirebaseAuthRegister().firebaseRegister(
                               user.usernameController.text.trim(),
                               user.emailController.text.trim(), 
                               user.passwordController.text.trim(),
                               (text, color, icon) async {
-                                Navigator.of(context).pop();
+                                loadingScreen.hideOverlay();
                                 await MaterialBannerAlert1(context)
                                   .materialBannerAlert1(text, color, icon);
                               } 
@@ -279,7 +282,7 @@ class LoginPage extends StatelessWidget{
                           } 
                           //Password and confirmPassword fields do not match.
                           else {
-                            Navigator.of(context).pop();
+                            loadingScreen.hideOverlay();
                             MaterialBannerAlert1(context).materialBannerAlert1(
                               'Password Confirmation Error!!!', 
                               redColor, 

@@ -52,7 +52,9 @@ class FirebaseEmailVerification{
 
 class FirebaseAuthLogin{
 
-  Future<String> firebaseLogin(String email, String password, Function(String text, Color color, IconData icon) firebaseAlert
+  Future<String> firebaseLogin(
+    String email, String password, 
+    Function(String text, Color color, IconData icon) firebaseAlert
   ) async{
     try{
       await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -63,7 +65,9 @@ class FirebaseAuthLogin{
         final userData = await FirebaseFirestore.instance.collection('Users').doc(user.uid).get();
         await firebaseAlert('Login Successful...', Colors.green, Icons.check);
         return userData['username'];
-      } else {return 'email not verified';}
+      } else {
+        return 'email not verified';
+      }
 
     } on FirebaseAuthException catch(e){
       if (e.code == 'user-not-found'){

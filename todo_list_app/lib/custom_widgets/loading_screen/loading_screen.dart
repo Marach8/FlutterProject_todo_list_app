@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:todo_list_app/constants/fonts_and_colors.dart';
@@ -51,26 +50,26 @@ class LoadingScreen{
               minWidth: size.width * 0.5
             ),
             decoration: BoxDecoration(
-              color: whiteColor,
+              color: blackColor,
               borderRadius: BorderRadius.circular(10),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(10.0),
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const Gap(10),
-                    const CircularProgressIndicator(color: blueColor),
-                    const Gap(10),
+                    const CircularProgressIndicator(color: greenColor),
+                    const Gap(15),
                     StreamBuilder(
                       stream: textStream.stream,
                       builder: (_, snapshot){
                         if(snapshot.hasData){
                           return Text(snapshot.data!)
                             .decoratewithGoogleFont(
-                              blueColor, fontSize2, fontWeight3
+                              greenColor, fontSize1, fontWeight1
                             );
                         } else{
                           return const SizedBox.shrink();
@@ -93,7 +92,7 @@ class LoadingScreen{
         return true;
       },
       updateScreen: (text){
-        textStream.add(text);
+        textStream.sink.add(text);
         return true;
       }
     );

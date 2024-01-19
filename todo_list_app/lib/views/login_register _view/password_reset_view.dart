@@ -3,6 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_app/constants/fonts_and_colors.dart';
 import 'package:todo_list_app/custom_widgets/alert_widget.dart';
+import 'package:todo_list_app/custom_widgets/loading_screen/loading_screen.dart';
 import 'package:todo_list_app/custom_widgets/textfield_widget.dart';
 import 'package:todo_list_app/custom_widgets/textitem_widget.dart';
 import 'package:todo_list_app/functions/firebase_functions.dart';
@@ -67,13 +68,14 @@ class PasswordResetView extends StatelessWidget {
         const Gap(20),
         Consumer<AppUsers>(
           builder: (_, user, __) => ElevatedButton(
-            onPressed: () async{                                                                                                        
+            onPressed: () async{
+              final loadingScreen = LoadingScreen();                                                                                                     
               if(user.forgotPasswordController.text.isNotEmpty){
-                ProgressIndicatorDialog().alert(context, 'Please Wait...');
+                loadingScreen.showOverlay(context, 'Please Wait...');
                 await FirebaseResetPassword().resetPassword(
                   user.forgotPasswordController.text,
                   (text, color, icon) async{
-                    Navigator.of(context).pop();
+                    loadingScreen.hideOverlay();
                     await MaterialBannerAlert1(context).materialBannerAlert1(
                       text, color, icon
                     );
