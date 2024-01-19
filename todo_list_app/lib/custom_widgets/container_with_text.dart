@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list_app/constants/fonts_and_colors.dart';
+import 'package:todo_list_app/functions/extensions.dart';
 
 class ContainerWithText extends StatelessWidget {
-  final dynamic user;
-  const ContainerWithText({required this.user, super.key});
+  final String title, content;
+  const ContainerWithText({
+    required this.title, 
+    required this.content, 
+    super.key
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +37,25 @@ class ContainerWithText extends StatelessWidget {
             ),
             borderRadius: BorderRadius.circular(10)
           ),
-          child: const Center(child: Text('Hello'))
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(8),
+              child: Column(
+                children: [
+                  Text(title).decorate(
+                    whiteColor, 
+                    fontSize1,
+                    fontWeight3
+                  ),
+                  Text(content).decorate(
+                    darkWhiteColor, 
+                    fontSize1,
+                    fontWeight3
+                  ),
+                ],
+              ),
+            )
+          )
         ),
       ),
     );

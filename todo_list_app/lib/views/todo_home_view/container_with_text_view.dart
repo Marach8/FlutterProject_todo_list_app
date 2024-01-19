@@ -13,8 +13,15 @@ class ContainerWithTextView extends StatelessWidget {
       height: screenWidth/4,
       width: screenWidth,
       child: ListView.builder(
-        itemCount: 10,
-        itemBuilder: (_, index) => ContainerWithText(user: user),
+        itemCount: user.dataBase.length,
+        itemBuilder: (_, index) {
+          final title = user.dataBase.elementAt(index)[0];
+          final content = user.dataBase.elementAt(index)[2];
+          return ContainerWithText(
+            title: title,
+            content: content
+          );
+        },
         scrollDirection: Axis.horizontal,
       )
     );

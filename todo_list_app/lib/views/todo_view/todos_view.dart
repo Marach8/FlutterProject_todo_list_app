@@ -4,41 +4,11 @@ import 'package:provider/provider.dart';
 import 'package:todo_list_app/constants/routes.dart';
 import 'package:todo_list_app/functions/firebase_functions.dart';
 import 'package:todo_list_app/functions/todo_provider.dart';
+import 'package:todo_list_app/views/todo_view/todo_details_view.dart';
 
-class Views extends StatefulWidget{
+class Views extends StatelessWidget{
   const Views ({super.key});
 
-  @override
-  State<Views> createState() => _Views();
-}
-
-class _Views extends State<Views> {
-
-  container(String heading, String content){
-    return Container(
-      padding: const EdgeInsets.all(10),                            
-      decoration: BoxDecoration(
-        color: Colors.blueGrey.shade900,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: const [
-          BoxShadow(blurRadius: 5, spreadRadius: 1, color: Color.fromARGB(255, 170, 169, 249))
-        ]
-      ),
-      child: Text.rich(
-        TextSpan(
-          children: [
-            TextSpan(
-              text: heading, style: GoogleFonts.getFont('Nunito', color: const Color.fromARGB(255, 170, 169, 249).withOpacity(0.6))
-            ),
-            TextSpan(
-              text: content, style: GoogleFonts.getFont('Nunito', color:Colors.white)
-            ),
-          ]
-        )
-      )
-    );
-  }
-  
   @override
   Widget build(BuildContext context){
     return Consumer<AppUsers>(
@@ -49,9 +19,14 @@ class _Views extends State<Views> {
             centerTitle: true, 
             title: Text(
               'Welcome to your views',
-              style: GoogleFonts.getFont('Quicksand', fontWeight: FontWeight.bold, fontSize: 20,)
+              style: GoogleFonts.getFont(
+                'Quicksand', 
+                fontWeight: FontWeight.bold, 
+                fontSize: 20,
+              )
             ),
-            backgroundColor: const Color.fromARGB(59, 106, 106, 106), foregroundColor: Colors.white,
+            backgroundColor: const Color.fromARGB(59, 106, 106, 106), 
+            foregroundColor: Colors.white,
           ),
           body: ListView.builder(
             itemCount: user.dataBase.length,
@@ -67,7 +42,8 @@ class _Views extends State<Views> {
                     user.delete(title, date, content, index);                    
                     await ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        behavior: SnackBarBehavior.floating, margin: const EdgeInsets.only(bottom:100),
+                        behavior: SnackBarBehavior.floating, 
+                        margin: const EdgeInsets.only(bottom:100),
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10))
                         ),
@@ -85,13 +61,17 @@ class _Views extends State<Views> {
                         duration: const Duration(seconds: 4), backgroundColor: Colors.white,
                       )
                     ).closed; 
-                    shouldDeleteFromFirestore? FirestoreInteraction().deleteTodo(user.firebaseCurrentUser!.uid, title): {};                 
+                    shouldDeleteFromFirestore? 
+                    FirestoreInteraction().deleteTodo(
+                      user.firebaseCurrentUser!.uid, title
+                    ): {};                 
                   } else if(direction == DismissDirection.startToEnd) {
                       bool shouldDeleteFromFirestore = true;
                       user.delete(title, date, content, index);
                       await ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          behavior: SnackBarBehavior.floating, margin: const EdgeInsets.only(bottom:100),
+                          behavior: SnackBarBehavior.floating, 
+                          margin: const EdgeInsets.only(bottom:100),
                           shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(Radius.circular(10))
                           ),
@@ -109,45 +89,43 @@ class _Views extends State<Views> {
                           duration: const Duration(seconds: 2), backgroundColor: Colors.white,
                         )
                       ).closed; 
-                      shouldDeleteFromFirestore? FirestoreInteraction().deleteTodo(user.firebaseCurrentUser!.uid, title): {};
+                      shouldDeleteFromFirestore? 
+                      FirestoreInteraction().deleteTodo(
+                        user.firebaseCurrentUser!.uid, title
+                      ): {};
                     }
                 },
                 background: Container(
                   padding: const EdgeInsets.only(left:10, right: 15),
-                  height: 30, color: Colors.lightBlue.shade300, alignment: Alignment.centerLeft,
+                  height: 30, 
+                  color: Colors.lightBlue.shade300, 
+                  alignment: Alignment.centerLeft,
                   child: const Wrap(
                     children: [
-                      Align(alignment: Alignment.bottomLeft, child: Icon(Icons.delete_rounded, color: Colors.red)),
-                      Align(alignment: Alignment.centerRight, child: Icon(Icons.delete_rounded, color: Colors.red)),
+                      Align(
+                        alignment: Alignment.bottomLeft, 
+                        child: Icon(Icons.delete_rounded, 
+                        color: Colors.red)
+                      ),
+                      Align(
+                        alignment: Alignment.centerRight, 
+                        child: Icon(Icons.delete_rounded, 
+                        color: Colors.red)
+                      ),
                     ]
                   )
                 ),
                 child: ListTile(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)
+                  ),
                   contentPadding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-                  onTap: (){
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(                                                
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20))
-                        ),
-                        backgroundColor: Colors.blueGrey.shade900,
-                        content: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            container('TITLE OF TODO: ', title), const SizedBox(height: 10),
-                            container('DATE/TIME OF TODO: ', date), const SizedBox(height: 10),
-                            container('CONTENT OF TODO: ', content), const SizedBox(height: 10),
-                          ]
-                        ),
-                        duration: const Duration(seconds: 10),
-                        action: SnackBarAction(
-                          onPressed: (){ScaffoldMessenger.of(context).hideCurrentSnackBar();},
-                          label: 'Back', textColor: Colors.blue,
-                        )
-                      )
-                    );
-                  },
+                  onTap: () => showFullTodoDetails(
+                    context,
+                    title, 
+                    date, 
+                    content
+                  ),
                   onLongPress: (){
                     user.isInUpdateMode = true;
                     user.updateTodo(title, date, content, index);

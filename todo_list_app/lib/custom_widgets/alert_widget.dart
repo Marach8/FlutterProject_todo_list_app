@@ -162,22 +162,6 @@ class DialogBox{
 
 
 
-// class ProgressIndicatorDialog{
-//   alert(BuildContext context, String text){
-//     showDialog(
-//       context: context,
-//       builder: (context) => AlertDialog(
-//         content: const LinearProgressIndicator(color: blueColor),
-//         title: Text(
-//           text,
-//           style: GoogleFonts.getFont('Nunito',fontSize: 25)
-//         ),
-//       )
-//     );
-//   }
-// }
-
-
 class MaterialBannerAlert1{
   final BuildContext context;
   MaterialBannerAlert1(this.context);

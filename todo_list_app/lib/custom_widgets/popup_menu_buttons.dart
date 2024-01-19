@@ -23,7 +23,7 @@ class PopUpMenu extends StatelessWidget {
           if(value == 'logout'){
             await showGenericDialog(
               context: context,
-              content: 'Are sure you want to logout?',
+              content: 'Dear ${user.loggedInUser}, are you sure you want to logout?',
               title: 'Logout',
               options: {
                 'Cancel': false,
