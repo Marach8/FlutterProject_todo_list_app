@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-const fontSize3 = 10.0;
+const fontSize1 = 12.0;
 const fontSize2 = 15.0;
-//const fontSize4 = 20.0;
+const fontSize3 = 20.0;
 const fontSize4 = 25.0;
 const blackColor = Colors.black;
 const greenColor = Colors.green;

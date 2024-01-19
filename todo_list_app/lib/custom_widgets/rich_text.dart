@@ -39,7 +39,7 @@ class TodoRichText extends StatelessWidget {
               .decorate(
                 whiteColor, 
                 fontSize2, 
-                fontWeight1
+                fontWeight3
               ),
           ]
         )

@@ -16,26 +16,26 @@ class Views extends StatelessWidget{
     return Consumer<AppUsers>(
       builder: (context, user, child) 
       => Scaffold(
-          backgroundColor: Colors.blueGrey.withOpacity(0.25),
+          backgroundColor: backGroundColor,
           appBar: AppBar(
             centerTitle: true, 
-            title: Text(
-              'Welcome to your views',
-              style: GoogleFonts.getFont(
-                'Quicksand', 
-                fontWeight: FontWeight.bold, 
-                fontSize: 20,
-              )
-            ),
-            backgroundColor: const Color.fromARGB(59, 106, 106, 106), 
-            foregroundColor: Colors.white,
+            title: const Text('Welcome to your views')
+              .decoratewithGoogleFont(
+                whiteColor,
+                fontSize3,
+                fontWeight2
+              ),
+            backgroundColor: deepBackGroundColor, 
+            foregroundColor: whiteColor
           ),
+
           body: ListView.builder(
             itemCount: user.dataBase.length,
             itemBuilder: (context, index) {
               final title = user.dataBase.elementAt(index)[0];
               final date = user.dataBase.elementAt(index)[1]; 
-              final content = user.dataBase.elementAt(index)[2];                            
+              final content = user.dataBase.elementAt(index)[2];
+              
               return Dismissible(                
                 key: Key(title),
                 onDismissed: (direction) async {
@@ -47,12 +47,16 @@ class Views extends StatelessWidget{
                         behavior: SnackBarBehavior.floating, 
                         margin: const EdgeInsets.only(bottom:100),
                         shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10))
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10)
+                          )
                         ),
-                        content: Text(
-                          'Item deleted!', 
-                          style: GoogleFonts.getFont('Nunito', fontSize:20, color: Colors.black, fontWeight: FontWeight.w300)
-                        ),
+                        content: const Text('Item deleted!')
+                          .decoratewithGoogleFont(
+                            blackColor,
+                            fontSize3, 
+                            fontWeight3
+                          ),
                         action: SnackBarAction(
                           onPressed: () {
                             user.undo(title, date, content, index);
@@ -100,19 +104,19 @@ class Views extends StatelessWidget{
                 background: Container(
                   padding: const EdgeInsets.only(left:10, right: 15),
                   height: 30, 
-                  color: Colors.lightBlue.shade300, 
+                  color: blueColor, 
                   alignment: Alignment.centerLeft,
                   child: const Wrap(
                     children: [
                       Align(
                         alignment: Alignment.bottomLeft, 
                         child: Icon(Icons.delete_rounded, 
-                        color: Colors.red)
+                        color: blackColor)
                       ),
                       Align(
                         alignment: Alignment.centerRight, 
                         child: Icon(Icons.delete_rounded, 
-                        color: Colors.red)
+                        color: blackColor)
                       ),
                     ]
                   )
@@ -140,12 +144,12 @@ class Views extends StatelessWidget{
                   ),
                   trailing: Text(date).decoratewithGoogleFont(
                     darkWhiteColor, 
-                    fontSize2, 
+                    fontSize1, 
                     fontWeight3
                   ),
                   title: Text(title).decoratewithGoogleFont(
                     whiteColor,
-                    fontSize4,
+                    fontSize3,
                     fontWeight1
                   ),
                   subtitle: Text(content).decoratewithGoogleFont(
