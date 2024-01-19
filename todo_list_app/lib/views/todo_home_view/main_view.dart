@@ -47,9 +47,9 @@ class TodoHome extends StatelessWidget{
             future: FirebaseGetUserDetails().getCurrentUserDetails(),
             builder: (context, snapshot)  {
               if(snapshot.connectionState == ConnectionState.waiting){
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(
-                    color: deepGreenColor,
+                    color: blueColor,
                   )
                 );
               } 
@@ -86,7 +86,7 @@ class TodoHome extends StatelessWidget{
                       children: [                      
                         SizedBox(                       
                           height: 35,
-                          width: screenWidth,
+                          width: double.infinity,
                           child: Stack(
                             children: [
                               Positioned(

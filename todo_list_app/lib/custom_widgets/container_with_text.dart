@@ -39,8 +39,8 @@ class ContainerWithText extends StatelessWidget {
                 radius: 10,
                 backgroundColor: blackColor,
                 child: Center(
-                  child: Text('$index').
-                    decorate(
+                  child: Text('$index')
+                    .decorate(
                       blueColor, 
                       fontSize2, 
                       fontWeight3
@@ -48,37 +48,35 @@ class ContainerWithText extends StatelessWidget {
                 )
               ),
             ),
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: backGroundColor,
-                  border: Border.all(
-                    color: blueColor,
-                    width: 0.3,
-                  ),
-                  borderRadius: BorderRadius.circular(10)
+            Container(
+              decoration: BoxDecoration(
+                color: backGroundColor,
+                border: Border.all(
+                  color: blueColor,
+                  width: 0.3,
                 ),
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(title).decorate(
-                          whiteColor, 
-                          fontSize2,
-                          fontWeight3
-                        ),
-                        Text(content).decorate(
-                          darkWhiteColor, 
-                          fontSize2,
-                          fontWeight3
-                        ),
-                      ],
-                    ),
-                  )
-                )
+                borderRadius: BorderRadius.circular(10)
               ),
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(title).decorate(
+                        whiteColor, 
+                        fontSize2,
+                        fontWeight3
+                      ),
+                      Text(content).decorate(
+                        darkWhiteColor, 
+                        fontSize2,
+                        fontWeight3
+                      ),
+                    ],
+                  ),
+                )
+              )
             ),
           ],
         ),
