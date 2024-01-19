@@ -67,7 +67,7 @@ class LoginPage extends StatelessWidget{
                 Consumer<AppUsers>(
                   builder: (_, user,__) => TextItem(
                     text: user.isRegistered ? 'Sign In': 'Sign Up', 
-                    fontSize: fontSize4, 
+                    fontSize: fontSize2, 
                     fontWeight: fontWeight2, 
                     color: deepGreenColor
                   ),
@@ -150,7 +150,7 @@ class LoginPage extends StatelessWidget{
                                     BoxShadow(
                                       blurRadius: 10, 
                                       spreadRadius:1, 
-                                      color: Colors.black54
+                                      color: blackColor
                                     )
                                   ]                      
                                 ),
@@ -309,7 +309,7 @@ class LoginPage extends StatelessWidget{
                     ),
                     child: TextItem(
                       text: user.isRegistered ? 'Login': 'Register', 
-                      fontSize: fontSize2, 
+                      fontSize: fontSize1, 
                       fontWeight: fontWeight2,
                       color: greenColor
                     ),

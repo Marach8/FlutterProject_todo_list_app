@@ -60,11 +60,12 @@ class LoginAndSignUpTextFields extends StatelessWidget{
   @override
   Widget build(BuildContext _) {
     return Column(
+
       children: [
         textItem == null ? const SizedBox.shrink() 
         : TextItem(
           text: textItem ?? '', 
-          fontSize: fontSize2, 
+          fontSize: fontSize1, 
           fontWeight: fontWeight1,
           color: blackColor
         ),
@@ -78,7 +79,7 @@ class LoginAndSignUpTextFields extends StatelessWidget{
               BoxShadow(
                 blurRadius: 3, 
                 spreadRadius: 1, 
-                color: Colors.black
+                color: blackColor
               )
             ],                            
           ),
