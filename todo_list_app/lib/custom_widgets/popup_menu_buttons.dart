@@ -31,7 +31,10 @@ class PopUpMenu extends StatelessWidget {
               }
             ).then((shouldLogOut) async {
               if(shouldLogOut == true){
-                loadingScreen.showOverlay(contextForLoadingScreen, 'Logging out...');
+                loadingScreen.showOverlay(
+                  contextForLoadingScreen, 
+                  'Logging out...'
+                );
                 if(user.dataBase.isNotEmpty){                      
                   for(List item in user.dataBase){
                     await FirestoreInteraction().createTodo(
@@ -62,7 +65,9 @@ class PopUpMenu extends StatelessWidget {
                 ).then((value) {
                     user.done = true;
                     Navigator.of(context)
-                      .pushNamedAndRemoveUntil(loginPageRoute, (route) => false);
+                      .pushNamedAndRemoveUntil(
+                        loginPageRoute, (route) => false
+                      );
                   }                     
                 ); 
               }
@@ -75,7 +80,11 @@ class PopUpMenu extends StatelessWidget {
             value:'logout', 
             height: 20, 
             child: const Text('Logout')
-              .decorate(blackColor, fontSize1, fontWeight1),
+              .decorate(
+                blackColor, 
+                fontSize2, 
+                fontWeight1
+              ),
           ),
         ]
       ),

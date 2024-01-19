@@ -22,7 +22,7 @@ class PasswordResetView extends StatelessWidget {
           children: [
             const TextItem(
               text: 'Password Reset', 
-              fontSize: fontSize2, 
+              fontSize: fontSize4, 
               fontWeight: fontWeight1,
               color: blackColor
             ),
@@ -102,7 +102,7 @@ class PasswordResetView extends StatelessWidget {
             ),
             child: const TextItem(
               text: 'Change Password', 
-              fontSize: fontSize1, 
+              fontSize: fontSize2, 
               fontWeight: fontWeight2,
               color: blackColor
             ),

@@ -16,13 +16,13 @@ class TodoRichText extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(10),                            
       decoration: BoxDecoration(
-        color: Colors.blueGrey.shade900,
+        color: deepBackGroundColor,
         borderRadius: BorderRadius.circular(10),
         boxShadow: const [
           BoxShadow(
             blurRadius: 5, 
             spreadRadius: 1, 
-            color: Color.fromARGB(255, 170, 169, 249)
+            color: whiteColor
           )
         ]
       ),
@@ -31,14 +31,14 @@ class TodoRichText extends StatelessWidget {
           children: [
             TextSpan(text: heading)
               .decorate(
-                whiteColor, 
-                fontSize1, 
+                darkWhiteColor, 
+                fontSize2, 
                 fontWeight1
               ),
             TextSpan(text: content)
               .decorate(
                 whiteColor, 
-                fontSize1, 
+                fontSize2, 
                 fontWeight1
               ),
           ]

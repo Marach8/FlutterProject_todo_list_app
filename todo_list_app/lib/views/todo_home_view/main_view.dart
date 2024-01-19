@@ -33,7 +33,7 @@ class TodoHome extends StatelessWidget{
                 Icon(
                   Icons.edit, 
                   color: blueColor, 
-                  size: fontSize2,
+                  size: fontSize4,
                 ), 
                 Gap(10), 
                 Text('My Todo')
@@ -55,7 +55,11 @@ class TodoHome extends StatelessWidget{
               } 
               else if(snapshot.hasError){
                 return const Text('An error occured !!!')
-                .decoratewithGoogleFont(whiteColor, fontSize1, fontWeight3);
+                .decoratewithGoogleFont(
+                  whiteColor, 
+                  fontSize2, 
+                  fontWeight3
+                );
               }
               else{
                 if(snapshot.data == null){} 

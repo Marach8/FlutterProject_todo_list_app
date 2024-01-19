@@ -14,7 +14,7 @@ class CrudButtonsView extends StatelessWidget {
     
     return Container(
       width: screenWidth,
-      margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),                  
+      margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),                  
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [

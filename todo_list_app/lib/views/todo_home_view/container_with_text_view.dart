@@ -19,7 +19,8 @@ class ContainerWithTextView extends StatelessWidget {
           final content = user.dataBase.elementAt(index)[2];
           return ContainerWithText(
             title: title,
-            content: content
+            content: content,
+            index: index + 1
           );
         },
         scrollDirection: Axis.horizontal,

@@ -17,19 +17,19 @@ class WelcomeTextView extends StatelessWidget {
             text: 'Hello ${user.loggedInUser}, Welcome to your Todo Manager. You currently have ',
           ).decorate(
             whiteColor, 
-            fontSize2, 
+            fontSize4, 
             fontWeight3
           ),
           TextSpan(text: '${user.dataBase.length}')
             .decorate(
               user.dataBase.isEmpty ? redColor : greenColor,
-              fontSize2, 
+              fontSize4, 
               fontWeight1
             ),
           TextSpan(text: user.dataBase.length == 1? ' Todo.' : ' Todos.',)
             .decorate(
               whiteColor, 
-              fontSize2, 
+              fontSize4, 
               fontWeight3
             )
         ]

@@ -60,12 +60,11 @@ class LoginAndSignUpTextFields extends StatelessWidget{
   @override
   Widget build(BuildContext _) {
     return Column(
-      //crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         textItem == null ? const SizedBox.shrink() 
         : TextItem(
           text: textItem ?? '', 
-          fontSize: fontSize1, 
+          fontSize: fontSize2, 
           fontWeight: fontWeight1,
           color: blackColor
         ),
@@ -110,7 +109,7 @@ class LoginAndSignUpTextFields extends StatelessWidget{
                 hintText: hintText,
                 hintStyle: const TextStyle(
                   color: blackColor, 
-                  fontSize: fontSize1,
+                  fontSize: fontSize2,
                 )
               ),
             ),

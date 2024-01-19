@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_list_app/constants/fonts_and_colors.dart';
 import 'package:todo_list_app/constants/routes.dart';
+import 'package:todo_list_app/functions/extensions.dart';
 import 'package:todo_list_app/functions/firebase_functions.dart';
 import 'package:todo_list_app/functions/todo_provider.dart';
-import 'package:todo_list_app/views/todo_view/todo_details_view.dart';
+import 'package:todo_list_app/functions/show_todo_details.dart';
 
 class Views extends StatelessWidget{
   const Views ({super.key});
@@ -131,27 +133,25 @@ class Views extends StatelessWidget{
                     user.updateTodo(title, date, content, index);
                     Navigator.of(context).pushNamed(addTodoPageRoute);
                   },
-                  leading: const Icon(Icons.create, size: 40, color: Colors.blue,),
-                  trailing: Text(
-                    date,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w300, fontSize: 10,
-                      color: Colors.white70, overflow: TextOverflow.ellipsis
-                    )
+                  leading: const Icon(
+                    Icons.create, 
+                    size: 40, 
+                    color: blueColor
                   ),
-                  title: Text(
-                    title,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w400, fontSize: 18,
-                      color: Colors.white, overflow: TextOverflow.ellipsis
-                    )
-                    ),
-                  subtitle: Text(
-                    content,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w300, fontSize: 14,
-                      color: Colors.white70, overflow: TextOverflow.ellipsis
-                    )
+                  trailing: Text(date).decoratewithGoogleFont(
+                    darkWhiteColor, 
+                    fontSize2, 
+                    fontWeight3
+                  ),
+                  title: Text(title).decoratewithGoogleFont(
+                    whiteColor,
+                    fontSize4,
+                    fontWeight1
+                  ),
+                  subtitle: Text(content).decoratewithGoogleFont(
+                    darkWhiteColor,
+                    fontSize2,
+                    fontWeight3
                   )
                 )
               );

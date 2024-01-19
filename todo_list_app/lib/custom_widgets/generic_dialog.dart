@@ -12,12 +12,12 @@ Future<T?> showGenericDialog<T>({
   builder: (_) => AlertDialog(
     title: Text(title).decorate(
       whiteColor, 
-      fontSize2, 
+      fontSize4, 
       fontWeight2
     ),
     content: Text(content).decorate(
       whiteColor,
-      fontSize1, 
+      fontSize2, 
       fontWeight3
     ),
     actions: options.keys.map((optionKey){
@@ -28,7 +28,7 @@ Future<T?> showGenericDialog<T>({
           : Navigator.of(context).pop(optionValue),
         child: Text(optionKey).decoratewithGoogleFont(
           blueColor, 
-          fontSize1, 
+          fontSize2, 
           fontWeight1
         ),        
       );

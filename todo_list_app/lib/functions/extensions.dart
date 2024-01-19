@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 extension DecorateText on Text{
-  decorate(
+  Flexible decorate(
     Color color, 
     double fontSize, 
     FontWeight fontWeight
@@ -36,17 +36,19 @@ extension DecorateTextSpan on TextSpan{
 
 
 extension DecorateTextWithGoogleFont on Text{
-  Text decoratewithGoogleFont(
+  Flexible decoratewithGoogleFont(
     Color color, 
     double fontSize, 
     FontWeight fontWeight
-  ) => Text(data ?? '', 
-      style: GoogleFonts.getFont(
-      'Nunito',
-      color: color, 
-      fontSize: fontSize,
-      fontWeight: fontWeight
+  ) => Flexible(
+    child: Text(data ?? '', 
+        style: GoogleFonts.getFont(
+        'Nunito',
+        color: color, 
+        fontSize: fontSize,
+        fontWeight: fontWeight
+      ),
+      overflow: TextOverflow.ellipsis,
     ),
-    // overflow: TextOverflow.ellipsis,
   );
 }

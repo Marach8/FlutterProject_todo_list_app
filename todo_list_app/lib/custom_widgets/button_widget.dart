@@ -26,7 +26,7 @@ class CrudButtonModel extends StatelessWidget {
       icon: Icon(icon, color: blueColor,),
       label: Text(text).decoratewithGoogleFont(
         whiteColor, 
-        fontSize2, 
+        fontSize4, 
         fontWeight3
       )
     );

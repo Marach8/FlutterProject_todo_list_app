@@ -8,7 +8,10 @@ class DividerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-      child: Divider(color: deepGreenColor, thickness: 0.5,),
+      child: Divider(
+        color: deepGreenColor, 
+        thickness: 0.5,
+      ),
     );
   }
 }

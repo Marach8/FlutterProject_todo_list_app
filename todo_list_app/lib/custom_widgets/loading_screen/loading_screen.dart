@@ -69,7 +69,7 @@ class LoadingScreen{
                         if(snapshot.hasData){
                           return Text(snapshot.data!)
                             .decoratewithGoogleFont(
-                              greenColor, fontSize1, fontWeight1
+                              greenColor, fontSize2, fontWeight1
                             );
                         } else{
                           return const SizedBox.shrink();
