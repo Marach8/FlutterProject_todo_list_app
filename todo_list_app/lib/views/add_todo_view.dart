@@ -160,9 +160,9 @@ class AddUpdate extends StatelessWidget{
                     }
                   },
                   backgroundColor: backGroundColor,
-                  borderColor: deepGreenColor,
+                  borderColor: customGreenColor,
                   child: TextItem(
-                    color: greenColor,
+                    color: customGreenColor,
                     fontSize: fontSize2,
                     fontWeight: fontWeight1,
                     text: user.isInUpdateMode ? 'Update Todo' : 'Save Todo'

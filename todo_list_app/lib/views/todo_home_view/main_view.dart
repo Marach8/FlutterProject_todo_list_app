@@ -33,7 +33,7 @@ class TodoHome extends StatelessWidget{
               children:[
                 Icon(
                   Icons.edit, 
-                  color: blueColor, 
+                  color: customGreenColor, 
                   size: fontSize4,
                 ), 
                 Gap(10), 
@@ -50,7 +50,7 @@ class TodoHome extends StatelessWidget{
               if(snapshot.connectionState == ConnectionState.waiting){
                 return const Center(
                   child: CircularProgressIndicator(
-                    color: blueColor,
+                    color: customGreenColor,
                   )
                 );
               } 
@@ -69,7 +69,9 @@ class TodoHome extends StatelessWidget{
                     user.firebaseCurrentUser = snapshot.data![2];
                     for(var items in snapshot.data![1].docs){                  
                     List<String> newList = [
-                      items['title'], items['datetime'], items['content']
+                      items['title'], 
+                      items['datetime'], 
+                      items['content']
                     ];
                     if(!user.dataBase.contains(newList)){
                       if (user.done){

@@ -35,7 +35,7 @@ class AppUsers extends ChangeNotifier{
     confirmPassController.dispose(); 
     forgotPasswordController.dispose(); 
     super.dispose();
-    }
+  }
   
   void addTodo(int index){
     List<String> newList = [
@@ -47,7 +47,12 @@ class AppUsers extends ChangeNotifier{
     notifyListeners();
   }
 
-  void updateTodo(String keyItem, String dateItem, String todoItem, int removeIndex,){
+  void updateTodo(
+    String keyItem, 
+    String dateItem, 
+    String todoItem, 
+    int removeIndex,
+  ){
     initialTitle = keyItem; 
     initialDate = dateItem; 
     initialTodo = todoItem; 
@@ -59,13 +64,23 @@ class AppUsers extends ChangeNotifier{
     notifyListeners();
   }
 
-  void delete(String keyItem, String dateItem, String todoItem, int removeIndex,){
+  void delete(
+    String keyItem, 
+    String dateItem, 
+    String todoItem, 
+    int removeIndex,
+  ){
     wasteBin.add([keyItem, dateItem, todoItem]);
     dataBase.removeAt(removeIndex);
     notifyListeners();
   }
 
-  void undo(String keyItem, dateItem, todoItem, int insertIndex){
+  void undo(
+    String keyItem,
+    dateItem, 
+    todoItem, 
+    int insertIndex
+  ){
     List<String> newList = [keyItem, dateItem, todoItem];    
     dataBase.insert(insertIndex, newList);
     notifyListeners();

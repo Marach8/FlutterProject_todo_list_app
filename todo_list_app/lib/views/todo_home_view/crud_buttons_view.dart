@@ -18,7 +18,7 @@ class CrudButtonsView extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            greenColor,
+            customGreenColor,
             backGroundColor,
             blueColor
           ],

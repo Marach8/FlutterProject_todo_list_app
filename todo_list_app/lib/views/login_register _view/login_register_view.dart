@@ -295,7 +295,7 @@ class LoginPage extends StatelessWidget{
                         else{
                           MaterialBannerAlert1(context).materialBannerAlert1(
                             'Field(s) Cannot be Empty!!!',
-                            Colors.red, 
+                            redColor, 
                             Icons.warning_rounded
                           );
                         }

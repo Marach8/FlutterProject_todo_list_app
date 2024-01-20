@@ -111,7 +111,7 @@ class Views extends StatelessWidget{
                 leading: const Icon(
                   Icons.create, 
                   size: 40, 
-                  color: blueColor
+                  color: customGreenColor
                 ),
                 trailing: Text(date).decoratewithGoogleFont(
                   darkWhiteColor, 

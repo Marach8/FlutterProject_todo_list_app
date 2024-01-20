@@ -22,7 +22,7 @@ class WelcomeTextView extends StatelessWidget {
           ),
           TextSpan(text: '${user.dataBase.length}')
             .decorate(
-              user.dataBase.isEmpty ? redColor : greenColor,
+              user.dataBase.isEmpty ? redColor : customGreenColor,
               fontSize4, 
               fontWeight1
             ),

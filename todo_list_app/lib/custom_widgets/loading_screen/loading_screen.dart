@@ -61,7 +61,9 @@ class LoadingScreen{
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const Gap(10),
-                    const CircularProgressIndicator(color: greenColor),
+                    const CircularProgressIndicator(
+                      color: customGreenColor
+                    ),
                     const Gap(15),
                     StreamBuilder(
                       stream: textStream.stream,
@@ -69,7 +71,9 @@ class LoadingScreen{
                         if(snapshot.hasData){
                           return Text(snapshot.data!)
                             .decoratewithGoogleFont(
-                              greenColor, fontSize2, fontWeight1
+                              customGreenColor, 
+                              fontSize2, 
+                              fontWeight1
                             );
                         } else{
                           return const SizedBox.shrink();

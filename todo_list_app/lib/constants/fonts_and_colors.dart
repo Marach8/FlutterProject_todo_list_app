@@ -6,6 +6,7 @@ const fontSize3 = 20.0;
 const fontSize4 = 25.0;
 const blackColor = Colors.black;
 const greenColor = Colors.green;
+const customGreenColor = Color.fromARGB(255, 54, 151, 125);
 const whiteColor = Colors.white;
 const darkWhiteColor = Colors.white60;
 const blueColor = Colors.blue;

@@ -42,7 +42,7 @@ class AddTodoTextFields extends StatelessWidget {
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: deepGreenColor
+            color: customGreenColor
           ),
           borderRadius: BorderRadius.circular(10),
         ),

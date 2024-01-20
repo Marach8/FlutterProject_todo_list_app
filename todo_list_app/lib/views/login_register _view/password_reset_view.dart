@@ -28,7 +28,7 @@ class PasswordResetView extends StatelessWidget {
             Container(
               width:45,
               decoration: BoxDecoration(
-                color: greenColor,
+                color: customGreenColor,
                 shape: BoxShape.circle,                                                          
                 border: Border.all(width:1)
               ),
@@ -91,19 +91,8 @@ class PasswordResetView extends StatelessWidget {
                   Icons.warning_rounded
                 );
               }                                                    
-            },                          
-            // style: ButtonStyle(
-            //   backgroundColor: const MaterialStatePropertyAll(greenColor),
-            //   fixedSize: MaterialStatePropertyAll(Size(w, 30)),
-            //   side: const MaterialStatePropertyAll(
-            //     BorderSide(
-            //       width: 1, 
-            //       strokeAlign: 3, 
-            //       color: blackColor
-            //     )
-            //   )
-            // ),
-            backgroundColor: greenColor,
+            },
+            backgroundColor: customGreenColor,
             borderColor: blackColor,
             child: const TextItem(
               text: 'Change Password', 

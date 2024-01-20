@@ -26,7 +26,7 @@ class ContainerWithText extends StatelessWidget {
         decoration: BoxDecoration(
           color: backGroundColor,
           border: Border.all(
-            color: greenColor,
+            color: customGreenColor,
             width: 0.5,
           ),
           borderRadius: BorderRadius.circular(10)
