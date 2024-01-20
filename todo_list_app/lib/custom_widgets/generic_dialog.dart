@@ -39,6 +39,6 @@ Future<T?> showGenericDialog<T>({
       borderRadius: BorderRadius.circular(20)
     ),
     scrollable: true,
-    backgroundColor: backGroundColor  
+    backgroundColor: deepBackGroundColor  
   )
 );

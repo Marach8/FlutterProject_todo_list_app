@@ -16,3 +16,4 @@ final deepGreenColor = Colors.green.shade900;
 const fontWeight3 = FontWeight.w200;
 const fontWeight1 = FontWeight.w600;
 const fontWeight2 = FontWeight.w800;
+const fontWeight4 = FontWeight.w400;

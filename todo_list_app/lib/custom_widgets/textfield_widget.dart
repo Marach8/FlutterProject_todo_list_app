@@ -25,7 +25,9 @@ class AddTodoTextFields extends StatelessWidget {
       controller: controller,
       maxLines: null, 
       autocorrect: true, 
-      cursorColor: blueColor,              
+      cursorColor: whiteColor,              
+      cursorWidth: 0.5,
+
       decoration: InputDecoration(
         labelStyle: const TextStyle(
           color: whiteColor,
@@ -48,6 +50,8 @@ class AddTodoTextFields extends StatelessWidget {
       ),
       style: const TextStyle(
         fontSize: fontSize3,
+        fontWeight: fontWeight3,
+        textBaseline: TextBaseline.ideographic,
         decoration: TextDecoration.none
       ), 
     );

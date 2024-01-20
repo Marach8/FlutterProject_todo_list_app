@@ -4,6 +4,7 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_app/animations/slider_animations.dart';
 import 'package:todo_list_app/constants/fonts_and_colors.dart';
+import 'package:todo_list_app/constants/strings.dart';
 import 'package:todo_list_app/custom_widgets/divider.dart';
 import 'package:todo_list_app/custom_widgets/popup_menu_buttons.dart';
 import 'package:todo_list_app/functions/extensions.dart';
@@ -18,10 +19,10 @@ class TodoHome extends StatelessWidget{
 
   @override 
   Widget build(BuildContext context){
-
     final screenWidth = MediaQuery.of(context).size.width;
+
     return Consumer<AppUsers>(
-      builder: ((context, user, child)
+      builder: ((_, user, __)
         => Scaffold(
           backgroundColor: blackColor,
           appBar: AppBar( 
@@ -45,7 +46,7 @@ class TodoHome extends StatelessWidget{
           
           body: FutureBuilder<List<dynamic>>(
             future: FirebaseGetUserDetails().getCurrentUserDetails(),
-            builder: (context, snapshot)  {
+            builder: (_, snapshot){
               if(snapshot.connectionState == ConnectionState.waiting){
                 return const Center(
                   child: CircularProgressIndicator(
@@ -104,7 +105,7 @@ class TodoHome extends StatelessWidget{
                         ),
                         const DividerWidget(),
                         Lottie.asset(
-                          'assets/lottie.json',
+                          lottiePath,
                           fit: BoxFit.cover
                         ),
                         const DividerWidget(),

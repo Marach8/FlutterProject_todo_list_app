@@ -1,0 +1,1 @@
+const lottiePath = 'assets/lottie.json';

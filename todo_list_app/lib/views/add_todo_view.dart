@@ -5,6 +5,8 @@ import 'package:todo_list_app/constants/fonts_and_colors.dart';
 import 'package:todo_list_app/custom_widgets/alert_widget.dart';
 import 'package:todo_list_app/custom_widgets/buttons/elevated_button.dart';
 import 'package:todo_list_app/custom_widgets/divider.dart';
+import 'package:todo_list_app/custom_widgets/generic_dialog.dart';
+import 'package:todo_list_app/custom_widgets/loading_screen/loading_screen.dart';
 import 'package:todo_list_app/custom_widgets/textfield_widget.dart';
 import 'package:todo_list_app/custom_widgets/textitem_widget.dart';
 import 'package:todo_list_app/functions/extensions.dart';
@@ -18,11 +20,14 @@ class AddUpdate extends StatelessWidget{
   Widget build(BuildContext context) {   
     
     return Consumer<AppUsers>(
-      builder: (context, user, child)
-      => Scaffold(
+      builder: (_, user, __) => Scaffold(
         appBar: AppBar(
           centerTitle: true, 
-          title: const Text('Add your todo details here')
+          title: Text(
+            user.isInUpdateMode
+            ? 'Update you todo details'
+            : 'Add your todo details here'
+          )
             .decoratewithGoogleFont(
               whiteColor,
               fontSize3, 
@@ -52,7 +57,8 @@ class AddUpdate extends StatelessWidget{
                         );                        
                         for(List item in user.wasteBin){
                           FirestoreInteraction().deleteTodo(
-                            user.firebaseCurrentUser!.uid, item[0]
+                            user.firebaseCurrentUser!.uid, 
+                            item[0]
                           );
                         }
                       }
@@ -80,13 +86,16 @@ class AddUpdate extends StatelessWidget{
             
                 ElevatedButtonWidget(
                   onPressed: () async{
+                    final loadingScreen = LoadingScreen();
                     bool hasData = [
                       user.todoTitleController, 
                       user.todoDateTimeController, 
                       user.todoContentController
                     ].every((controller) => controller.text.isNotEmpty);
                     if(hasData){
+                      //Updating an existing Todo
                       if(user.isInUpdateMode){
+                        loadingScreen.showOverlay(context, 'Updating...');
                         user.addTodo(user.updateIndex); 
                         if(user.dataBase.isNotEmpty){                      
                           for(List item in user.dataBase){
@@ -101,9 +110,18 @@ class AddUpdate extends StatelessWidget{
                             );                        
                           }                          
                         }
-                        user.isInUpdateMode = false;
-                      } 
+                        loadingScreen.hideOverlay();
+                        user.todoTitleController.clear();
+                        user.todoDateTimeController.clear();
+                        user.todoContentController.clear();
+                        user.callToAction(() => user.isInUpdateMode = false);
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                          '/home', (route) => false
+                        );
+                      }
+                      //Saving a new Todo
                       else{
+                        loadingScreen.showOverlay(context, 'Saving...');
                         user.addTodo(user.dataBase.length);
                         if(user.dataBase.isNotEmpty){                      
                           for(List item in user.dataBase){
@@ -118,24 +136,36 @@ class AddUpdate extends StatelessWidget{
                             );                        
                           }                          
                         }
-                      }
-                      await DialogBox(context: context).dialogBox(
-                        user.todoTitleController, 
-                        user.todoDateTimeController, 
-                        user.todoContentController
-                      );                      
-                    } else {
+                        loadingScreen.hideOverlay();
+                        user.todoTitleController.clear();
+                        user.todoDateTimeController.clear();
+                        user.todoContentController.clear();
+                        await showGenericDialog(
+                          context: context, 
+                          title: 'Save Todo', 
+                          content: 'Your todo has been saved sucessfully. Do you want to add another?',
+                          options: {
+                            'No': false,
+                            'Yes': true
+                          }
+                        ).then((addAnotherTodo) =>
+                          addAnotherTodo == false
+                            ? Navigator.pop(context) :{}
+                        );
+                      }                    
+                    } 
+                    else {
                       SnackBarAlert(context: context)
                         .snackBarAlert('Oops!!! Fields cannot be empty!');                      
                     }
                   },
                   backgroundColor: backGroundColor,
                   borderColor: deepGreenColor,
-                  child: const TextItem(
+                  child: TextItem(
                     color: greenColor,
                     fontSize: fontSize2,
                     fontWeight: fontWeight1,
-                    text: 'Save Todo'
+                    text: user.isInUpdateMode ? 'Update Todo' : 'Save Todo'
                   )
                 ),
               ]
