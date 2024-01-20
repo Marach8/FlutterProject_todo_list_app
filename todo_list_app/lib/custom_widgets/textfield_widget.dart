@@ -27,9 +27,20 @@ class AddTodoTextFields extends StatelessWidget {
       autocorrect: true, 
       cursorColor: blueColor,              
       decoration: InputDecoration(
+        labelStyle: const TextStyle(
+          color: whiteColor,
+          fontSize: fontSize2,
+          fontWeight: fontWeight3
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: deepGreenColor
+          ),
+          borderRadius: BorderRadius.circular(10),
+        ),
         enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(
-            color: greenColor
+          borderSide: BorderSide(
+            color: deepGreenColor
           ),
           borderRadius: BorderRadius.circular(10),
         ),
@@ -37,8 +48,9 @@ class AddTodoTextFields extends StatelessWidget {
       ),
       style: const TextStyle(
         fontSize: fontSize3,
-        decoration: TextDecoration.none, 
-      )
+        decoration: TextDecoration.none
+
+      ), 
     );
   }
 }
