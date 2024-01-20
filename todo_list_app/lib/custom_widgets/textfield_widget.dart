@@ -65,7 +65,7 @@ class LoginAndSignUpTextFields extends StatelessWidget{
         textItem == null ? const SizedBox.shrink() 
         : TextItem(
           text: textItem ?? '', 
-          fontSize: fontSize1, 
+          fontSize: fontSize2, 
           fontWeight: fontWeight1,
           color: blackColor
         ),

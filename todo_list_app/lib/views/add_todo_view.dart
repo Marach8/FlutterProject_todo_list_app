@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_list_app/constants/fonts_and_colors.dart';
 import 'package:todo_list_app/custom_widgets/alert_widget.dart';
 import 'package:todo_list_app/custom_widgets/textfield_widget.dart';
+import 'package:todo_list_app/functions/extensions.dart';
 import 'package:todo_list_app/functions/firebase_functions.dart';
 import 'package:todo_list_app/functions/todo_provider.dart';
 
@@ -24,9 +26,14 @@ class _AU extends State<AddUpdate> {
     return Consumer<AppUsers>(
       builder: (context, user, child)
       => Scaffold(
-        appBar: AppBar(centerTitle: true, title: Text(
-            'Add the details of your todo here', style: GoogleFonts.getFont('Nunito', color:Colors.white, fontSize: 17)
-          )
+        appBar: AppBar(
+          centerTitle: true, 
+          title: const Text('Add the details of your todo here')
+            .decoratewithGoogleFont(
+              whiteColor,
+              fontSize3, 
+              fontWeight1
+            )
         ),
         backgroundColor: Colors.blueGrey.shade900,
         body: Center(

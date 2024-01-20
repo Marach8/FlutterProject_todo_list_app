@@ -67,7 +67,7 @@ class LoginPage extends StatelessWidget{
                 Consumer<AppUsers>(
                   builder: (_, user,__) => TextItem(
                     text: user.isRegistered ? 'Sign In': 'Sign Up', 
-                    fontSize: fontSize2, 
+                    fontSize: fontSize4, 
                     fontWeight: fontWeight2, 
                     color: deepGreenColor
                   ),
@@ -309,7 +309,7 @@ class LoginPage extends StatelessWidget{
                     ),
                     child: TextItem(
                       text: user.isRegistered ? 'Login': 'Register', 
-                      fontSize: fontSize1, 
+                      fontSize: fontSize2, 
                       fontWeight: fontWeight2,
                       color: greenColor
                     ),

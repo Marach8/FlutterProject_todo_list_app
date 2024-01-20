@@ -40,7 +40,7 @@ extension DecorateTextWithGoogleFont on Text{
     FontWeight fontWeight
   ) => Text(data ?? '', 
       style: GoogleFonts.getFont(
-      'Nunito',
+      'Quicksand',
       color: color, 
       fontSize: fontSize,
       fontWeight: fontWeight

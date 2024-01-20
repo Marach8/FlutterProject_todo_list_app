@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list_app/constants/fonts_and_colors.dart';
+import 'package:todo_list_app/custom_widgets/textitem_widget.dart';
 import 'package:todo_list_app/functions/extensions.dart';
 
 Future<T?> showGenericDialog<T>({
@@ -15,10 +16,11 @@ Future<T?> showGenericDialog<T>({
       fontSize4, 
       fontWeight2
     ),
-    content: Text(content).decorate(
-      whiteColor,
-      fontSize2, 
-      fontWeight3
+    content: TextItem(
+      text: content,
+      color: whiteColor,
+      fontSize: fontSize2, 
+      fontWeight: fontWeight3
     ),
     actions: options.keys.map((optionKey){
       final optionValue = options[optionKey];
