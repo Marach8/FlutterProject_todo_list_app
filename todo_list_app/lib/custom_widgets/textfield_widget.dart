@@ -6,34 +6,39 @@ import 'package:todo_list_app/constants/fonts_and_colors.dart';
 import 'package:todo_list_app/custom_widgets/textitem_widget.dart';
 import 'package:todo_list_app/functions/todo_provider.dart';
 
-class AddTodoTextFields{
-  Widget addTodoTextFields(String text, TextEditingController control, Function(String)? onChanged){
-    return Container(
-      padding: const EdgeInsets.all(10), margin: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: const [BoxShadow(blurRadius:10, spreadRadius: 10)]
-      ),
-      child: SingleChildScrollView(
-        child: TextField( 
-          onChanged: onChanged,
-          controller: control,
-          maxLines: null, autocorrect: true, 
-          cursorColor: Colors.blue,              
-          decoration: InputDecoration(
-            border: InputBorder.none, focusedBorder: InputBorder.none,
-            fillColor: Colors.black, filled: true,
-            hintText: text,
-            hintStyle: TextStyle(
-              fontFamily: 'monospace', color: Colors.blueGrey.withOpacity(0.9),
-              fontSize: 20, fontWeight: FontWeight.bold,
-            )
+class AddTodoTextFields extends StatelessWidget {
+  final String title;
+  final TextEditingController controller;
+  final Function(String)? onChanged;
+
+  const AddTodoTextFields({
+    required this.title,
+    required this.controller,
+    this.onChanged,
+    super.key
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField( 
+      onChanged: onChanged,
+      controller: controller,
+      maxLines: null, 
+      autocorrect: true, 
+      cursorColor: blueColor,              
+      decoration: InputDecoration(
+        enabledBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: greenColor
           ),
-          style: const TextStyle(
-            fontSize: 20, color: Colors.white, decoration: TextDecoration.none, fontFamily: 'monospace'
-          )
+          borderRadius: BorderRadius.circular(10),
         ),
+        label: Text(title),
       ),
+      style: const TextStyle(
+        fontSize: fontSize3,
+        decoration: TextDecoration.none, 
+      )
     );
   }
 }
