@@ -3,6 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_app/constants/fonts_and_colors.dart';
 import 'package:todo_list_app/custom_widgets/alert_widget.dart';
+import 'package:todo_list_app/custom_widgets/buttons/elevated_button.dart';
 import 'package:todo_list_app/custom_widgets/loading_screen/loading_screen.dart';
 import 'package:todo_list_app/custom_widgets/textfield_widget.dart';
 import 'package:todo_list_app/custom_widgets/textitem_widget.dart';
@@ -13,9 +14,7 @@ class PasswordResetView extends StatelessWidget {
   const PasswordResetView({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final w = MediaQuery.of(context).size.width;
-    return Column(
+  Widget build(BuildContext context) => Column(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -67,7 +66,7 @@ class PasswordResetView extends StatelessWidget {
         const Divider(height: 1), 
         const Gap(20),
         Consumer<AppUsers>(
-          builder: (_, user, __) => ElevatedButton(
+          builder: (_, user, __) => ElevatedButtonWidget(
             onPressed: () async{
               final loadingScreen = LoadingScreen();                                                                                                     
               if(user.forgotPasswordController.text.isNotEmpty){
@@ -93,13 +92,19 @@ class PasswordResetView extends StatelessWidget {
                 );
               }                                                    
             },                          
-            style: ButtonStyle(
-              backgroundColor: const MaterialStatePropertyAll(greenColor),
-              fixedSize: MaterialStatePropertyAll(Size(w, 30)),
-              side: const MaterialStatePropertyAll(
-                BorderSide(width: 1, strokeAlign: 3, color: blackColor)
-              )
-            ),
+            // style: ButtonStyle(
+            //   backgroundColor: const MaterialStatePropertyAll(greenColor),
+            //   fixedSize: MaterialStatePropertyAll(Size(w, 30)),
+            //   side: const MaterialStatePropertyAll(
+            //     BorderSide(
+            //       width: 1, 
+            //       strokeAlign: 3, 
+            //       color: blackColor
+            //     )
+            //   )
+            // ),
+            backgroundColor: greenColor,
+            borderColor: blackColor,
             child: const TextItem(
               text: 'Change Password', 
               fontSize: fontSize2, 
@@ -110,5 +115,4 @@ class PasswordResetView extends StatelessWidget {
         ),
       ],
     );
-  }
 }

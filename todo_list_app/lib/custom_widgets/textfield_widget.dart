@@ -49,7 +49,6 @@ class AddTodoTextFields extends StatelessWidget {
       style: const TextStyle(
         fontSize: fontSize3,
         decoration: TextDecoration.none
-
       ), 
     );
   }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_list_app/constants/fonts_and_colors.dart';
 import 'package:todo_list_app/constants/routes.dart';
 import 'package:todo_list_app/custom_widgets/alert_widget.dart';
-import 'package:todo_list_app/custom_widgets/button_widget.dart';
+import 'package:todo_list_app/custom_widgets/buttons/crud_button.dart';
 
 class CrudButtonsView extends StatelessWidget {
   final dynamic user;

@@ -5,6 +5,7 @@ import 'package:todo_list_app/animations/slider_animations.dart';
 import 'package:todo_list_app/constants/fonts_and_colors.dart';
 import 'package:todo_list_app/constants/routes.dart';
 import 'package:todo_list_app/custom_widgets/alert_widget.dart';
+import 'package:todo_list_app/custom_widgets/buttons/elevated_button.dart';
 import 'package:todo_list_app/custom_widgets/loading_screen/loading_screen.dart';
 import 'package:todo_list_app/custom_widgets/textfield_widget.dart';
 import 'package:todo_list_app/custom_widgets/textitem_widget.dart';
@@ -191,7 +192,7 @@ class LoginPage extends StatelessWidget{
                 const Gap(20),
       
                 Consumer<AppUsers>(
-                  builder: (_, user, __) => ElevatedButton(
+                  builder: (_, user, __) => ElevatedButtonWidget(
                     onPressed: () async{            
                       //user Login
                       bool loginFieldsNotEmpty = [
@@ -300,13 +301,9 @@ class LoginPage extends StatelessWidget{
                         }
                       }
                     },
-                              
-                    style: ButtonStyle(
-                      fixedSize: MaterialStatePropertyAll(Size(screenWidth, 30)),
-                      side: const MaterialStatePropertyAll(
-                        BorderSide(width: 1, strokeAlign: 3, color: greenColor)
-                      )
-                    ),
+                    
+                    backgroundColor: blackColor,
+                    borderColor: greenColor,
                     child: TextItem(
                       text: user.isRegistered ? 'Login': 'Register', 
                       fontSize: fontSize2, 
