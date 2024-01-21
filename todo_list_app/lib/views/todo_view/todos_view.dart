@@ -106,7 +106,7 @@ class Views extends StatelessWidget{
                   context,
                   title, 
                   date, 
-                  content
+                  content,
                 ),
                 onLongPress: (){
                   user.callToAction(() => user.isInUpdateMode = true);

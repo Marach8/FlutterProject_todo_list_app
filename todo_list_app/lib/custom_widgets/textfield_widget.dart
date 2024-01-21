@@ -77,7 +77,7 @@ class LoginAndSignUpTextFields extends StatelessWidget{
   });
 
   @override
-  Widget build(BuildContext _) {
+  Widget build(BuildContext context) {
     return Column(
 
       children: [
@@ -106,7 +106,8 @@ class LoginAndSignUpTextFields extends StatelessWidget{
             builder: (_, user, __) => TextField(
               controller: controller, 
               enabled: enabled, 
-              obscureText: showSuffixIcon == null ? false : user.obscureText,
+              obscureText: showSuffixIcon == null 
+                ? false : user.obscureText,
               cursorColor: blackColor,
               style: GoogleFonts.getFont(
                 'Quicksand', 

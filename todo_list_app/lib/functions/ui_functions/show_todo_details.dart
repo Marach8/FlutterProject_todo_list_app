@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:todo_list_app/constants/fonts_and_colors.dart';
 import 'package:todo_list_app/custom_widgets/rich_text.dart';
+import 'package:todo_list_app/custom_widgets/timer.dart';
 import 'package:todo_list_app/functions/extensions.dart';
 
 dynamic showFullTodoDetails(
   BuildContext context,
   String title, 
   String dateTime,
-  String content
+  String content,
 ){
   final overlay = Overlay.of(context);
   if(!overlay.mounted){
@@ -24,7 +25,7 @@ dynamic showFullTodoDetails(
   );
   overlay.insert(overlayEntry);
 
-  final snackBar = SnackBar(                                                
+  final snackBar = SnackBar(
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
         topRight: Radius.circular(20), 
@@ -36,14 +37,26 @@ dynamic showFullTodoDetails(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 15),
-            child: const Text('Full Todo Details')
-              .decoratewithGoogleFont(
-                whiteColor,
-                fontSize3, 
-                fontWeight1
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: const Text('Full Todo Details')
+                    .decoratewithGoogleFont(
+                      whiteColor,
+                      fontSize3, 
+                      fontWeight1
+                    ),
+                ),
               ),
+              const Padding(
+                padding: EdgeInsets.only(top: 5.0),
+                child: CountDownTimerView(),
+              )
+            ],
           ),
           TodoRichText(
             heading: 'TITLE OF TODO: ',

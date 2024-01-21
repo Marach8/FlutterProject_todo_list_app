@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list_app/constants/fonts_and_colors.dart';
+import 'package:todo_list_app/custom_widgets/circle_avatar.dart';
 import 'package:todo_list_app/functions/extensions.dart';
 
 class ContainerWithText extends StatelessWidget {
@@ -35,18 +36,14 @@ class ContainerWithText extends StatelessWidget {
           children: [
             Positioned(
               left: 0,
-              child: CircleAvatar(
-                radius: 10,
-                backgroundColor: blackColor,
-                child: Center(
-                  child: Text('$index')
-                    .decorate(
-                      blueColor, 
-                      fontSize2, 
-                      fontWeight3
-                    )
-                )
-              ),
+              child: CircleAvatarWidget(
+                child: Text('$index')
+                  .decorate(
+                    blueColor, 
+                    fontSize2, 
+                    fontWeight3
+                  )
+              )
             ),
             Container(
               decoration: BoxDecoration(

@@ -24,7 +24,7 @@ class ContainerWithTextView extends StatelessWidget {
               context, 
               title, 
               date,
-              content
+              content,
             ),
             child: ContainerWithText(
               title: title,
