@@ -59,8 +59,13 @@ class PopUpMenu extends StatelessWidget {
                 await FirebaseAuthLogout().firebaseLogout(
                   (text, color, icon) async {
                     loadingScreen.hideOverlay();
-                    await MaterialBannerAlert1(context)
-                      .materialBannerAlert1(text, color, icon);
+                    await showNotification(
+                      context, 
+                      text, 
+                      icon, 
+                      color,
+                      5
+                    );
                   }
                 ).then((value) {
                     user.done = true;

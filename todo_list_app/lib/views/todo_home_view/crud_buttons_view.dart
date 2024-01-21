@@ -33,27 +33,26 @@ class CrudButtonsView extends StatelessWidget {
           CrudButtonModel(
             icon: Icons.add, 
             text: 'Add',
-            function: () => Navigator.of(context).pushNamed(addTodoPageRoute)
+            function: () => Navigator.of(context)
+              .pushNamed(addTodoPageRoute)
           ),
       
           CrudButtonModel(
             icon: Icons.view_array, 
             text: 'View', 
-            function: (){
+            function: () async{
               if (user.dataBase.isNotEmpty) {
-                MaterialBannerAlert(context: context).materialBannerAlert(
+                await showNotification(
+                  context, 
                   'To view an item in detail, tap on the item.', 
-                  Icons.view_array_rounded
-                );
-                Future.delayed(
-                  const Duration(seconds:5), 
-                  () =>ScaffoldMessenger.of(context).hideCurrentMaterialBanner()
-                );
-                Navigator.of(context).pushNamed('/view');
+                  Icons.view_array_rounded, 
+                  blackColor,
+                  5
+                ).then((_) => Navigator.of(context)
+                  .pushNamed(viewPageRoute));
+
               } else {
-                SnackBarAlert(context: context).snackBarAlert(
-                  'Oops!!! seems like you currently have no Todos. Add Todos first!'
-                );
+                await noTodoNotify(context);
               }
             }
           ),
@@ -61,21 +60,18 @@ class CrudButtonsView extends StatelessWidget {
           CrudButtonModel(
             icon: Icons.delete,
             text: 'Delete',
-            function: (){
+            function: ()async{
               if (user.dataBase.isNotEmpty) {
-                MaterialBannerAlert(context: context).materialBannerAlert(
-                  'To delete an item, swipe the item to the left or right.', 
-                  Icons.delete
-                );
-                Future.delayed(
-                  const Duration(seconds:5), 
-                  () =>ScaffoldMessenger.of(context).hideCurrentMaterialBanner()
-                );
-                Navigator.of(context).pushNamed(viewPageRoute);
+                await showNotification(
+                  context, 
+                  'To delete an item, swipe horizontally', 
+                  Icons.view_array_rounded, 
+                  blackColor,
+                  5
+                ).then((_) => Navigator.of(context)
+                  .pushNamed(viewPageRoute));
               } else {
-                SnackBarAlert(context: context).snackBarAlert(
-                  'Oops!!! seems like you currently have no Todos. Add Todos first!'
-                );
+                await noTodoNotify(context);
               }
             }
           ),
@@ -83,22 +79,18 @@ class CrudButtonsView extends StatelessWidget {
           CrudButtonModel(
             icon: Icons.update_rounded, 
             text: 'Update', 
-            function: (){
+            function: () async{
               if (user.dataBase.isNotEmpty) {
-                MaterialBannerAlert(context: context).materialBannerAlert(
-                  'To update an item, longpress on it to enter update mode.', 
-                  Icons.update_sharp
-                );
-                Future.delayed(
-                  const Duration(seconds:5), 
-                  () =>ScaffoldMessenger.of(context).hideCurrentMaterialBanner()
-                );
-                Navigator.of(context).pushNamed('/view');
+                await showNotification(
+                  context, 
+                  'Longpress on an item to go to update mode', 
+                  Icons.view_array_rounded, 
+                  blackColor,
+                  5
+                ).then((_) => Navigator.of(context)
+                  .pushNamed(viewPageRoute));
               } else {
-                SnackBarAlert(context: context)
-                .snackBarAlert(
-                  'Oops!!! seems like you currently have no Todos. Add Todos first!'
-                );
+                await noTodoNotify(context);
               }
             }
           ),                    
@@ -107,3 +99,13 @@ class CrudButtonsView extends StatelessWidget {
     );
   }
 }
+
+
+Future<void> noTodoNotify(BuildContext context) 
+async => await showNotification(
+  context, 
+  'Oops! You currently have no Todos. Add Todos first!', 
+  Icons.warning_rounded, 
+  redColor,
+  5
+);

@@ -23,15 +23,25 @@ Future<void> registerNewUser(dynamic user, BuildContext context) async {
         user.passwordController.text.trim(),
         (text, color, icon) async {
           loadingScreen.hideOverlay();
-          await MaterialBannerAlert1(context)
-            .materialBannerAlert1(text, color, icon);
+          await showNotification(
+            context,
+            text, 
+            icon, 
+            color,
+            5
+          );
         } 
       ).then((registrationResult) async {
         registrationResult == 'yes'
         ? await FirebaseEmailVerification().verifyEmail(
           (text, color, icon) async{                                      
-            await MaterialBannerAlert1(context)
-              .materialBannerAlert1(text, color, icon);
+            await showNotification(
+              context, 
+              text, 
+              icon, 
+              color,
+              5
+            );
           }
         )
         : {
@@ -47,19 +57,23 @@ Future<void> registerNewUser(dynamic user, BuildContext context) async {
     //Password and confirmPassword fields do not match.
     else {
       loadingScreen.hideOverlay();
-      MaterialBannerAlert1(context).materialBannerAlert1(
-        'Password Confirmation Error!!!', 
-        redColor, 
-        Icons.warning_rounded
+      await showNotification(
+        context, 
+        'Passwords do not Match!',
+        Icons.warning_rounded,
+        redColor,
+        5
       );
     }
   }
   //Any or all of the registration fields is/are empty
   else{
-    MaterialBannerAlert1(context).materialBannerAlert1(
-      'Field(s) Cannot be Empty!!!',
-      redColor, 
-      Icons.warning_rounded
+    await showNotification(
+      context, 
+      'Field(s) Cannot be Empty!', 
+      Icons.warning_rounded, 
+      redColor,
+      5
     );
   }
 }

@@ -12,8 +12,12 @@ Future<void> resetUserPassword(dynamic user, BuildContext context) async{
       user.forgotPasswordController.text,
       (text, color, icon) async{
         loadingScreen.hideOverlay();
-        await MaterialBannerAlert1(context).materialBannerAlert1(
-          text, color, icon
+        await showNotification(
+          context, 
+          text, 
+          icon, 
+          color,
+          5
         );
       }
       ).then((_) {
@@ -22,10 +26,12 @@ Future<void> resetUserPassword(dynamic user, BuildContext context) async{
       user.callToAction(() => user.forgotPassword = false);
     });
   } else{
-    MaterialBannerAlert1(context).materialBannerAlert1(
-      'Fields Cannot be Empty!!!',
+    await showNotification(
+      context, 
+      'Fields Cannot be Empty!', 
+      Icons.warning_rounded, 
       redColor,
-      Icons.warning_rounded
+      5
     );
   }     
 }

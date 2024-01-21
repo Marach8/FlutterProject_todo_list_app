@@ -19,8 +19,13 @@ Future<void> loginToApp(dynamic user, BuildContext context) async {
       user.passwordController.text.trim(),
       (text, color, icon) async{
         loadingScreen.hideOverlay();
-        await MaterialBannerAlert1(context)
-          .materialBannerAlert1(text, color, icon);
+        await showNotification(
+          context, 
+          text, 
+          icon, 
+          color,
+          5
+        );
       } 
     ).then((result) async{
       if(result != 'no' && result != 'email not verified'){
@@ -34,8 +39,13 @@ Future<void> loginToApp(dynamic user, BuildContext context) async {
         await FirebaseEmailVerification().verifyEmail(
           (text, color, icon) async{
             loadingScreen.hideOverlay();
-            await MaterialBannerAlert1(context)
-              .materialBannerAlert1(text, color, icon);
+            await showNotification(
+              context, 
+              text, 
+              icon, 
+              color,
+              5
+            );
           }
         );
       }
@@ -43,10 +53,12 @@ Future<void> loginToApp(dynamic user, BuildContext context) async {
   }
   //Either email or password field or both is empty
   else{
-    MaterialBannerAlert1(context).materialBannerAlert1(
-      'Fields Cannot be Empty!!!', 
-      redColor, 
-      Icons.warning_rounded
+    await showNotification(
+      context, 
+      'Field(s) Cannot be Empty!', 
+      Icons.warning_rounded, 
+      redColor,
+      5
     );
   }                               
 }

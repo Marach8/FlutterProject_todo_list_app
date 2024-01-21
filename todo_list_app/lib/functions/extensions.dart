@@ -37,8 +37,9 @@ extension DecorateTextWithGoogleFont on Text{
   Text decoratewithGoogleFont(
     Color color, 
     double fontSize, 
-    FontWeight fontWeight
+    FontWeight fontWeight,
   ) => Text(data ?? '', 
+      maxLines: maxLines,
       style: GoogleFonts.getFont(
       'Quicksand',
       color: color, 

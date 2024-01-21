@@ -111,7 +111,7 @@ class TodoHome extends StatelessWidget{
                           fit: BoxFit.cover
                         ),
                         const DividerWidget(),
-                        ContainerWithTextView(user: user),
+                        // ContainerWithTextView(user: user),
                         const DividerWidget(),
                         CrudButtonsView(user: user)
                       ],

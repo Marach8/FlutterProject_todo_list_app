@@ -1,115 +1,50 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:todo_list_app/constants/fonts_and_colors.dart';
+import 'package:todo_list_app/functions/extensions.dart';
 
+Future<void> showNotification(
+  BuildContext context, 
+  String text,
+  IconData? icon,
+  Color buttonColor,
+  int duration
+) async{
+  final materialBanner = MaterialBanner(
 
-class SnackBarAlert {
-  final BuildContext context;  
-  SnackBarAlert({required this.context,});
-
-  void snackBarAlert(String text){
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        action: SnackBarAction(
-          label: 'Ok', onPressed: () => 
-            ScaffoldMessenger.of(context).hideCurrentSnackBar(), 
-          textColor: Colors.blue,
-        ),
-        content: Text(
-          text,
-          style: GoogleFonts.getFont(
-            'Nunito', 
-            fontWeight: FontWeight.w500, 
-            fontSize: 20, 
-            color: Colors.red.shade500
-          ),
-        ),
-        backgroundColor: Colors.white, 
-        duration: const Duration(seconds: 2), 
-        elevation: 20,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20), 
-            topRight: Radius.circular(20)
+    content: Text(
+      text,
+      maxLines: 2,
+    ).decoratewithGoogleFont(
+      whiteColor,
+      fontSize2,
+      fontWeight3
+    ), 
+    actions: [
+      TextButton(
+        onPressed:(){
+          ScaffoldMessenger.of(context)
+            .hideCurrentMaterialBanner();
+        }, 
+        child: const Text('Ok')
+          .decoratewithGoogleFont(
+            buttonColor, 
+            fontSize3, 
+            fontWeight4
           )
-        ),
       )
-    );
-  }
-}
-
-
-
-class MaterialBannerAlert{
-  final BuildContext context;
-
-  MaterialBannerAlert({required this.context});
-
-  void materialBannerAlert(String text, IconData icon){
-    ScaffoldMessenger.of(context).showMaterialBanner(
-      MaterialBanner(
-        leading: Icon(icon, size: 40, color: Colors.blue,), 
-        elevation: 5,
-        actions: [
-          TextButton(
-            onPressed:(){
-              ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-            }, 
-            child: const Text(
-              'Ok', 
-              style: TextStyle(
-                fontFamily: 'monospace',
-                fontSize: 20, 
-                fontWeight: FontWeight.w300, 
-                color: Colors.blue
-              )
-            )
-          )
-        ],
-        backgroundColor: Colors.white, 
-        shadowColor: Colors.yellow, 
-        padding: const EdgeInsets.all(10),
-        content: Text(
-          text, 
-          style: const TextStyle(
-            fontFamily: 'monospace', fontSize: 15,
-            fontWeight: FontWeight.bold, 
-            color: Colors.black
-          )
-        ),
-      )
-    );
-  }
-}
-
-
-class MaterialBannerAlert1{
-  final BuildContext context;
-  MaterialBannerAlert1(this.context);
-  
-  materialBannerAlert1(String text, Color color, IconData icon) async{
-    ScaffoldMessenger.of(context).showMaterialBanner(
-      MaterialBanner(
-        leading: Icon(icon, color: color, size:40), 
-        backgroundColor: Colors.blueGrey.shade800,
-        content: Text(
-          text, 
-          style: GoogleFonts.getFont(
-            'Nunito', 
-            fontSize: 17, 
-            fontWeight: FontWeight.w400, 
-            color: Colors.white
-          )
-        ), 
-        actions: [
-          TextButton(onPressed: 
-            () => ScaffoldMessenger.of(context).hideCurrentMaterialBanner(), 
-          child: Text('Ok', style: GoogleFonts.getFont('Nunito', color: color))
-          )
-        ]
-      )
-    );
-    await Future.delayed(const Duration(seconds: 5), 
-      () => ScaffoldMessenger.of(context).hideCurrentMaterialBanner()
-    );
-  }
+    ],
+    backgroundColor: backGroundColor,
+    padding: const EdgeInsets.all(10),
+    leading: Icon(
+      icon,
+      size: 40, 
+      color: buttonColor
+    ), 
+  );
+  ScaffoldMessenger.of(context)
+    .showMaterialBanner(materialBanner);
+  Future.delayed(const Duration(seconds: 5), () 
+    => ScaffoldMessenger.of(context)
+    .hideCurrentMaterialBanner()
+  );
 }
