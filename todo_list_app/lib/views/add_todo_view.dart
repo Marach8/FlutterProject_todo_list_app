@@ -78,7 +78,7 @@ class AddUpdate extends StatelessWidget{
                 AddTodoTextFields(
                   title: 'Content of Todo',
                   controller: user.todoContentController,
-                  ),
+                ),
                     
                 const Gap(5),
                 const DividerWidget(),

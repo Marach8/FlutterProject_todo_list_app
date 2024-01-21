@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_app/constants/fonts_and_colors.dart';
-import 'package:todo_list_app/custom_widgets/alert_widget.dart';
 import 'package:todo_list_app/custom_widgets/buttons/elevated_button.dart';
-import 'package:todo_list_app/custom_widgets/loading_screen/loading_screen.dart';
 import 'package:todo_list_app/custom_widgets/textfield_widget.dart';
 import 'package:todo_list_app/custom_widgets/textitem_widget.dart';
-import 'package:todo_list_app/functions/firebase_functions.dart';
 import 'package:todo_list_app/functions/todo_provider.dart';
+import 'package:todo_list_app/functions/ui_functions/password_reset_function.dart';
 
 class PasswordResetView extends StatelessWidget {
   const PasswordResetView({super.key});
@@ -67,31 +65,8 @@ class PasswordResetView extends StatelessWidget {
         const Gap(20),
         Consumer<AppUsers>(
           builder: (_, user, __) => ElevatedButtonWidget(
-            onPressed: () async{
-              final loadingScreen = LoadingScreen();                                                                                                     
-              if(user.forgotPasswordController.text.isNotEmpty){
-                loadingScreen.showOverlay(context, 'Please Wait...');
-                await FirebaseResetPassword().resetPassword(
-                  user.forgotPasswordController.text,
-                  (text, color, icon) async{
-                    loadingScreen.hideOverlay();
-                    await MaterialBannerAlert1(context).materialBannerAlert1(
-                      text, color, icon
-                    );
-                  }
-                  ).then((_) {
-                  user.forgotPasswordController.clear();
-                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                  user.callToAction(() => user.forgotPassword = false);
-                });
-              } else{
-                MaterialBannerAlert1(context).materialBannerAlert1(
-                  'Fields Cannot be Empty!!!',
-                  redColor,
-                  Icons.warning_rounded
-                );
-              }                                                    
-            },
+            onPressed: () async 
+              => await resetUserPassword(user, context),
             backgroundColor: customGreenColor,
             borderColor: blackColor,
             child: const TextItem(
