@@ -57,7 +57,7 @@ class TodoHome extends StatelessWidget{
               else if(snapshot.hasError){
                 return const Text('An error occured !!!')
                 .decoratewithGoogleFont(
-                  whiteColor, 
+                  redColor, 
                   fontSize2, 
                   fontWeight3
                 );
@@ -111,7 +111,7 @@ class TodoHome extends StatelessWidget{
                           fit: BoxFit.cover
                         ),
                         const DividerWidget(),
-                        // ContainerWithTextView(user: user),
+                        ContainerWithTextView(user: user),
                         const DividerWidget(),
                         CrudButtonsView(user: user)
                       ],

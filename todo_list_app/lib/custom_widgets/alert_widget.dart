@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:todo_list_app/constants/fonts_and_colors.dart';
 import 'package:todo_list_app/functions/extensions.dart';
@@ -9,21 +11,22 @@ Future<void> showNotification(
   Color buttonColor,
   int duration
 ) async{
+  final completer = Completer<void>();
   final materialBanner = MaterialBanner(
-
     content: Text(
       text,
       maxLines: 2,
     ).decoratewithGoogleFont(
       whiteColor,
       fontSize2,
-      fontWeight3
+      fontWeight1
     ), 
     actions: [
       TextButton(
         onPressed:(){
           ScaffoldMessenger.of(context)
             .hideCurrentMaterialBanner();
+          completer.complete();
         }, 
         child: const Text('Ok')
           .decoratewithGoogleFont(
@@ -33,6 +36,9 @@ Future<void> showNotification(
           )
       )
     ],
+    dividerColor: deepGreenColor,
+
+    //shadowColor: greenColor,
     backgroundColor: backGroundColor,
     padding: const EdgeInsets.all(10),
     leading: Icon(
@@ -43,8 +49,13 @@ Future<void> showNotification(
   );
   ScaffoldMessenger.of(context)
     .showMaterialBanner(materialBanner);
-  Future.delayed(const Duration(seconds: 5), () 
-    => ScaffoldMessenger.of(context)
-    .hideCurrentMaterialBanner()
-  );
+  
+  await Future.any([
+    completer.future,
+    Future.delayed(
+    const Duration(seconds: 5), () 
+      => ScaffoldMessenger.of(context)
+        .hideCurrentMaterialBanner()
+    )
+  ]);
 }

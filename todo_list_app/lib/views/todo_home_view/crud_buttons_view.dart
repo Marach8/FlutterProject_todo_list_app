@@ -6,7 +6,11 @@ import 'package:todo_list_app/custom_widgets/buttons/crud_button.dart';
 
 class CrudButtonsView extends StatelessWidget {
   final dynamic user;
-  const CrudButtonsView({required this.user, super.key});
+  
+  const CrudButtonsView({
+    required this.user,
+    super.key
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +50,7 @@ class CrudButtonsView extends StatelessWidget {
                   context, 
                   'To view an item in detail, tap on the item.', 
                   Icons.view_array_rounded, 
-                  blackColor,
+                  blueColor,
                   5
                 ).then((_) => Navigator.of(context)
                   .pushNamed(viewPageRoute));
@@ -65,8 +69,8 @@ class CrudButtonsView extends StatelessWidget {
                 await showNotification(
                   context, 
                   'To delete an item, swipe horizontally', 
-                  Icons.view_array_rounded, 
-                  blackColor,
+                  Icons.delete_rounded, 
+                  blueColor,
                   5
                 ).then((_) => Navigator.of(context)
                   .pushNamed(viewPageRoute));
@@ -84,8 +88,8 @@ class CrudButtonsView extends StatelessWidget {
                 await showNotification(
                   context, 
                   'Longpress on an item to go to update mode', 
-                  Icons.view_array_rounded, 
-                  blackColor,
+                  Icons.update_rounded, 
+                  blueColor,
                   5
                 ).then((_) => Navigator.of(context)
                   .pushNamed(viewPageRoute));

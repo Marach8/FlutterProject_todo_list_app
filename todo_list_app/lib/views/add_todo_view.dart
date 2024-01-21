@@ -20,6 +20,7 @@ class AddUpdate extends StatelessWidget{
     return Consumer<AppUsers>(
       builder: (_, user, __) => Scaffold(
         appBar: AppBar(
+          backgroundColor: backGroundColor,
           centerTitle: true, 
           title: Text(
             user.isInUpdateMode
