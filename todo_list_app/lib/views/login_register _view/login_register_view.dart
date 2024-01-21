@@ -3,14 +3,12 @@ import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_app/animations/slider_animations.dart';
 import 'package:todo_list_app/constants/fonts_and_colors.dart';
-import 'package:todo_list_app/constants/routes.dart';
-import 'package:todo_list_app/custom_widgets/alert_widget.dart';
 import 'package:todo_list_app/custom_widgets/buttons/elevated_button.dart';
-import 'package:todo_list_app/custom_widgets/loading_screen/loading_screen.dart';
 import 'package:todo_list_app/custom_widgets/textfield_widget.dart';
 import 'package:todo_list_app/custom_widgets/textitem_widget.dart';
-import 'package:todo_list_app/functions/firebase_functions.dart';
 import 'package:todo_list_app/functions/todo_provider.dart';
+import 'package:todo_list_app/functions/ui_functions/login_function.dart';
+import 'package:todo_list_app/functions/ui_functions/registration_function.dart';
 import 'package:todo_list_app/views/login_register%20_view/password_reset_view.dart';
 
 class LoginPage extends StatelessWidget{
@@ -53,7 +51,7 @@ class LoginPage extends StatelessWidget{
             margin: const EdgeInsets.only(left: 20, right: 20), 
             padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
             decoration: BoxDecoration(                    
-              color: Colors.white70, 
+              color: white70Color, 
               borderRadius: BorderRadius.circular(10),
               boxShadow: const [
                 BoxShadow(
@@ -193,115 +191,10 @@ class LoginPage extends StatelessWidget{
       
                 Consumer<AppUsers>(
                   builder: (_, user, __) => ElevatedButtonWidget(
-                    onPressed: () async{            
-                      //user Login
-                      bool loginFieldsNotEmpty = [
-                        user.emailController, 
-                        user.passwordController
-                      ].every((controller) => controller.text.isNotEmpty);
-                      final loadingScreen = LoadingScreen();
-
-                      if(user.isRegistered){
-                        if(loginFieldsNotEmpty){
-                          loadingScreen.showOverlay(context, 'Logging in...');
-                          await FirebaseAuthLogin().firebaseLogin(
-                            user.emailController.text.trim(), 
-                            user.passwordController.text.trim(),
-                            (text, color, icon) async{
-                              loadingScreen.hideOverlay();
-                              await MaterialBannerAlert1(context)
-                                .materialBannerAlert1(text, color, icon);
-                            } 
-                          ).then((result) async{
-                            if(result != 'no' && result != 'email not verified'){
-                              user.loggedInUser = result;
-                              user.emailController.clear(); 
-                              user.passwordController.clear();
-                              Navigator.of(context)
-                                .pushNamedAndRemoveUntil(homePageRoute, (route) => false);
-                            } 
-                            else{
-                              await FirebaseEmailVerification().verifyEmail(
-                                (text, color, icon) async{
-                                  loadingScreen.hideOverlay();
-                                  await MaterialBannerAlert1(context)
-                                    .materialBannerAlert1(text, color, icon);
-                                }
-                              );
-                            }
-                          },);                                  
-                        }
-                        //Either email or password field or both is empty
-                        else{
-                          MaterialBannerAlert1(context).materialBannerAlert1(
-                            'Fields Cannot be Empty!!!', 
-                            redColor, 
-                            Icons.warning_rounded
-                          );
-                        }                               
-                      }
-                              
-                      //User Registration
-                      else {
-                        bool registrationFieldsNotEmpty = [
-                          user.emailController, 
-                          user.passwordController,
-                          user.confirmPassController, 
-                          user.usernameController
-                        ].every((controller) => controller.text.isNotEmpty);
-      
-                        if(registrationFieldsNotEmpty){
-                          loadingScreen.showOverlay(context, 'Registering...');
-
-                          if(user.passwordController.text == user.confirmPassController.text){
-                            await FirebaseAuthRegister().firebaseRegister(
-                              user.usernameController.text.trim(),
-                              user.emailController.text.trim(), 
-                              user.passwordController.text.trim(),
-                              (text, color, icon) async {
-                                loadingScreen.hideOverlay();
-                                await MaterialBannerAlert1(context)
-                                  .materialBannerAlert1(text, color, icon);
-                              } 
-                            ).then((registrationResult) async {
-                              registrationResult == 'yes'
-                              ? await FirebaseEmailVerification().verifyEmail(
-                                (text, color, icon) async{                                      
-                                  await MaterialBannerAlert1(context)
-                                    .materialBannerAlert1(text, color, icon);
-                                }
-                              )
-                              : {
-                                //Will still handle a case whereby the regisitration did not go through
-                              };
-                            });
-                            user.emailController.clear(); 
-                            user.passwordController.clear(); 
-                            user.usernameController.clear();
-                            user.confirmPassController.clear();
-                            user.callToAction(() => user.isRegistered = true);
-                          } 
-                          //Password and confirmPassword fields do not match.
-                          else {
-                            loadingScreen.hideOverlay();
-                            MaterialBannerAlert1(context).materialBannerAlert1(
-                              'Password Confirmation Error!!!', 
-                              redColor, 
-                              Icons.warning_rounded
-                            );
-                          }
-                        }
-                        //Any or all of the registration fields is/are empty
-                        else{
-                          MaterialBannerAlert1(context).materialBannerAlert1(
-                            'Field(s) Cannot be Empty!!!',
-                            redColor, 
-                            Icons.warning_rounded
-                          );
-                        }
-                      }
-                    },
-                    
+                    onPressed: () async =>
+                    user.isRegistered 
+                      ? await loginToApp(user, context)
+                      : await registerNewUser(user, context),
                     backgroundColor: blackColor,
                     borderColor: greenColor,
                     child: TextItem(

@@ -5,7 +5,7 @@ import 'package:todo_list_app/constants/routes.dart';
 import 'package:todo_list_app/functions/extensions.dart';
 import 'package:todo_list_app/functions/firebase_functions.dart';
 import 'package:todo_list_app/functions/todo_provider.dart';
-import 'package:todo_list_app/functions/show_todo_details.dart';
+import 'package:todo_list_app/functions/ui_functions/show_todo_details.dart';
 
 class Views extends StatelessWidget{
   const Views ({super.key});

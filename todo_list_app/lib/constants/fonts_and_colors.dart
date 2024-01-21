@@ -9,6 +9,7 @@ const greenColor = Colors.green;
 const customGreenColor = Color.fromARGB(255, 54, 151, 125);
 const whiteColor = Colors.white;
 const darkWhiteColor = Colors.white60;
+const white70Color = Colors.white70;
 const blueColor = Colors.blue;
 const redColor = Colors.red;
 final backGroundColor = Colors.blueGrey.withOpacity(0.25);

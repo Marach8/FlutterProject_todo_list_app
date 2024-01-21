@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list_app/custom_widgets/container_with_text.dart';
-import 'package:todo_list_app/functions/show_todo_details.dart';
+import 'package:todo_list_app/functions/ui_functions/show_todo_details.dart';
 
 class ContainerWithTextView extends StatelessWidget {
   final dynamic user;

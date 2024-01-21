@@ -15,13 +15,11 @@ dynamic showFullTodoDetails(
     return;
   }
   final overlayEntry = OverlayEntry(
-    builder: (_) => Positioned.fill(
-      child: Material(
-        color: blackColor.withAlpha(150),
-        child: const Center(
-          child: SizedBox.shrink()
-        )
-      ),
+    builder: (_) => Material(
+      color: blackColor.withAlpha(50),
+      child: const Center(
+        child: SizedBox.shrink()
+      )
     )
   );
   overlay.insert(overlayEntry);
@@ -33,7 +31,7 @@ dynamic showFullTodoDetails(
         topLeft: Radius.circular(20)
       )
     ),
-    backgroundColor: Colors.blueGrey.shade900,
+    backgroundColor: deepBackGroundColor,
     content: Center(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,7 +40,7 @@ dynamic showFullTodoDetails(
             padding: const EdgeInsets.only(bottom: 15),
             child: const Text('Full Todo Details')
               .decoratewithGoogleFont(
-                blueColor,
+                whiteColor,
                 fontSize3, 
                 fontWeight1
               ),
@@ -66,15 +64,6 @@ dynamic showFullTodoDetails(
       ),
     ),
     duration: const Duration(seconds: 10),
-    // action: SnackBarAction(
-    //   onPressed: () {
-    //     ScaffoldMessenger
-    //       .of(context).hideCurrentSnackBar();
-    //     overlayEntry.remove();
-    //   },
-    //   label: 'Back',
-    //   textColor: blueColor,
-    // )
   );
   ScaffoldMessenger.of(context).showSnackBar(snackBar)
     .closed.then((_) => overlayEntry.remove());
