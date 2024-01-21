@@ -24,7 +24,6 @@ Future<void> loginToApp(dynamic user, BuildContext context) async {
           text, 
           icon, 
           color,
-          5
         );
       } 
     ).then((result) async{
@@ -44,7 +43,6 @@ Future<void> loginToApp(dynamic user, BuildContext context) async {
               text, 
               icon, 
               color,
-              5
             );
           }
         );
@@ -58,7 +56,6 @@ Future<void> loginToApp(dynamic user, BuildContext context) async {
       'Field(s) Cannot be Empty!', 
       Icons.warning_rounded, 
       redColor,
-      5
     );
   }                               
 }

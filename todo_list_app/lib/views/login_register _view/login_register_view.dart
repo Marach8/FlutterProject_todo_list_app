@@ -38,7 +38,6 @@ class LoginPage extends StatelessWidget{
             );
           }
         ), 
-        //centerTitle: true,
         backgroundColor: blackColor, 
         elevation: 10, 
         foregroundColor: whiteColor

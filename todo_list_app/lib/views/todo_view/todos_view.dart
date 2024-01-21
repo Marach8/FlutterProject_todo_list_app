@@ -63,7 +63,8 @@ class Views extends StatelessWidget{
                         }, 
                         label: 'Undo', textColor: blueColor, 
                       ),
-                      duration: const Duration(seconds: 4), backgroundColor: Colors.white,
+                      duration: const Duration(seconds: 4), 
+                      backgroundColor: Colors.white,
                     )
                   ).closed; 
                   shouldDeleteFromFirestore? 
@@ -81,13 +82,17 @@ class Views extends StatelessWidget{
                   children: [
                     Align(
                       alignment: Alignment.bottomLeft, 
-                      child: Icon(Icons.delete_rounded, 
-                      color: blackColor)
+                      child: Icon(
+                        Icons.delete_rounded, 
+                        color: blackColor
+                      )
                     ),
                     Align(
                       alignment: Alignment.centerRight, 
-                      child: Icon(Icons.delete_rounded, 
-                      color: blackColor)
+                      child: Icon(
+                        Icons.delete_rounded, 
+                        color: blackColor
+                      )
                     ),
                   ]
                 )

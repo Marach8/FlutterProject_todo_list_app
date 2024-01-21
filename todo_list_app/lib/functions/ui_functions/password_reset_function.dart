@@ -17,7 +17,6 @@ Future<void> resetUserPassword(dynamic user, BuildContext context) async{
           text, 
           icon, 
           color,
-          5
         );
       }
       ).then((_) {
@@ -31,7 +30,6 @@ Future<void> resetUserPassword(dynamic user, BuildContext context) async{
       'Fields Cannot be Empty!', 
       Icons.warning_rounded, 
       redColor,
-      5
     );
   }     
 }

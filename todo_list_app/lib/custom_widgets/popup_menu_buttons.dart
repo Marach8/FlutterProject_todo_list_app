@@ -64,7 +64,6 @@ class PopUpMenu extends StatelessWidget {
                       text, 
                       icon, 
                       color,
-                      5
                     );
                   }
                 ).then((value) {

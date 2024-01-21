@@ -28,7 +28,6 @@ Future<void> registerNewUser(dynamic user, BuildContext context) async {
             text, 
             icon, 
             color,
-            5
           );
         } 
       ).then((registrationResult) async {
@@ -40,7 +39,6 @@ Future<void> registerNewUser(dynamic user, BuildContext context) async {
               text, 
               icon, 
               color,
-              5
             );
           }
         )
@@ -62,7 +60,6 @@ Future<void> registerNewUser(dynamic user, BuildContext context) async {
         'Passwords do not Match!',
         Icons.warning_rounded,
         redColor,
-        5
       );
     }
   }
@@ -73,7 +70,6 @@ Future<void> registerNewUser(dynamic user, BuildContext context) async {
       'Field(s) Cannot be Empty!', 
       Icons.warning_rounded, 
       redColor,
-      5
     );
   }
 }

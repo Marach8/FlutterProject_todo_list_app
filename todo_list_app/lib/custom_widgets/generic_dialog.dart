@@ -29,7 +29,7 @@ Future<T?> showGenericDialog<T>({
           Navigator.pop(context) 
           : Navigator.of(context).pop(optionValue),
         child: Text(optionKey).decoratewithGoogleFont(
-          customGreenColor, 
+          blueColor, 
           fontSize2, 
           fontWeight1
         ),        

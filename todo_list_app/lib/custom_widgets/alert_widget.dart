@@ -9,13 +9,12 @@ Future<void> showNotification(
   String text,
   IconData? icon,
   Color buttonColor,
-  int duration
 ) async{
   final completer = Completer<void>();
   final materialBanner = MaterialBanner(
     content: Text(
       text,
-      maxLines: 2,
+      maxLines: 4,
     ).decoratewithGoogleFont(
       whiteColor,
       fontSize2,
@@ -37,8 +36,6 @@ Future<void> showNotification(
       )
     ],
     dividerColor: deepGreenColor,
-
-    //shadowColor: greenColor,
     backgroundColor: backGroundColor,
     padding: const EdgeInsets.all(10),
     leading: Icon(

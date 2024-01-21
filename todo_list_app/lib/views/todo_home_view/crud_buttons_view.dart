@@ -51,7 +51,6 @@ class CrudButtonsView extends StatelessWidget {
                   'To view an item in detail, tap on the item.', 
                   Icons.view_array_rounded, 
                   blueColor,
-                  5
                 ).then((_) => Navigator.of(context)
                   .pushNamed(viewPageRoute));
 
@@ -71,7 +70,6 @@ class CrudButtonsView extends StatelessWidget {
                   'To delete an item, swipe horizontally', 
                   Icons.delete_rounded, 
                   blueColor,
-                  5
                 ).then((_) => Navigator.of(context)
                   .pushNamed(viewPageRoute));
               } else {
@@ -90,7 +88,6 @@ class CrudButtonsView extends StatelessWidget {
                   'Longpress on an item to go to update mode', 
                   Icons.update_rounded, 
                   blueColor,
-                  5
                 ).then((_) => Navigator.of(context)
                   .pushNamed(viewPageRoute));
               } else {
@@ -111,5 +108,4 @@ async => await showNotification(
   'Oops! You currently have no Todos. Add Todos first!', 
   Icons.warning_rounded, 
   redColor,
-  5
 );
