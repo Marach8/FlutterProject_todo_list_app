@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 
 class AppUsers extends ChangeNotifier{
@@ -15,7 +13,7 @@ class AppUsers extends ChangeNotifier{
   TextEditingController forgotPasswordController = TextEditingController(); 
   TextEditingController confirmPassController = TextEditingController();
 
-  String loggedInUser = ''; 
+  String? loggedInUser; 
   bool done = true;
   bool isInUpdateMode = false; 
   String initialTitle = ''; 

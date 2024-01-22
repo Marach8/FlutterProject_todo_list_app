@@ -34,6 +34,7 @@ class FirebaseBackend{
         uid: currentUser!.uid
       );
       await cloudStore.collection('Users').add(userPayload);
+      await verifyUserEmail();
       return const AuthSuccess.fromFirebase();
     } on FirebaseAuthException catch(e){
       return AuthError.fromFirebase(e);

@@ -3,34 +3,34 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 
-class FirebaseAuthRegister{
+// class FirebaseAuthRegister{
 
-  Future<String> firebaseRegister(
-    String username, String email, String password, Function(String text, Color color, IconData icon) firebaseAlert
-  ) async{
-    try{
-      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email, password: password
-      );
-      await FirebaseFirestore.instance.collection('Users').doc(userCredential.user!.uid).set({'username': username});
-      await firebaseAlert('Registration Successful...', Colors.green, Icons.check);
-      return 'yes';
-    } on FirebaseAuthException catch(e){
-      if (e.code == 'weak-password'){
-        await firebaseAlert('Password must contain at least 6 characters!!!', Colors.red, Icons.warning_rounded);
-      }
-      else if(e.code == 'email-already-in-use'){
-        await firebaseAlert('This email is already registered!!!', Colors.red, Icons.warning_rounded);
-      }
-      return 'no';
-    } catch (e){
-      await firebaseAlert(
-        "Registration Failed!!! Please Check Your Network Connection And Try Again.", Colors.red, Icons.error_rounded
-      );
-      return 'no';
-    }
-  }
-}
+//   Future<String> firebaseRegister(
+//     String username, String email, String password, Function(String text, Color color, IconData icon) firebaseAlert
+//   ) async{
+//     try{
+//       UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+//         email: email, password: password
+//       );
+//       await FirebaseFirestore.instance.collection('Users').doc(userCredential.user!.uid).set({'username': username});
+//       await firebaseAlert('Registration Successful...', Colors.green, Icons.check);
+//       return 'yes';
+//     } on FirebaseAuthException catch(e){
+//       if (e.code == 'weak-password'){
+//         await firebaseAlert('Password must contain at least 6 characters!!!', Colors.red, Icons.warning_rounded);
+//       }
+//       else if(e.code == 'email-already-in-use'){
+//         await firebaseAlert('This email is already registered!!!', Colors.red, Icons.warning_rounded);
+//       }
+//       return 'no';
+//     } catch (e){
+//       await firebaseAlert(
+//         "Registration Failed!!! Please Check Your Network Connection And Try Again.", Colors.red, Icons.error_rounded
+//       );
+//       return 'no';
+//     }
+//   }
+// }
 
 
 class FirebaseEmailVerification{
