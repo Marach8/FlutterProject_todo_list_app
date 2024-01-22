@@ -54,7 +54,7 @@ dynamic showFullTodoDetails(
               ),
               const Padding(
                 padding: EdgeInsets.only(top: 5.0),
-                child: CountDownTimerView(),
+                child: CountDownTimerView(duration: 9),
               )
             ],
           ),
