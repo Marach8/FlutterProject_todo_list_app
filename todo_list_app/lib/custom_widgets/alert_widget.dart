@@ -1,7 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:todo_list_app/constants/fonts_and_colors.dart';
+import 'package:todo_list_app/custom_widgets/timer.dart';
 import 'package:todo_list_app/functions/extensions.dart';
 
 Future<void> showNotification(
@@ -38,11 +38,7 @@ Future<void> showNotification(
     dividerColor: deepGreenColor,
     backgroundColor: backGroundColor,
     padding: const EdgeInsets.all(10),
-    leading: Icon(
-      icon,
-      size: 40, 
-      color: buttonColor
-    ), 
+    leading: const CountDownTimerView(duration: 3)
   );
   ScaffoldMessenger.of(context)
     .showMaterialBanner(materialBanner);

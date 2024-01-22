@@ -4,14 +4,18 @@ import 'package:todo_list_app/custom_widgets/circle_avatar.dart';
 import 'package:todo_list_app/functions/extensions.dart';
 
 class CountDownTimerView extends StatelessWidget {
-  const CountDownTimerView({super.key});
+  final int duration;
+  const CountDownTimerView({
+    super.key,
+    required this.duration
+  });
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: Stream.periodic(
         const Duration(seconds: 1), 
-        (time) => 9 - time
+        (time) => duration - time
       ).take(10), 
       builder: (_, snapshot) => CircleAvatarWidget(
         child: snapshot.hasData ? 
@@ -20,7 +24,7 @@ class CountDownTimerView extends StatelessWidget {
             .decoratewithGoogleFont(
               redColor, 
               fontSize2, 
-              fontWeight4
+              fontWeight2
             ),
         ) : const Text('')
       )
