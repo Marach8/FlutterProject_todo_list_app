@@ -8,12 +8,14 @@ class UserPayload extends MapView<String, String>{
   UserPayload({
     required String username, 
     required String email, 
-    required String password
+    required String password,
+    required  String uid
   }): super(
     {
       'username': username,
       'email': email,
       'password': password,
+      'user-uid': uid,
       'datetime-of-registration': DateFormat('yyyy-MM-dd hh:mm a')
         .format(DateTime.now()),
     }

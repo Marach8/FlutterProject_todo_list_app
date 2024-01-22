@@ -97,8 +97,16 @@ class NetworkFailedAuthError extends AuthError{
 @immutable 
 class WrongPasswordAuthError extends AuthError{
   const WrongPasswordAuthError(): super(
-    title: 'Incorrect Credentials',
+    title: 'Incorrect Credentials!',
     content: 'Login Credentials are incorrect'
+  );
+}
+
+@immutable 
+class InvalidEmailAuthError extends AuthError{
+  const InvalidEmailAuthError(): super(
+    title: 'Invalid Email!',
+    content: 'This email is invalid!'
   );
 }
 
@@ -110,5 +118,6 @@ Map<String, AuthError> authErrors = {
   'requires-recent-login': const RequiresRecentLoginAuthError(),
   'no-current-user': const NoCurrentUserAuthError(),
   'network-request-failed': const NetworkFailedAuthError(),
-  'wrong-password': const WrongPasswordAuthError()
+  'wrong-password': const WrongPasswordAuthError(),
+  'invalid-email': const InvalidEmailAuthError()
 };
