@@ -7,6 +7,7 @@ abstract class AuthenticationResult{
   const AuthenticationResult();
 }
 
+
 @immutable
 class AuthSuccess extends AuthenticationResult{
   final String title;

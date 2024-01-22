@@ -29,11 +29,13 @@ class TodoPayload extends MapView<String, String>{
     required String title,
     required String dueDateTime,
     required String content,
+    required String uid
   }):super(
     {
       'title': title,
       'due-datetime': dueDateTime,
       'content': content,
+      'user-uid': uid,
       'datetime-of-creation': DateFormat('yyyy-MM-dd hh:mm a')
         .format(DateTime.now())
     }

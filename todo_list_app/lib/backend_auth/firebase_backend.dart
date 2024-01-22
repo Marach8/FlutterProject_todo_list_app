@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:todo_list_app/backend_auth/auth_result.dart';
@@ -34,7 +33,7 @@ class FirebaseBackend{
         password: password, 
         uid: currentUser!.uid
       );
-      await cloudStore.collection('users').add(userPayload);
+      await cloudStore.collection('Users').add(userPayload);
       return const AuthSuccess.fromFirebase();
     } on FirebaseAuthException catch(e){
       return AuthError.fromFirebase(e);
@@ -42,6 +41,7 @@ class FirebaseBackend{
       return const UnknownAuthError();
     }
   }
+
 
   Future<AuthenticationResult> loginUser(
     String email,
@@ -54,7 +54,7 @@ class FirebaseBackend{
         password: password
       );
       currentUser = userCredential.user;
-      final query = cloudStore.collection('users')
+      final query = cloudStore.collection('Users')
         .where('user-uid', isEqualTo: currentUser!.uid);
       final snapshots = await query.get();
       final document = snapshots.docs.first;
@@ -68,6 +68,7 @@ class FirebaseBackend{
     }
   }
 
+
   Future<AuthenticationResult> resetUserPassword(String email) async{
     try{
       await cloudAuth.sendPasswordResetEmail(email: email);
@@ -78,6 +79,7 @@ class FirebaseBackend{
       return const UnknownAuthError();
     }
   }
+
 
   Future<AuthenticationResult> verifyUserEmail()async{
     final currentUser = FirebaseAuth.instance.currentUser;
@@ -92,6 +94,7 @@ class FirebaseBackend{
     }
   }
 
+
   Future<AuthenticationResult> logoutUser() async{
     try{
       await cloudAuth.signOut();
@@ -103,9 +106,83 @@ class FirebaseBackend{
     }
   }
 
+
+  Future<String> deleteUserAccount() async{
+    await deleteAllTodos();
+    try{
+      await cloudStore.collection('Users')
+        .where('user-uid', isEqualTo: currentUser!.uid)
+        .get()
+        .then((snapshot){
+          snapshot.docs.first.reference.delete();
+        });
+      currentUser!.delete();
+      return 'User Deleted.';
+    } catch (_){
+      return 'Could not Delete User';
+    }
+  }
+
+
+  Future<String> uploadTodo(
+    String title,
+    String dueDateTime,
+    String content
+  )async{
+    try{
+      final todoPayload = TodoPayload(
+        title: title, 
+        dueDateTime: dueDateTime, 
+        content: content, 
+        uid: currentUser!.uid
+      );
+      await cloudStore.collection('Todos')
+        .add(todoPayload);
+      return 'success';
+    } catch(e){
+      return e.toString();
+    }
+  }
+
+
+  Future<void> deleteTodo(String titleOfTodo) async {
+    try{
+      await cloudStore.collection('Todos')
+        .where('title', isEqualTo: titleOfTodo)
+        .get()
+        .then((snapshot){
+          snapshot.docs.first.reference.delete();
+        });
+    } catch(_){
+      
+    }
+  }
+
+
+  Future<void> deleteAllTodos() async {
+    try{
+      await cloudStore.collection('Todos')
+        .where('user-uid', isEqualTo: currentUser!.uid)
+        .get()
+        .then((snapshot){
+          final documents = snapshot.docs;
+          for(final document in documents){
+            document.reference.delete();
+          }
+        });
+    } catch(_){
+
+    }
+  }
+
+
   dynamic getCurrentUserDetails(){
     try{
-      
+      return cloudStore.collection('Todos')
+        .where('user-uid', isEqualTo: currentUser!.uid)
+        .snapshots();
+    } catch(_){
+      return 'Unable To Fetch Details';
     }
   }
 }
