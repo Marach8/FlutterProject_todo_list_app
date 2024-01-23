@@ -1,38 +1,22 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 
 @immutable 
-abstract class AuthenticationResult{
-  const AuthenticationResult();
-}
-
-
-@immutable
-class AuthSuccess extends AuthenticationResult{
-  final String title;
-
-  const AuthSuccess.fromFirebase()
-    : title = 'Authentication Successfull!';
-}
-
-@immutable 
-abstract class AuthError extends AuthenticationResult{
+abstract class AuthResult{
   final String title, content;
   
-  const AuthError({
+  const AuthResult({
     required this.content, required this.title
   });
 
-  factory AuthError.fromFirebase(
-    FirebaseAuthException exception) 
-    => authErrors[exception.code.trim().toLowerCase()]
+  factory AuthResult.fromBackend(dynamic exception) 
+    => authResult[exception.trim().toLowerCase()]
     ?? const UnknownAuthError();
 }
 
 
 @immutable 
-class UnknownAuthError extends AuthError{
+class UnknownAuthError extends AuthResult{
   const UnknownAuthError(): super(
     title: 'Authentication Error!',
     content: 'Unknown Authentication Error!'
@@ -40,7 +24,7 @@ class UnknownAuthError extends AuthError{
 }
 
 @immutable 
-class NoCurrentUserAuthError extends AuthError{
+class NoCurrentUserAuthError extends AuthResult{
   const NoCurrentUserAuthError(): super(
     title: 'No Current User!',
     content: 'No Current user with this information was found!'
@@ -48,7 +32,7 @@ class NoCurrentUserAuthError extends AuthError{
 }
 
 @immutable 
-class RequiresRecentLoginAuthError extends AuthError {
+class RequiresRecentLoginAuthError extends AuthResult {
   const RequiresRecentLoginAuthError(): super(
     title: 'Requires Recent Login!',
     content: 'Please, logout and log back in to perform this operation!'
@@ -56,7 +40,7 @@ class RequiresRecentLoginAuthError extends AuthError {
 }
 
 @immutable 
-class OperationNotAllowedAuthError extends AuthError {
+class OperationNotAllowedAuthError extends AuthResult {
   const OperationNotAllowedAuthError(): super(
     title: 'Operation Not Allowed!',
     content: 'Sorry, you cannot perform this operation at this moment!'
@@ -64,7 +48,7 @@ class OperationNotAllowedAuthError extends AuthError {
 }
 
 @immutable 
-class UserNotFoundAuthError extends AuthError{
+class UserNotFoundAuthError extends AuthResult{
   const UserNotFoundAuthError(): super(
     title: 'User Not Found!',
     content: 'This User was not found on the server!'
@@ -72,7 +56,7 @@ class UserNotFoundAuthError extends AuthError{
 }
 
 @immutable 
-class WeakPasswordAuthError extends AuthError{
+class WeakPasswordAuthError extends AuthResult{
   const WeakPasswordAuthError(): super(
     title: 'Weak Password!',
     content: 'Length of password is too short!'
@@ -80,7 +64,7 @@ class WeakPasswordAuthError extends AuthError{
 }
 
 @immutable 
-class EmailAlreadyInUseAuthError extends AuthError{
+class EmailAlreadyInUseAuthError extends AuthResult{
   const EmailAlreadyInUseAuthError(): super(
     title: 'Email Already In User!',
     content: 'Thei email is already registered! Please enter a new one!'
@@ -88,7 +72,7 @@ class EmailAlreadyInUseAuthError extends AuthError{
 }
 
 @immutable 
-class NetworkFailedAuthError extends AuthError{
+class NetworkFailedAuthError extends AuthResult{
   const NetworkFailedAuthError(): super(
     title: 'Network Request Failed!',
     content: 'Please check your Internet connection and try again!'
@@ -96,7 +80,7 @@ class NetworkFailedAuthError extends AuthError{
 }
 
 @immutable 
-class WrongPasswordAuthError extends AuthError{
+class WrongPasswordAuthError extends AuthResult{
   const WrongPasswordAuthError(): super(
     title: 'Incorrect Credentials!',
     content: 'Login Credentials are incorrect'
@@ -104,14 +88,23 @@ class WrongPasswordAuthError extends AuthError{
 }
 
 @immutable 
-class InvalidEmailAuthError extends AuthError{
+class InvalidEmailAuthError extends AuthResult{
   const InvalidEmailAuthError(): super(
     title: 'Invalid Email!',
     content: 'This email is invalid!'
   );
 }
 
-Map<String, AuthError> authErrors = {
+@immutable 
+class SuccessfulAuthentication extends AuthResult{
+  const SuccessfulAuthentication(): super(
+    title: 'Success...',
+    content: 'Authentication Successful...'
+  );
+}
+
+
+Map<String, AuthResult> authResult= {
   'user-not-found': const UserNotFoundAuthError(),
   'weak-password': const WeakPasswordAuthError(),
   'operation-not-allowed': const OperationNotAllowedAuthError(),
@@ -120,5 +113,6 @@ Map<String, AuthError> authErrors = {
   'no-current-user': const NoCurrentUserAuthError(),
   'network-request-failed': const NetworkFailedAuthError(),
   'wrong-password': const WrongPasswordAuthError(),
-  'invalid-email': const InvalidEmailAuthError()
+  'invalid-email': const InvalidEmailAuthError(),
+  'success': const SuccessfulAuthentication()
 };

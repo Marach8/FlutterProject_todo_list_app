@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_list_app/backend_auth/auth_result.dart';
 import 'package:todo_list_app/backend_auth/firebase_backend.dart';
 import 'package:todo_list_app/constants/fonts_and_colors.dart';
+import 'package:todo_list_app/constants/strings.dart';
 import 'package:todo_list_app/custom_widgets/alert_widget.dart';
 import 'package:todo_list_app/custom_widgets/loading_screen/loading_screen.dart';
 
@@ -25,49 +26,31 @@ Future<void> registerNewUser(dynamic user, BuildContext context) async {
         user.emailController.text.trim(), 
         user.passwordController.text.trim()
       )
-      // await FirebaseAuthRegister().firebaseRegister(
-      //   user.usernameController.text.trim(),
-      //   user.emailController.text.trim(), 
-      //   user.passwordController.text.trim(),
-      //   (text, color, icon) async {
-      //     loadingScreen.hideOverlay();
-      //     await showNotification(
-      //       context,
-      //       text, 
-      //       icon, 
-      //       color,
-      //     );
-      //   } 
-      // )
       .then((registrationResult) async {
-        
-        // registrationResult.runtimeType == AuthSuccess
-        // ? await FirebaseEmailVerification().verifyEmail(
-        //   (text, color, icon) async{                                      
-        //     await showNotification(
-        //       context, 
-        //       text, 
-        //       icon, 
-        //       color,
-        //     );
-        //   }
-        // )
-        : {
-          //Will still handle a case whereby the regisitration did not go through
-        };
+        await showNotification(
+          context, 
+          registrationResult.runtimeType == SuccessfulAuthentication ?
+            '${registrationResult.content}\n $checkYourEmail' :
+            registrationResult.content,
+          registrationResult.runtimeType == SuccessfulAuthentication ?
+            Icons.check_rounded : Icons.error_rounded, 
+          registrationResult.runtimeType == SuccessfulAuthentication ?
+            greenColor : redColor
+        );
       });
       user.emailController.clear(); 
       user.passwordController.clear(); 
       user.usernameController.clear();
       user.confirmPassController.clear();
       user.callToAction(() => user.isRegistered = true);
+      loadingScreen.hideOverlay();
     } 
     //Password and confirmPassword fields do not match.
     else {
       loadingScreen.hideOverlay();
       await showNotification(
         context, 
-        'Passwords do not Match!',
+        unmatchedPasswords,
         Icons.warning_rounded,
         redColor,
       );
@@ -77,7 +60,7 @@ Future<void> registerNewUser(dynamic user, BuildContext context) async {
   else{
     await showNotification(
       context, 
-      'Field(s) Cannot be Empty!', 
+      emptyFields, 
       Icons.warning_rounded, 
       redColor,
     );
