@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:todo_list_app/constants/fonts_and_colors.dart';
 import 'package:todo_list_app/constants/routes.dart';
 import 'package:todo_list_app/functions/extensions.dart';
-import 'package:todo_list_app/functions/firebase_functions.dart';
 import 'package:todo_list_app/functions/todo_provider.dart';
 import 'package:todo_list_app/functions/ui_functions/show_todo_details.dart';
 
@@ -67,10 +66,10 @@ class Views extends StatelessWidget{
                       backgroundColor: Colors.white,
                     )
                   ).closed; 
-                  shouldDeleteFromFirestore? 
-                  FirestoreInteraction().deleteTodo(
-                    user.firebaseCurrentUser!.uid, title
-                  ): {};                 
+                  // shouldDeleteFromFirestore? 
+                  // FirestoreInteraction().deleteTodo(
+                  //   user.firebaseCurrentUser!.uid, title
+                  // ): {};                 
                 }
               },
               background: Container(

@@ -1,8 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_list_app/backend_auth/firebase_backend.dart';
 import 'package:todo_list_app/constants/routes.dart';
-import 'package:todo_list_app/functions/firebase_functions.dart';
 import 'package:todo_list_app/views/add_todo_view.dart';
 import 'package:todo_list_app/views/login_register%20_view/login_register_view.dart';
 import 'package:todo_list_app/views/todo_home_view/main_view.dart';
@@ -28,17 +28,25 @@ class TodoApp extends StatelessWidget{
           brightness: Brightness.dark
         ),
         debugShowCheckedModeBanner: false,
-        home: FutureBuilder(
-          future: FirebaseGetUserDetails().firebaseCurrentUser(),
-          builder:(context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done){
-              if(snapshot.hasData && snapshot.data!.emailVerified)
-                {return const TodoHome();}
-              else {return const LoginPage();}
-            } 
-            else{return const CircularProgressIndicator();}
-          },
-        ),
+        home: FirebaseBackend().currentUser == null
+        ? const LoginPage() : const TodoHome(),
+        // FutureBuilder(
+        //   future: FirebaseBackend().cloudAuth.currentUser,
+        //   builder:(context, snapshot) {
+        //     if (snapshot.connectionState == ConnectionState.done){
+        //       if(snapshot.hasData && snapshot.data!.emailVerified)
+        //         {
+        //           return const TodoHome();
+        //         }
+        //       else {
+        //         return const LoginPage();
+        //       }
+        //     } 
+        //     else{
+        //       return const CircularProgressIndicator();
+        //     }
+        //   },
+        // ),
         routes: {
           loginPageRoute: (context) => const LoginPage(),
           homePageRoute: (context) => const TodoHome(),

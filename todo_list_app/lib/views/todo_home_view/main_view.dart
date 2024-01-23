@@ -3,12 +3,12 @@ import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_app/animations/slider_animations.dart';
+import 'package:todo_list_app/backend_auth/firebase_backend.dart';
 import 'package:todo_list_app/constants/fonts_and_colors.dart';
 import 'package:todo_list_app/constants/strings.dart';
 import 'package:todo_list_app/custom_widgets/divider.dart';
 import 'package:todo_list_app/custom_widgets/popup_menu_buttons.dart';
 import 'package:todo_list_app/functions/extensions.dart';
-import 'package:todo_list_app/functions/firebase_functions.dart';
 import 'package:todo_list_app/functions/todo_provider.dart';
 import 'package:todo_list_app/views/todo_home_view/container_with_text_view.dart';
 import 'package:todo_list_app/views/todo_home_view/crud_buttons_view.dart';
@@ -20,6 +20,7 @@ class TodoHome extends StatelessWidget{
   @override 
   Widget build(BuildContext context){
     final screenWidth = MediaQuery.of(context).size.width;
+    final backend = FirebaseBackend();
 
     return Consumer<AppUsers>(
       builder: ((_, user, __)
@@ -44,8 +45,8 @@ class TodoHome extends StatelessWidget{
             foregroundColor: whiteColor,          
           ),
           
-          body: FutureBuilder<List<dynamic>>(
-            future: FirebaseGetUserDetails().getCurrentUserDetails(),
+          body: StreamBuilder(
+            stream: backend.getCurrentUserDetails(),
             builder: (_, snapshot){
               if(snapshot.connectionState == ConnectionState.waiting){
                 return const Center(
@@ -63,23 +64,26 @@ class TodoHome extends StatelessWidget{
                 );
               }
               else{
-                if(snapshot.data == null){} 
+                if(snapshot.data.runtimeType == String){
+                  return Text(snapshot.data);
+                } 
                 else{
-                    user.loggedInUser = snapshot.data![0]['username'];
-                    user.firebaseCurrentUser = snapshot.data![2];
-                    for(var items in snapshot.data![1].docs){                  
-                    List<String> newList = [
-                      items['title'], 
-                      items['datetime'], 
-                      items['content']
-                    ];
-                    if(!user.dataBase.contains(newList)){
-                      if (user.done){
-                        user.dataBase.add(newList);
-                      }                    
-                    }                     
-                  }
-                  user.done = false;
+                  print(snapshot.data);
+                    // user.loggedInUser = snapshot.data![0]['username'];
+                    // user.firebaseCurrentUser = snapshot.data![2];
+                  //   for(var items in snapshot.data![1].docs){                  
+                  //   List<String> newList = [
+                  //     items['title'], 
+                  //     items['datetime'], 
+                  //     items['content']
+                  //   ];
+                  //   if(!user.dataBase.contains(newList)){
+                  //     if (user.done){
+                  //       user.dataBase.add(newList);
+                  //     }                    
+                  //   }                     
+                  // }
+                  // user.done = false;
                 }             
                 
                 return SingleChildScrollView(

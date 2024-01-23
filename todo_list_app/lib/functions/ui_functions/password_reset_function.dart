@@ -1,33 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:todo_list_app/backend_auth/auth_result.dart';
+import 'package:todo_list_app/backend_auth/firebase_backend.dart';
 import 'package:todo_list_app/constants/fonts_and_colors.dart';
+import 'package:todo_list_app/constants/strings.dart';
 import 'package:todo_list_app/custom_widgets/alert_widget.dart';
 import 'package:todo_list_app/custom_widgets/loading_screen/loading_screen.dart';
-import 'package:todo_list_app/functions/firebase_functions.dart';
+
 
 Future<void> resetUserPassword(dynamic user, BuildContext context) async{
-  final loadingScreen = LoadingScreen();                                                                                                     
+                                                                                                      
   if(user.forgotPasswordController.text.isNotEmpty){
+    final backend = FirebaseBackend();
+    final loadingScreen = LoadingScreen(); 
     loadingScreen.showOverlay(context, 'Please Wait...');
-    await FirebaseResetPassword().resetPassword(
-      user.forgotPasswordController.text,
-      (text, color, icon) async{
+
+    await backend.resetUserPassword(
+      user.forgotPasswordController.text
+    )
+    .then((passwordResetResult) async{
+      await showNotification(
+        context,
+        passwordResetResult.content,
+        passwordResetResult.runtimeType == SuccessfulAuthentication ?
+          Icons.check_rounded : Icons.error_rounded, 
+        passwordResetResult.runtimeType == SuccessfulAuthentication ?
+          greenColor : redColor
+      )
+      .then((_){
+        user.forgotPasswordController.clear();
         loadingScreen.hideOverlay();
-        await showNotification(
-          context, 
-          text, 
-          icon, 
-          color,
-        );
-      }
-      ).then((_) {
-      user.forgotPasswordController.clear();
-      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-      user.callToAction(() => user.forgotPassword = false);
+        if(passwordResetResult.runtimeType == SuccessfulAuthentication){
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          user.callToAction(() => user.forgotPassword = false);
+        }
+      });
     });
+
   } else{
     await showNotification(
       context, 
-      'Fields Cannot be Empty!', 
+      emptyFields, 
       Icons.warning_rounded, 
       redColor,
     );

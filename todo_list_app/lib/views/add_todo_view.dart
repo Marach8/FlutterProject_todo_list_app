@@ -7,7 +7,6 @@ import 'package:todo_list_app/custom_widgets/divider.dart';
 import 'package:todo_list_app/custom_widgets/textfield_widget.dart';
 import 'package:todo_list_app/custom_widgets/textitem_widget.dart';
 import 'package:todo_list_app/functions/extensions.dart';
-import 'package:todo_list_app/functions/firebase_functions.dart';
 import 'package:todo_list_app/functions/todo_provider.dart';
 import 'package:todo_list_app/functions/ui_functions/save_or_update_todo.dart';
 
@@ -44,25 +43,25 @@ class AddUpdate extends StatelessWidget{
                 AddTodoTextFields(
                   title: 'Title of Todo',
                   controller: user.todoTitleController,
-                  onChanged: (newTitle){
-                    if(user.isInUpdateMode){
-                      if (newTitle != user.initialTitle){
-                        user.wasteBin.add(
-                          [
-                            user.initialTitle, 
-                            user.initialDate,
-                            user.initialTodo
-                          ]
-                        );                        
-                        for(List item in user.wasteBin){
-                          FirestoreInteraction().deleteTodo(
-                            user.firebaseCurrentUser!.uid, 
-                            item[0]
-                          );
-                        }
-                      }
-                    }                  
-                  }
+                  // onChanged: (newTitle){
+                  //   if(user.isInUpdateMode){
+                  //     if (newTitle != user.initialTitle){
+                  //       user.wasteBin.add(
+                  //         [
+                  //           user.initialTitle, 
+                  //           user.initialDate,
+                  //           user.initialTodo
+                  //         ]
+                  //       );                        
+                  //       for(List item in user.wasteBin){
+                  //         FirestoreInteraction().deleteTodo(
+                  //           user.firebaseCurrentUser!.uid, 
+                  //           item[0]
+                  //         );
+                  //       }
+                  //     }
+                  //   }                  
+                  // }
                 ),
                 const Gap(5),
                 const DividerWidget(),
