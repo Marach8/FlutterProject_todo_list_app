@@ -8,8 +8,6 @@ import 'package:todo_list_app/custom_widgets/loading_screen/loading_screen.dart'
 
 
 Future<void> registerNewUser(dynamic user, BuildContext context) async {
-  final backend = FirebaseBackend();
-  final loadingScreen = LoadingScreen();
   bool registrationFieldsNotEmpty = [
     user.emailController, 
     user.passwordController,
@@ -18,6 +16,9 @@ Future<void> registerNewUser(dynamic user, BuildContext context) async {
   ].every((controller) => controller.text.isNotEmpty);
 
   if(registrationFieldsNotEmpty){
+    final backend = FirebaseBackend();
+    final loadingScreen = LoadingScreen();
+    
     loadingScreen.showOverlay(context, 'Registering...');
 
     if(user.passwordController.text == user.confirmPassController.text){

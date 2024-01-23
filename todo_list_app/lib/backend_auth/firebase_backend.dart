@@ -12,10 +12,8 @@ class FirebaseBackend{
   final cloudAuth = FirebaseAuth.instance;
   final cloudStore = FirebaseFirestore.instance;
   late User? currentUser;
-  StreamController streamController = StreamController();
 
-
-  Future<AuthenticationResult> registerUser(
+  Future<AuthResult> registerUser(
     String username,
     String email,
     String password, 
@@ -35,16 +33,16 @@ class FirebaseBackend{
       );
       await cloudStore.collection('Users').add(userPayload);
       await verifyUserEmail();
-      return const AuthSuccess.fromFirebase();
+      return AuthResult.fromBackend('success');
     } on FirebaseAuthException catch(e){
-      return AuthError.fromFirebase(e);
+      return AuthResult.fromBackend(e.code);
     } catch (_){
       return const UnknownAuthError();
     }
   }
 
 
-  Future<AuthenticationResult> loginUser(
+  Future<AuthResult> loginUser(
     String email,
     String password,
     dynamic user
@@ -61,9 +59,9 @@ class FirebaseBackend{
       final document = snapshots.docs.first;
       final userDetails = document.data();
       user.callToAction(() => user.loggedInUser = userDetails['username']);
-      return const AuthSuccess.fromFirebase();
+      return AuthResult.fromBackend('success');
     } on FirebaseAuthException catch(e){
-      return AuthError.fromFirebase(e);
+      return AuthResult.fromBackend(e.code);
     } catch(_){
       return const UnknownAuthError();
     }

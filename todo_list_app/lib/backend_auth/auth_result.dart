@@ -96,6 +96,14 @@ class InvalidEmailAuthError extends AuthResult{
 }
 
 @immutable 
+class UserNotVerifiedAuthError extends AuthResult{
+  const UserNotVerifiedAuthError(): super(
+    title: '',
+    content: 'User not verified!'
+  );
+}
+
+@immutable 
 class SuccessfulAuthentication extends AuthResult{
   const SuccessfulAuthentication(): super(
     title: 'Success...',
@@ -106,6 +114,7 @@ class SuccessfulAuthentication extends AuthResult{
 
 Map<String, AuthResult> authResult= {
   'user-not-found': const UserNotFoundAuthError(),
+  'user-not-verified': const UserNotVerifiedAuthError(),
   'weak-password': const WeakPasswordAuthError(),
   'operation-not-allowed': const OperationNotAllowedAuthError(),
   'email-already-in-use': const EmailAlreadyInUseAuthError(),
