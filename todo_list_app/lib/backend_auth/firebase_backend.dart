@@ -68,38 +68,38 @@ class FirebaseBackend{
   }
 
 
-  Future<AuthenticationResult> resetUserPassword(String email) async{
+  Future<AuthResult> resetUserPassword(String email) async{
     try{
       await cloudAuth.sendPasswordResetEmail(email: email);
-      return const AuthSuccess.fromFirebase();
+      return AuthResult.fromBackend('success');
     } on FirebaseAuthException catch(e){
-      return AuthError.fromFirebase(e);
+      return AuthResult.fromBackend(e.code);
     } catch (_){
       return const UnknownAuthError();
     }
   }
 
 
-  Future<AuthenticationResult> verifyUserEmail()async{
+  Future<AuthResult> verifyUserEmail()async{
     final currentUser = FirebaseAuth.instance.currentUser;
     try{
       currentUser != null 
       ? await currentUser.sendEmailVerification() : {};
-      return const AuthSuccess.fromFirebase();
+      return AuthResult.fromBackend('success');
     } on FirebaseAuthException catch(e){
-      return AuthError.fromFirebase(e);
+      return AuthResult.fromBackend(e.code);
     } catch (_){
       return const UnknownAuthError();
     }
   }
 
 
-  Future<AuthenticationResult> logoutUser() async{
+  Future<AuthResult> logoutUser() async{
     try{
       await cloudAuth.signOut();
-      return const AuthSuccess.fromFirebase();
+      return AuthResult.fromBackend('success');
     } on FirebaseAuthException catch(e){
-      return AuthError.fromFirebase(e);
+      return AuthResult.fromBackend(e.code);
     } catch (_){
       return const UnknownAuthError();
     }
