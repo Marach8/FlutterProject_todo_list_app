@@ -11,7 +11,8 @@ class FirebaseBackend{
 
   final cloudAuth = FirebaseAuth.instance;
   final cloudStore = FirebaseFirestore.instance;
-  late User? currentUser;
+
+  User? get currentUser => cloudAuth.currentUser;
 
   Future<AuthResult> registerUser(
     String username,
@@ -19,12 +20,11 @@ class FirebaseBackend{
     String password, 
   ) async{
     try{
-      final userCredentials = await cloudAuth
+      await cloudAuth
       .createUserWithEmailAndPassword(
         email: email, 
         password: password
       );
-      currentUser = userCredentials.user;
       final userPayload = UserPayload(
         username: username, 
         email: email, 
@@ -36,7 +36,8 @@ class FirebaseBackend{
       return AuthResult.fromBackend('success');
     } on FirebaseAuthException catch(e){
       return AuthResult.fromBackend(e.code);
-    } catch (_){
+    } catch (e){
+      print(e.toString());
       return const UnknownAuthError();
     }
   }
@@ -48,11 +49,10 @@ class FirebaseBackend{
     dynamic user
   ) async{
     try{
-      final userCredential = await cloudAuth.signInWithEmailAndPassword(
+      await cloudAuth.signInWithEmailAndPassword(
         email: email, 
         password: password
       );
-      currentUser = userCredential.user;
       final query = cloudStore.collection('Users')
         .where('user-uid', isEqualTo: currentUser!.uid);
       final snapshots = await query.get();
@@ -61,8 +61,10 @@ class FirebaseBackend{
       user.callToAction(() => user.loggedInUser = userDetails['username']);
       return AuthResult.fromBackend('success');
     } on FirebaseAuthException catch(e){
+      print('I am here1');
       return AuthResult.fromBackend(e.code);
     } catch(_){
+      print('I am here2');
       return const UnknownAuthError();
     }
   }
@@ -81,10 +83,10 @@ class FirebaseBackend{
 
 
   Future<AuthResult> verifyUserEmail()async{
-    final currentUser = FirebaseAuth.instance.currentUser;
+
     try{
       currentUser != null 
-      ? await currentUser.sendEmailVerification() : {};
+      ? await currentUser!.sendEmailVerification() : {};
       return AuthResult.fromBackend('success');
     } on FirebaseAuthException catch(e){
       return AuthResult.fromBackend(e.code);

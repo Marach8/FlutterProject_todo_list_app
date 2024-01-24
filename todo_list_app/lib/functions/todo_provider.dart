@@ -20,7 +20,6 @@ class AppUsers extends ChangeNotifier{
   String initialDate = ''; 
   String initialTodo = ''; 
   int updateIndex = 0;  
-  dynamic firebaseCurrentUser;
   bool forgotPassword = false;
   bool isRegistered = true;
   bool obscureText = true;

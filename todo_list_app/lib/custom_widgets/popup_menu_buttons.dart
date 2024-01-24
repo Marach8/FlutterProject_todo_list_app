@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_app/backend_auth/firebase_backend.dart';
 import 'package:todo_list_app/constants/fonts_and_colors.dart';
+import 'package:todo_list_app/constants/routes.dart';
 import 'package:todo_list_app/custom_widgets/generic_dialog.dart';
 import 'package:todo_list_app/custom_widgets/loading_screen/loading_screen.dart';
 import 'package:todo_list_app/functions/extensions.dart';
@@ -34,6 +35,15 @@ class PopUpMenu extends StatelessWidget {
                 loadingScreen.showOverlay(
                   contextForLoadingScreen, 
                   'Logging out...'
+                );
+                await backend.logoutUser()
+                .then((_) {
+                  loadingScreen.hideOverlay();
+                  Navigator.of(context)
+                    .pushNamedAndRemoveUntil(
+                      loginPageRoute, (route) => false
+                    );
+                  }
                 );
                 // if(user.dataBase.isNotEmpty){                      
                 //   for(List item in user.dataBase){

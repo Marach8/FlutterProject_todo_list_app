@@ -56,19 +56,23 @@ class TodoHome extends StatelessWidget{
                 );
               } 
               else if(snapshot.hasError){
-                return const Text('An error occured !!!')
-                .decoratewithGoogleFont(
-                  redColor, 
-                  fontSize2, 
-                  fontWeight3
+                return Center(
+                  child: const Text('An error occured !!!')
+                  .decoratewithGoogleFont(
+                    redColor, 
+                    fontSize2, 
+                    fontWeight3
+                  ),
                 );
               }
               else{
                 if(snapshot.data.runtimeType == String){
-                  return Text(snapshot.data);
+                  return Center(
+                    child: Text(snapshot.data)
+                  );
                 } 
                 else{
-                  print(snapshot.data);
+                  print(snapshot.data.runtimeType);
                     // user.loggedInUser = snapshot.data![0]['username'];
                     // user.firebaseCurrentUser = snapshot.data![2];
                   //   for(var items in snapshot.data![1].docs){                  

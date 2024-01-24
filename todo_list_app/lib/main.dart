@@ -20,6 +20,7 @@ class TodoApp extends StatelessWidget{
 
   @override
   Widget build(BuildContext context){
+    final backend = FirebaseBackend().cloudAuth;
     return ChangeNotifierProvider(
       create: (_) => AppUsers(),
       child: MaterialApp(
@@ -28,8 +29,9 @@ class TodoApp extends StatelessWidget{
           brightness: Brightness.dark
         ),
         debugShowCheckedModeBanner: false,
-        home: FirebaseBackend().currentUser == null
-        ? const LoginPage() : const TodoHome(),
+        home: backend.currentUser != null && 
+        backend.currentUser!.emailVerified
+          ? const TodoHome() : const LoginPage(),
         // FutureBuilder(
         //   future: FirebaseBackend().cloudAuth.currentUser,
         //   builder:(context, snapshot) {

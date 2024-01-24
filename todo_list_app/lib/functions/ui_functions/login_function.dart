@@ -20,11 +20,12 @@ Future<void> loginToApp(dynamic user, BuildContext context) async {
 
     loadingScreen.showOverlay(context, 'Logging in...');
     await backend.loginUser(
-      user.emailController.text, 
-      user.passwordController.text, 
+      user.emailController.text.trim(), 
+      user.passwordController.text.trim(), 
       user
     )
     .then((loginResult) async{
+      loadingScreen.hideOverlay();
       await showNotification(
         context,
         loginResult.runtimeType == UserNotVerifiedAuthError ?
@@ -35,13 +36,12 @@ Future<void> loginToApp(dynamic user, BuildContext context) async {
         loginResult.runtimeType == SuccessfulAuthentication ?
           greenColor : redColor
       ).then((_) async{
-        user.emailController.clear();
-        user.passwordController.clear();
-        loadingScreen.hideOverlay();
         if(loginResult.runtimeType == UserNotVerifiedAuthError){
           await backend.verifyUserEmail();
         }
         else if(loginResult.runtimeType == SuccessfulAuthentication){
+          user.emailController.clear();
+          user.passwordController.clear();
           Navigator.of(context).pushNamedAndRemoveUntil(
             homePageRoute, (route) => false
           );

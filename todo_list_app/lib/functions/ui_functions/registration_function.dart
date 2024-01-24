@@ -21,13 +21,14 @@ Future<void> registerNewUser(dynamic user, BuildContext context) async {
     
     loadingScreen.showOverlay(context, 'Registering...');
 
-    if(user.passwordController.text == user.confirmPassController.text){
+    if(user.passwordController.text.trim() == user.confirmPassController.text.trim()){
       await backend.registerUser(
         user.usernameController.text.trim(), 
         user.emailController.text.trim(), 
         user.passwordController.text.trim()
       )
       .then((registrationResult) async {
+        loadingScreen.hideOverlay();
         await showNotification(
           context, 
           registrationResult.runtimeType == SuccessfulAuthentication ?
@@ -37,14 +38,16 @@ Future<void> registerNewUser(dynamic user, BuildContext context) async {
             Icons.check_rounded : Icons.error_rounded, 
           registrationResult.runtimeType == SuccessfulAuthentication ?
             greenColor : redColor
-        );
+        ).then((_){
+          if(registrationResult.runtimeType == SuccessfulAuthentication){
+            user.emailController.clear(); 
+            user.passwordController.clear(); 
+            user.usernameController.clear();
+            user.confirmPassController.clear();
+            user.callToAction(() => user.isRegistered = true);
+          }
+        });
       });
-      user.emailController.clear(); 
-      user.passwordController.clear(); 
-      user.usernameController.clear();
-      user.confirmPassController.clear();
-      user.callToAction(() => user.isRegistered = true);
-      loadingScreen.hideOverlay();
     } 
     //Password and confirmPassword fields do not match.
     else {
