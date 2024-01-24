@@ -83,7 +83,6 @@ class FirebaseBackend{
 
 
   Future<AuthResult> verifyUserEmail()async{
-
     try{
       currentUser != null 
       ? await currentUser!.sendEmailVerification() : {};
@@ -146,7 +145,7 @@ class FirebaseBackend{
   }
 
 
-  Future<void> deleteTodo(String titleOfTodo) async {
+  Future<String> deleteTodo(String titleOfTodo) async {
     try{
       await cloudStore.collection('Todos')
         .where('title', isEqualTo: titleOfTodo)
@@ -154,13 +153,14 @@ class FirebaseBackend{
         .then((snapshot){
           snapshot.docs.first.reference.delete();
         });
-    } catch(_){
-      
+      return 'success';
+    } catch(e){
+      return e.toString();
     }
   }
 
 
-  Future<void> deleteAllTodos() async {
+  Future<String> deleteAllTodos() async {
     try{
       await cloudStore.collection('Todos')
         .where('user-uid', isEqualTo: currentUser!.uid)
@@ -171,8 +171,40 @@ class FirebaseBackend{
             document.reference.delete();
           }
         });
-    } catch(_){
+      return 'success';
+    } catch(e){
+      return e.toString();
+    }
+  }
 
+
+  Future<String> updateTodo(
+    String initialTitle,
+    String initialDueDateTime,
+    String initialContent,
+    String newTitle,
+    String newDueDateTime,
+    String newContent
+  ) async{
+    final todoPayLoad = TodoPayload(
+      title: newTitle, 
+      dueDateTime: newDueDateTime, 
+      content: newContent, 
+      uid: currentUser!.uid
+    );
+    try{
+      final query = await cloudStore.collection('Todos')
+        .where('title', isEqualTo: initialTitle)
+        .where('due-datetime', isEqualTo: initialDueDateTime)
+        .where('content', isEqualTo: initialContent)
+        .get();
+      
+      final todoId = query.docs.first.id;
+      await cloudStore.collection('Todos')
+        .doc(todoId).set(todoPayLoad);
+      return 'success';
+    } catch (e){
+      return e.toString();
     }
   }
 

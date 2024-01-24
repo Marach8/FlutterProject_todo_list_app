@@ -43,25 +43,6 @@ class AddUpdate extends StatelessWidget{
                 AddTodoTextFields(
                   title: 'Title of Todo',
                   controller: user.todoTitleController,
-                  // onChanged: (newTitle){
-                  //   if(user.isInUpdateMode){
-                  //     if (newTitle != user.initialTitle){
-                  //       user.wasteBin.add(
-                  //         [
-                  //           user.initialTitle, 
-                  //           user.initialDate,
-                  //           user.initialTodo
-                  //         ]
-                  //       );                        
-                  //       for(List item in user.wasteBin){
-                  //         FirestoreInteraction().deleteTodo(
-                  //           user.firebaseCurrentUser!.uid, 
-                  //           item[0]
-                  //         );
-                  //       }
-                  //     }
-                  //   }                  
-                  // }
                 ),
                 const Gap(5),
                 const DividerWidget(),

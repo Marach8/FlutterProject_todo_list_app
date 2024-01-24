@@ -55,7 +55,7 @@ class Views extends StatelessWidget{
                         .decoratewithGoogleFont(
                           blackColor,
                           fontSize3, 
-                          fontWeight3
+                          fontWeight4
                         ),
                       action: SnackBarAction(
                         onPressed: () {
@@ -76,6 +76,7 @@ class Views extends StatelessWidget{
                   );              
                 }
               },
+              
               background: Container(
                 padding: const EdgeInsets.only(left:10, right: 15),
                 height: 30, 
