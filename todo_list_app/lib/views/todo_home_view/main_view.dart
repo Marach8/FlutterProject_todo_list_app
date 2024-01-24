@@ -46,7 +46,7 @@ class TodoHome extends StatelessWidget{
           ),
           
           body: StreamBuilder(
-            stream: backend.getCurrentUserDetails(),
+            stream: backend.getCurrentUserTodos(),
             builder: (_, snapshot){
               if(snapshot.connectionState == ConnectionState.waiting){
                 return const Center(
@@ -76,8 +76,7 @@ class TodoHome extends StatelessWidget{
                   for(final map in dataFromBackend){
                     listOfMaps.add(map.data());
                   }
-
-                  user.dataBase = listOfMaps;
+                  user.dataBase = [...listOfMaps];
                 }
                 
                 return SingleChildScrollView(

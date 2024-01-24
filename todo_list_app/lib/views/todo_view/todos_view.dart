@@ -11,22 +11,22 @@ class Views extends StatelessWidget{
 
   @override
   Widget build(BuildContext context){
-    return Consumer<AppUsers>(
-      builder: (context, user, child) => Scaffold(
-        backgroundColor: backGroundColor,
-        appBar: AppBar(
-          centerTitle: true, 
-          title: const Text('Welcome to your views')
-            .decoratewithGoogleFont(
-              whiteColor,
-              fontSize3,
-              fontWeight2
-            ),
-          backgroundColor: deepBackGroundColor, 
-          foregroundColor: whiteColor
-        ),
+    return Scaffold(
+      backgroundColor: backGroundColor,
+      appBar: AppBar(
+        centerTitle: true, 
+        title: const Text('Welcome to your views')
+          .decoratewithGoogleFont(
+            whiteColor,
+            fontSize3,
+            fontWeight2
+          ),
+        backgroundColor: deepBackGroundColor, 
+        foregroundColor: whiteColor
+      ),
 
-        body: ListView.builder(
+      body: Consumer<AppUsers>(
+        builder: (_, user, __) => ListView.builder(
           itemCount: user.dataBase.length,
           itemBuilder: (_, index) {
             final mapOfTodoDetails = user.dataBase.elementAt(index);
@@ -36,11 +36,12 @@ class Views extends StatelessWidget{
             final datetimeOfCreation = mapOfTodoDetails['datetime-of-creation'];
             
             return Dismissible(                
-              key: Key(title),
+              key: UniqueKey(),
               onDismissed: (direction) async {
+                bool shouldDeleteFromRemote = true;
                 if(direction == DismissDirection.endToStart 
                 || direction == DismissDirection.startToEnd){
-                  final deletedTodo = user.removefromLocal(index);                    
+                  user.deletefromLocal(index);                    
                   await ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       behavior: SnackBarBehavior.floating, 
@@ -57,14 +58,22 @@ class Views extends StatelessWidget{
                           fontWeight3
                         ),
                       action: SnackBarAction(
-                        onPressed: () => user.revertDelete(index, deletedTodo),
-                        label: 'Undo', textColor: blueColor, 
+                        onPressed: () {
+                          user.revertDelete(index);
+                          shouldDeleteFromRemote = false;
+                        },
+                        label: 'Undo', 
+                        textColor: blueColor, 
                       ),
                       duration: const Duration(seconds: 4), 
                       backgroundColor: whiteColor
                     )
                   ).closed
-                  .then((_) => user.deleteFromRemote(deletedTodo['title']));              
+                  .then(
+                    (_) => shouldDeleteFromRemote 
+                    ? user.deleteFromRemote()
+                    : {}                    
+                  );              
                 }
               },
               background: Container(
@@ -105,7 +114,6 @@ class Views extends StatelessWidget{
                 ),
                 onLongPress: (){
                   user.callToAction(() => user.isInUpdateMode = true);
-                  //user.updateTodo(title, date, content, index);
                   Navigator.of(context).pushNamed(addTodoPageRoute);
                 },
                 leading: const Icon(
@@ -131,8 +139,8 @@ class Views extends StatelessWidget{
               )
             );
           }
-        ) 
-      )
+        ),
+      ) 
     );
   }
 }

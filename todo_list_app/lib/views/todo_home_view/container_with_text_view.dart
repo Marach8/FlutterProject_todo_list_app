@@ -9,7 +9,9 @@ class ContainerWithTextView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.sizeOf(context).width;
-
+    if(user.dataBase.isEmpty){
+      return const SizedBox();
+    }
     return SizedBox(
       height: screenWidth/4,
       width: screenWidth,

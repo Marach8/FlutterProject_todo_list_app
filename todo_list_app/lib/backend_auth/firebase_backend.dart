@@ -177,7 +177,7 @@ class FirebaseBackend{
   }
 
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> getCurrentUserDetails() 
+  Stream<QuerySnapshot<Map<String, dynamic>>> getCurrentUserTodos() 
   => cloudStore.collection('Todos')
     .where('user-uid', isEqualTo: currentUser!.uid)
     .snapshots();
