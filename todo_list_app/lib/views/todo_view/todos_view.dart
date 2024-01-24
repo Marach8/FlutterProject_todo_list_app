@@ -27,11 +27,12 @@ class Views extends StatelessWidget{
         ),
 
         body: ListView.builder(
-          itemCount: user.dataBase.length,
-          itemBuilder: (context, index) {
-            final title = user.dataBase.elementAt(index)[0];
-            final date = user.dataBase.elementAt(index)[1]; 
-            final content = user.dataBase.elementAt(index)[2];
+          itemCount: user.dataBase!.length,
+          itemBuilder: (_, index) {
+            final mapOfTodoDetails = user.dataBase!.elementAt(index);
+            final title = mapOfTodoDetails['title'];
+            final date = mapOfTodoDetails['due-datetime'] ;
+            final content = mapOfTodoDetails['content'];
             
             return Dismissible(                
               key: Key(title),
@@ -39,7 +40,7 @@ class Views extends StatelessWidget{
                 if(direction == DismissDirection.endToStart 
                 || direction == DismissDirection.startToEnd){
                   bool shouldDeleteFromFirestore = true;
-                  user.delete(title, date, content, index);                    
+                  //user.delete(title, date, content, index);                    
                   await ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       behavior: SnackBarBehavior.floating, 
@@ -57,7 +58,7 @@ class Views extends StatelessWidget{
                         ),
                       action: SnackBarAction(
                         onPressed: () {
-                          user.undo(title, date, content, index);
+                          //user.undo(title, date, content, index);
                           shouldDeleteFromFirestore = false;
                         }, 
                         label: 'Undo', textColor: blueColor, 
@@ -109,7 +110,7 @@ class Views extends StatelessWidget{
                 ),
                 onLongPress: (){
                   user.callToAction(() => user.isInUpdateMode = true);
-                  user.updateTodo(title, date, content, index);
+                  //user.updateTodo(title, date, content, index);
                   Navigator.of(context).pushNamed(addTodoPageRoute);
                 },
                 leading: const Icon(

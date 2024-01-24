@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class AppUsers extends ChangeNotifier{
 
-  List<List<String>> dataBase = [], wasteBin = [];
+  List? dataBase; 
+  //wasteBin = [];
 
   TextEditingController todoTitleController = TextEditingController();  
   TextEditingController emailController = TextEditingController();
@@ -37,54 +38,54 @@ class AppUsers extends ChangeNotifier{
     super.dispose();
   }
   
-  void addTodo(int index){
-    List<String> newList = [
-      todoTitleController.text, 
-      todoDateTimeController.text, 
-      todoContentController.text
-    ]; 
-    dataBase.insert(index, newList);
-    notifyListeners();
-  }
+  // void addTodo(int index){
+  //   List<String> newList = [
+  //     todoTitleController.text, 
+  //     todoDateTimeController.text, 
+  //     todoContentController.text
+  //   ]; 
+  //   dataBase.insert(index, newList);
+  //   notifyListeners();
+  // }
 
-  void updateTodo(
-    String keyItem, 
-    String dateItem, 
-    String todoItem, 
-    int removeIndex,
-  ){
-    initialTitle = keyItem; 
-    initialDate = dateItem; 
-    initialTodo = todoItem; 
-    updateIndex = removeIndex;
-    todoTitleController.text = keyItem;
-    todoDateTimeController.text = dateItem; 
-    todoContentController.text = todoItem;
-    dataBase.removeAt(removeIndex);
-    notifyListeners();
-  }
+  // void updateTodo(
+  //   String keyItem, 
+  //   String dateItem, 
+  //   String todoItem, 
+  //   int removeIndex,
+  // ){
+  //   initialTitle = keyItem; 
+  //   initialDate = dateItem; 
+  //   initialTodo = todoItem; 
+  //   updateIndex = removeIndex;
+  //   todoTitleController.text = keyItem;
+  //   todoDateTimeController.text = dateItem; 
+  //   todoContentController.text = todoItem;
+  //   dataBase.removeAt(removeIndex);
+  //   notifyListeners();
+  // }
 
-  void delete(
-    String keyItem, 
-    String dateItem, 
-    String todoItem, 
-    int removeIndex,
-  ){
-    wasteBin.add([keyItem, dateItem, todoItem]);
-    dataBase.removeAt(removeIndex);
-    notifyListeners();
-  }
+  // void delete(
+  //   String keyItem, 
+  //   String dateItem, 
+  //   String todoItem, 
+  //   int removeIndex,
+  // ){
+  //   wasteBin.add([keyItem, dateItem, todoItem]);
+  //   dataBase.removeAt(removeIndex);
+  //   notifyListeners();
+  // }
 
-  void undo(
-    String keyItem,
-    dateItem, 
-    todoItem, 
-    int insertIndex
-  ){
-    List<String> newList = [keyItem, dateItem, todoItem];    
-    dataBase.insert(insertIndex, newList);
-    notifyListeners();
-  }
+  // void undo(
+  //   String keyItem,
+  //   dateItem, 
+  //   todoItem, 
+  //   int insertIndex
+  // ){
+  //   List<String> newList = [keyItem, dateItem, todoItem];    
+  //   dataBase.insert(insertIndex, newList);
+  //   notifyListeners();
+  // }
 
   void callToAction(VoidCallback action){
     action();

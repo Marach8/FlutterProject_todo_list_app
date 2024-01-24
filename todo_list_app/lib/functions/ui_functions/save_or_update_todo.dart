@@ -50,9 +50,9 @@ Future<void> saveOrUpdateTodo(
     else{
       loadingScreen.showOverlay(context, 'Saving...');
       backend.uploadTodo(
-        user.todoTitleController.text,
-        user.todoDateTimeController.text,
-        user.todoContentController.text
+        user.todoTitleController.text.trim(),
+        user.todoDateTimeController.text.trim(),
+        user.todoContentController.text.trim()
       );
       loadingScreen.hideOverlay();
       user.todoTitleController.clear();

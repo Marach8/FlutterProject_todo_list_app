@@ -72,22 +72,13 @@ class TodoHome extends StatelessWidget{
                   );
                 } 
                 else{
-                  print(snapshot.data.runtimeType);
-                    // user.loggedInUser = snapshot.data![0]['username'];
-                    // user.firebaseCurrentUser = snapshot.data![2];
-                  //   for(var items in snapshot.data![1].docs){                  
-                  //   List<String> newList = [
-                  //     items['title'], 
-                  //     items['datetime'], 
-                  //     items['content']
-                  //   ];
-                  //   if(!user.dataBase.contains(newList)){
-                  //     if (user.done){
-                  //       user.dataBase.add(newList);
-                  //     }                    
-                  //   }                     
-                  // }
-                  // user.done = false;
+                  final listOfMaps = [];
+                  final dataFromBackend = snapshot.data.docs;
+                  //Iterating through the list an extracting data from each map.
+                  for(final map in dataFromBackend){
+                    listOfMaps.add(map);
+                  }
+                  user.dataBase = listOfMaps;
                 }             
                 
                 return SingleChildScrollView(
