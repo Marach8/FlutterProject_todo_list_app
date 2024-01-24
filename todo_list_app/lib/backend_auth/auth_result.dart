@@ -99,7 +99,7 @@ class InvalidEmailAuthError extends AuthResult{
 class UserNotVerifiedAuthError extends AuthResult{
   const UserNotVerifiedAuthError(): super(
     title: '',
-    content: 'User not verified!'
+    content: 'Your email is not Verified!'
   );
 }
 

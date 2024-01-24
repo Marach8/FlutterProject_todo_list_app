@@ -36,8 +36,7 @@ class FirebaseBackend{
       return AuthResult.fromBackend('success');
     } on FirebaseAuthException catch(e){
       return AuthResult.fromBackend(e.code);
-    } catch (e){
-      print(e.toString());
+    } catch (_){
       return const UnknownAuthError();
     }
   }
@@ -48,12 +47,12 @@ class FirebaseBackend{
     String password,
     dynamic user
   ) async{
-    if (currentUser!.emailVerified){
-      try{
-        await cloudAuth.signInWithEmailAndPassword(
-          email: email, 
-          password: password
-        );
+    try{
+      await cloudAuth.signInWithEmailAndPassword(
+        email: email, 
+        password: password
+      );
+      if(currentUser!.emailVerified){
         final query = cloudStore.collection('Users')
           .where('user-uid', isEqualTo: currentUser!.uid);
         final snapshots = await query.get();
@@ -61,13 +60,13 @@ class FirebaseBackend{
         final userDetails = document.data();
         user.callToAction(() => user.loggedInUser = userDetails['username']);
         return AuthResult.fromBackend('success');
-      } on FirebaseAuthException catch(e){
-        return AuthResult.fromBackend(e.code);
-      } catch(_){
-        return const UnknownAuthError();
       }
+      return const UserNotVerifiedAuthError();
+    } on FirebaseAuthException catch(e){
+      return AuthResult.fromBackend(e.code);
+    } catch(_){
+      return const UnknownAuthError();
     }
-    return const UserNotVerifiedAuthError();
   }
 
 
