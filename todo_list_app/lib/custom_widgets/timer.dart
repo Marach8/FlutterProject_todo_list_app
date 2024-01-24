@@ -5,8 +5,10 @@ import 'package:todo_list_app/functions/extensions.dart';
 
 class CountDownTimerView extends StatelessWidget {
   final int duration;
+  final Color color;
   const CountDownTimerView({
     super.key,
+    required this.color,
     required this.duration
   });
 
@@ -16,13 +18,13 @@ class CountDownTimerView extends StatelessWidget {
       stream: Stream.periodic(
         const Duration(seconds: 1), 
         (time) => duration - time
-      ).take(10), 
+      ).take(duration + 1), 
       builder: (_, snapshot) => CircleAvatarWidget(
         child: snapshot.hasData ? 
         Center(
           child: Text('${snapshot.data!}')
             .decoratewithGoogleFont(
-              redColor, 
+              color, 
               fontSize2, 
               fontWeight2
             ),

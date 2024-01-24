@@ -74,7 +74,6 @@ class TodoHome extends StatelessWidget{
                 else{
                   final listOfMaps = [];
                   final dataFromBackend = snapshot.data.docs;
-                  //Iterating through the list an extracting data from each map.
                   for(final map in dataFromBackend){
                     listOfMaps.add(map);
                   }

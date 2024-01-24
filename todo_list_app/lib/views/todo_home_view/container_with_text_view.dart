@@ -20,12 +20,14 @@ class ContainerWithTextView extends StatelessWidget {
           final title = mapOfTodoDetails['title'];
           final date = mapOfTodoDetails['due-datetime'] ;
           final content = mapOfTodoDetails['content'];
+          final datetimeOfCreation = mapOfTodoDetails['datetime-of-creation'];
           return GestureDetector(
             onTap: () => showFullTodoDetails(
               context, 
               title, 
               date,
               content,
+              datetimeOfCreation
             ),
             child: ContainerWithText(
               title: title,

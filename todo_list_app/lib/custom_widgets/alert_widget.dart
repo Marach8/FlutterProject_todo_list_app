@@ -38,7 +38,10 @@ Future<void> showNotification(
     dividerColor: deepGreenColor,
     backgroundColor: backGroundColor,
     padding: const EdgeInsets.all(10),
-    leading: const CountDownTimerView(duration: 3)
+    leading: CountDownTimerView(
+      duration: 4,
+      color: buttonColor,
+    )
   );
   ScaffoldMessenger.of(context)
     .showMaterialBanner(materialBanner);

@@ -10,6 +10,7 @@ dynamic showFullTodoDetails(
   String title, 
   String dateTime,
   String content,
+  String datetimeOfCreation
 ){
   final overlay = Overlay.of(context);
   if(!overlay.mounted){
@@ -54,7 +55,10 @@ dynamic showFullTodoDetails(
               ),
               const Padding(
                 padding: EdgeInsets.only(top: 5.0),
-                child: CountDownTimerView(duration: 9),
+                child: CountDownTimerView(
+                  duration: 9,
+                  color: whiteColor
+                ),
               )
             ],
           ),
@@ -64,13 +68,18 @@ dynamic showFullTodoDetails(
           ),
           const Gap(10),
           TodoRichText(
-            heading: 'DATE/TIME OF TODO: ',
+            heading: 'DUE DATE OR TIME OF TODO: ',
             content: dateTime
           ),
           const Gap(10),
           TodoRichText(
             heading: 'CONTENT OF TODO: ',
             content: content
+          ),
+          const Gap(10),
+          TodoRichText(
+            heading: 'CREATION DATE AND TIME OF TODO: ',
+            content: datetimeOfCreation
           ),
           const Gap(10),
         ]

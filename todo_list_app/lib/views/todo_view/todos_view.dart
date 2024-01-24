@@ -33,6 +33,7 @@ class Views extends StatelessWidget{
             final title = mapOfTodoDetails['title'];
             final date = mapOfTodoDetails['due-datetime'] ;
             final content = mapOfTodoDetails['content'];
+            final datetimeOfCreation = mapOfTodoDetails['datetime-of-creation'];
             
             return Dismissible(                
               key: Key(title),
@@ -107,6 +108,7 @@ class Views extends StatelessWidget{
                   title, 
                   date, 
                   content,
+                  datetimeOfCreation
                 ),
                 onLongPress: (){
                   user.callToAction(() => user.isInUpdateMode = true);
