@@ -177,13 +177,8 @@ class FirebaseBackend{
   }
 
 
-  Stream getCurrentUserDetails(){
-    try{
-      return cloudStore.collection('Todos')
-        .where('user-uid', isEqualTo: currentUser!.uid)
-        .snapshots();
-    } catch(_){
-      return Stream.value('Unable To Fetch Details');
-    }
-  }
+  Stream<QuerySnapshot<Map<String, dynamic>>> getCurrentUserDetails() 
+  => cloudStore.collection('Todos')
+    .where('user-uid', isEqualTo: currentUser!.uid)
+    .snapshots();
 }

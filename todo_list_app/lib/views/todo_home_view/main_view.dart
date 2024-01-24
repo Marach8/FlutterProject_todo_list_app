@@ -57,7 +57,9 @@ class TodoHome extends StatelessWidget{
               } 
               else if(snapshot.hasError){
                 return Center(
-                  child: const Text('An error occured !!!')
+                  child: const Text(
+                    'An Error Occured! Unable To Fetch Your Details'
+                  )
                   .decoratewithGoogleFont(
                     redColor, 
                     fontSize2, 
@@ -66,19 +68,17 @@ class TodoHome extends StatelessWidget{
                 );
               }
               else{
-                if(snapshot.data.runtimeType == String){
-                  return Center(
-                    child: Text(snapshot.data)
-                  );
-                } 
-                else{
-                  final listOfMaps = [];
-                  final dataFromBackend = snapshot.data.docs;
+                final dataFromBackend = snapshot.data!.docs;
+                if(dataFromBackend.isEmpty){
+                  user.dataBase = [];
+                } else {
+                  final List<Map<String, dynamic>> listOfMaps = [];
                   for(final map in dataFromBackend){
-                    listOfMaps.add(map);
+                    listOfMaps.add(map.data());
                   }
+
                   user.dataBase = listOfMaps;
-                }             
+                }
                 
                 return SingleChildScrollView(
                   child: Padding(

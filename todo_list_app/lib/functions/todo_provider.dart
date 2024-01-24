@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:todo_list_app/backend_auth/firebase_backend.dart';
 
 class AppUsers extends ChangeNotifier{
+  final backend = FirebaseBackend();
+  late List<Map<String, dynamic>> dataBase;
 
-  List? dataBase; 
-  //wasteBin = [];
+  String? loggedInUser; 
+  bool isInUpdateMode = false;
+  // String initialTitle = ''; 
+  // String initialDate = ''; 
+  // String initialTodo = ''; 
+  // int updateIndex = 0;  
+  bool forgotPassword = false;
+  bool isRegistered = true;
+  bool obscureText = true;
 
   TextEditingController todoTitleController = TextEditingController();  
   TextEditingController emailController = TextEditingController();
@@ -13,17 +23,6 @@ class AppUsers extends ChangeNotifier{
   TextEditingController usernameController = TextEditingController(); 
   TextEditingController forgotPasswordController = TextEditingController(); 
   TextEditingController confirmPassController = TextEditingController();
-
-  String? loggedInUser; 
-  bool done = true;
-  bool isInUpdateMode = false; 
-  String initialTitle = ''; 
-  String initialDate = ''; 
-  String initialTodo = ''; 
-  int updateIndex = 0;  
-  bool forgotPassword = false;
-  bool isRegistered = true;
-  bool obscureText = true;
   
   @override
   void dispose(){
@@ -64,17 +63,20 @@ class AppUsers extends ChangeNotifier{
   //   dataBase.removeAt(removeIndex);
   //   notifyListeners();
   // }
+  Map<String, dynamic> removefromLocal(int index){
+    final deletedTodo = dataBase.removeAt(index);
+    notifyListeners();
+    return deletedTodo;
+  }
+  
+  void revertDelete(int index, Map<String, dynamic> item) 
+    => !dataBase.contains(item) ? dataBase.insert(index, item)
+      : {};
 
-  // void delete(
-  //   String keyItem, 
-  //   String dateItem, 
-  //   String todoItem, 
-  //   int removeIndex,
-  // ){
-  //   wasteBin.add([keyItem, dateItem, todoItem]);
-  //   dataBase.removeAt(removeIndex);
-  //   notifyListeners();
-  // }
+  void deleteFromRemote(String titleToDelete){
+    backend.deleteTodo(titleToDelete);
+    notifyListeners();
+  }
 
   // void undo(
   //   String keyItem,

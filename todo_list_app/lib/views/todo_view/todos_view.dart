@@ -27,9 +27,9 @@ class Views extends StatelessWidget{
         ),
 
         body: ListView.builder(
-          itemCount: user.dataBase!.length,
+          itemCount: user.dataBase.length,
           itemBuilder: (_, index) {
-            final mapOfTodoDetails = user.dataBase!.elementAt(index);
+            final mapOfTodoDetails = user.dataBase.elementAt(index);
             final title = mapOfTodoDetails['title'];
             final date = mapOfTodoDetails['due-datetime'] ;
             final content = mapOfTodoDetails['content'];
@@ -40,8 +40,7 @@ class Views extends StatelessWidget{
               onDismissed: (direction) async {
                 if(direction == DismissDirection.endToStart 
                 || direction == DismissDirection.startToEnd){
-                  bool shouldDeleteFromFirestore = true;
-                  //user.delete(title, date, content, index);                    
+                  final deletedTodo = user.removefromLocal(index);                    
                   await ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       behavior: SnackBarBehavior.floating, 
@@ -58,20 +57,14 @@ class Views extends StatelessWidget{
                           fontWeight3
                         ),
                       action: SnackBarAction(
-                        onPressed: () {
-                          //user.undo(title, date, content, index);
-                          shouldDeleteFromFirestore = false;
-                        }, 
+                        onPressed: () => user.revertDelete(index, deletedTodo),
                         label: 'Undo', textColor: blueColor, 
                       ),
                       duration: const Duration(seconds: 4), 
-                      backgroundColor: Colors.white,
+                      backgroundColor: whiteColor
                     )
-                  ).closed; 
-                  // shouldDeleteFromFirestore? 
-                  // FirestoreInteraction().deleteTodo(
-                  //   user.firebaseCurrentUser!.uid, title
-                  // ): {};                 
+                  ).closed
+                  .then((_) => user.deleteFromRemote(deletedTodo['title']));              
                 }
               },
               background: Container(
