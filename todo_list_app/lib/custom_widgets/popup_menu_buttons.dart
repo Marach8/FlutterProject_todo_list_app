@@ -52,14 +52,53 @@ class PopUpMenuForMainView extends StatelessWidget {
                 );
               }
             });                                       
+          } 
+          else if(value == 'deleteAccount'){
+            await showGenericDialog(
+              context: context,
+              content: 'Dear ${user.loggedInUser}, are you sure you want to delete your account?',
+              title: 'Delete Account',
+              options: {
+                'Cancel': false,
+                'Delete Account': true
+              }
+            ).then((shouldDelete) async {
+              if(shouldDelete == true){
+                loadingScreen.showOverlay(
+                  contextForLoadingScreen, 
+                  'Deleting...'
+                );
+                await backend.deleteUserAccount()
+                .then((_) {
+                  loadingScreen.hideOverlay();
+                  Navigator.of(context)
+                    .pushNamedAndRemoveUntil(
+                      loginPageRoute, (route) => false
+                    );
+                  }
+                );
+              }
+            }); 
           }
         },
       
         itemBuilder: (context) => [
           PopupMenuItem(
+            padding: const EdgeInsets.all(10),
             value:'logout', 
             height: 20, 
             child: const Text('Logout')
+              .decorate(
+                blackColor, 
+                fontSize2, 
+                fontWeight1
+              ),
+          ),
+          PopupMenuItem(
+            padding: const EdgeInsets.all(10),
+            value:'deleteAccount', 
+            height: 20, 
+            child: const Text('Delete Account')
               .decorate(
                 blackColor, 
                 fontSize2, 
@@ -71,6 +110,7 @@ class PopUpMenuForMainView extends StatelessWidget {
     );
   }
 }
+
 
 
 
