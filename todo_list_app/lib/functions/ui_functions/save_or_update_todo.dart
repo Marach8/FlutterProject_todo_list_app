@@ -6,6 +6,7 @@ import 'package:todo_list_app/constants/strings.dart';
 import 'package:todo_list_app/custom_widgets/alert_widget.dart';
 import 'package:todo_list_app/custom_widgets/generic_dialog.dart';
 import 'package:todo_list_app/custom_widgets/loading_screen/loading_screen.dart';
+import 'package:todo_list_app/functions/extensions.dart';
 
 
 Future<void> saveOrUpdateTodo(
@@ -29,16 +30,16 @@ Future<void> saveOrUpdateTodo(
       final newDueDateTime = user.todoDateTimeController.text.trim();
       final newContent = user.todoContentController.text.trim();
 
-      final initialTitle = user.todoToUpdate['title'];
-      final initialDueDateTime = user.todoToUpdate['due-datetime'];
-      final initialContent = user.todoToUpdate['content'];
+      final initialTitle = user.todoToUpdate['title'].trim();
+      final initialDueDateTime = user.todoToUpdate['due-datetime'].trim();
+      final initialContent = user.todoToUpdate['content'].trim();
 
       final newMap = {
         'title': newTitle,
         'due-datetime': newDueDateTime,
         'content': newContent
       };
-      final mapsAreEqual = mapEquals(newMap, user.todoToUpdate);
+      final mapsAreEqual = newMap.checkMapEquality(user.todoToUpdate);
       mapsAreEqual 
       ? {
         loadingScreen.hideOverlay(),

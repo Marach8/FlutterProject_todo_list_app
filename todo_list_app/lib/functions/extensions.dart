@@ -49,3 +49,17 @@ extension DecorateTextWithGoogleFont on Text{
     overflow: TextOverflow.ellipsis,
   );
 }
+
+
+extension CheckMapEquality on Map<String, dynamic>{
+  bool checkMapEquality(Map<String, dynamic> map){
+    bool theyAreEqual = true;
+    for(final key in keys){
+      if (this[key] != map[key]){
+        theyAreEqual = false;
+        return theyAreEqual;
+      }
+    }
+    return theyAreEqual;
+  }
+}
