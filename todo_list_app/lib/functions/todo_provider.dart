@@ -5,7 +5,7 @@ class AppUsers extends ChangeNotifier{
   final backend = FirebaseBackend();
   late List<Map<String, dynamic>> dataBase;
   late Map<String, dynamic> deletedTodo, todoToUpdate;
-  String? loggedInUser; 
+  String? get loggedInUser => backend.currentUser!.displayName;
   bool isInUpdateMode = false;
   bool forgotPassword = false;
   bool isRegistered = true;

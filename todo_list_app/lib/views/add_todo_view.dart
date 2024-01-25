@@ -26,11 +26,11 @@ class AddUpdate extends StatelessWidget{
             ? 'Update you todo details'
             : 'Add your todo details here'
           )
-            .decoratewithGoogleFont(
-              whiteColor,
-              fontSize3, 
-              fontWeight1
-            )
+          .decoratewithGoogleFont(
+            whiteColor,
+            fontSize3, 
+            fontWeight1
+          )
         ),
         backgroundColor: blackColor,
         

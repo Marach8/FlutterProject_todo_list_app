@@ -33,6 +33,7 @@ class FirebaseBackend{
       );
       await cloudStore.collection('Users').add(userPayload);
       await verifyUserEmail();
+      await currentUser!.updateDisplayName(username);
       return AuthResult.fromBackend('success');
     } on FirebaseAuthException catch(e){
       return AuthResult.fromBackend(e.code);
@@ -53,12 +54,6 @@ class FirebaseBackend{
         password: password
       );
       if(currentUser!.emailVerified){
-        final query = cloudStore.collection('Users')
-          .where('user-uid', isEqualTo: currentUser!.uid);
-        final snapshots = await query.get();
-        final document = snapshots.docs.first;
-        final userDetails = document.data();
-        user.callToAction(() => user.loggedInUser = userDetails['username']);
         return AuthResult.fromBackend('success');
       }
       return const UserNotVerifiedAuthError();
