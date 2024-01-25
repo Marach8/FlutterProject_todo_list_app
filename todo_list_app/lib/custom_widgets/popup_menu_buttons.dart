@@ -8,9 +8,13 @@ import 'package:todo_list_app/custom_widgets/loading_screen/loading_screen.dart'
 import 'package:todo_list_app/functions/extensions.dart';
 import 'package:todo_list_app/functions/todo_provider.dart';
 
-class PopUpMenu extends StatelessWidget {
+class PopUpMenuForMainView extends StatelessWidget {
   final BuildContext contextForLoadingScreen;
-  const PopUpMenu({required this.contextForLoadingScreen, super.key});
+
+  const PopUpMenuForMainView({
+    required this.contextForLoadingScreen, 
+    super.key
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +23,7 @@ class PopUpMenu extends StatelessWidget {
 
     return Consumer<AppUsers>(
       builder: (_, user, __) => PopupMenuButton(
+        offset: const Offset(0, 100),
         color: whiteColor,        
         onSelected: (value) async {                  
           if(value == 'logout'){
@@ -45,45 +50,6 @@ class PopUpMenu extends StatelessWidget {
                     );
                   }
                 );
-                // if(user.dataBase.isNotEmpty){                      
-                //   for(List item in user.dataBase){
-                //     await FirestoreInteraction().createTodo(
-                //       user.firebaseCurrentUser!.uid, 
-                //       item[0], 
-                //       {
-                //         'title': item[0], 
-                //         'datetime': item[1], 
-                //         'content': item[2]
-                //       }
-                //     );                        
-                //   }
-                //   user.dataBase.clear();
-                // }
-                // if(user.wasteBin.isNotEmpty){
-                //   for(List item in user.wasteBin){
-                //     await FirestoreInteraction()
-                //       .deleteTodo(user.firebaseCurrentUser!.uid, item[0]);
-                //   }
-                //   user.wasteBin.clear();                      
-                // }
-                // await FirebaseAuthLogout().firebaseLogout(
-                //   (text, color, icon) async {
-                //     loadingScreen.hideOverlay();
-                //     await showNotification(
-                //       context, 
-                //       text, 
-                //       icon, 
-                //       color,
-                //     );
-                //   }
-                // ).then((value) {
-                //     user.done = true;
-                //     Navigator.of(context)
-                //       .pushNamedAndRemoveUntil(
-                //         loginPageRoute, (route) => false
-                //       );
-                //   }                     
-                // ); 
               }
             });                                       
           }
@@ -96,6 +62,68 @@ class PopUpMenu extends StatelessWidget {
             child: const Text('Logout')
               .decorate(
                 blackColor, 
+                fontSize2, 
+                fontWeight1
+              ),
+          ),
+        ]
+      ),
+    );
+  }
+}
+
+
+
+class PopUpMenuForTodosView extends StatelessWidget {
+  final BuildContext contextForLoadingScreen;
+
+  const PopUpMenuForTodosView({
+    required this.contextForLoadingScreen, 
+    super.key
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final backend = FirebaseBackend();
+    final loadingScreen = LoadingScreen();
+
+    return Consumer<AppUsers>(
+      builder: (_, user, __) => PopupMenuButton(
+        offset: const Offset(0, 55),
+        color: whiteColor,        
+        onSelected: (value) async {                  
+          if(value == 'deleteAll'){
+            await showGenericDialog(
+              context: context,
+              content: 'Dear ${user.loggedInUser}, are you sure you want to delete all your todos?',
+              title: 'Delete All Todos',
+              options: {
+                'Cancel': false,
+                'Proceed': true
+              }
+            ).then((shouldDeleteAll) async {
+              if(shouldDeleteAll == true){
+                loadingScreen.showOverlay(
+                  contextForLoadingScreen, 
+                  'Deleting...'
+                );
+                await backend.deleteAllTodos()
+                .then((_) {
+                  loadingScreen.hideOverlay();
+                  Navigator.pop(context);
+                });
+              }
+            });                                       
+          }
+        },
+      
+        itemBuilder: (context) => [
+          PopupMenuItem(
+            value:'deleteAll', 
+            height: 20, 
+            child: const Text('Delete All Todos')
+              .decorate(
+                redColor, 
                 fontSize2, 
                 fontWeight1
               ),

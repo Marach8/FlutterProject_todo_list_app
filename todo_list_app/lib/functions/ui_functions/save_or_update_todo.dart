@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_list_app/backend_auth/firebase_backend.dart';
 import 'package:todo_list_app/constants/fonts_and_colors.dart';

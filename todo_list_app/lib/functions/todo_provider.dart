@@ -47,12 +47,10 @@ class AppUsers extends ChangeNotifier{
     todoTitleController.text = todoToUpdate['title'];
     todoDateTimeController.text = todoToUpdate['due-datetime'];
     todoContentController.text = todoToUpdate['content'];
-    //notifyListeners();
   }
 
-  void deleteFromRemote(){
+  void deleteFromRemote() =>
     backend.deleteTodo(deletedTodo['title']);
-  }
 
   void callToAction(VoidCallback action){
     action();

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_app/constants/fonts_and_colors.dart';
 import 'package:todo_list_app/constants/routes.dart';
+import 'package:todo_list_app/custom_widgets/popup_menu_buttons.dart';
 import 'package:todo_list_app/functions/extensions.dart';
 import 'package:todo_list_app/functions/todo_provider.dart';
 import 'package:todo_list_app/functions/ui_functions/show_todo_details.dart';
@@ -21,6 +22,7 @@ class Views extends StatelessWidget{
             fontSize3,
             fontWeight2
           ),
+        actions: [PopUpMenuForTodosView(contextForLoadingScreen: context)],
         backgroundColor: deepBackGroundColor, 
         foregroundColor: whiteColor
       ),
