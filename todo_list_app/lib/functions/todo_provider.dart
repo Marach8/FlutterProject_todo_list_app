@@ -4,7 +4,7 @@ import 'package:todo_list_app/backend_auth/firebase_backend.dart';
 class AppUsers extends ChangeNotifier{
   final backend = FirebaseBackend();
   late List<Map<String, dynamic>> dataBase;
-  late Map<String, dynamic> deletedTodo;
+  late Map<String, dynamic> deletedTodo, todoToUpdate;
   String? loggedInUser; 
   bool isInUpdateMode = false;
   bool forgotPassword = false;
@@ -41,6 +41,13 @@ class AppUsers extends ChangeNotifier{
       ? dataBase.insert(index, deletedTodo)
       : {};
     notifyListeners();
+  }
+
+  void populateTodoFields(){
+    todoTitleController.text = todoToUpdate['title'];
+    todoDateTimeController.text = todoToUpdate['due-datetime'];
+    todoContentController.text = todoToUpdate['content'];
+    //notifyListeners();
   }
 
   void deleteFromRemote(){

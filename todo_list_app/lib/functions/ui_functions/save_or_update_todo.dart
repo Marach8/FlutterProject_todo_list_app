@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_list_app/backend_auth/firebase_backend.dart';
 import 'package:todo_list_app/constants/fonts_and_colors.dart';
@@ -23,28 +24,65 @@ Future<void> saveOrUpdateTodo(
     //Updating an existing Todo
     if(user.isInUpdateMode){
       loadingScreen.showOverlay(context, 'Updating...');
-      // user.addTodo(user.updateIndex); 
-      // if(user.dataBase.isNotEmpty){                      
-      //   for(List item in user.dataBase){
-      //     FirestoreInteraction().createTodo(
-      //       user.firebaseCurrentUser!.uid, 
-      //       item[0], 
-      //       {
-      //         'title': item[0], 
-      //         'datetime': item[1], 
-      //         'content': item[2]
-      //       }
-      //     );                        
-      //   }                          
-      // }
-      // loadingScreen.hideOverlay();
-      // user.todoTitleController.clear();
-      // user.todoDateTimeController.clear();
-      // user.todoContentController.clear();
-      // user.callToAction(() => user.isInUpdateMode = false);
-      // Navigator.of(context).pushNamedAndRemoveUntil(
-      //   '/home', (route) => false
-      // );
+
+      final newTitle = user.todoTitleController.text.trim();
+      final newDueDateTime = user.todoDateTimeController.text.trim();
+      final newContent = user.todoContentController.text.trim();
+
+      final initialTitle = user.todoToUpdate['title'];
+      final initialDueDateTime = user.todoToUpdate['due-datetime'];
+      final initialContent = user.todoToUpdate['content'];
+
+      final newMap = {
+        'title': newTitle,
+        'due-datetime': newDueDateTime,
+        'content': newContent
+      };
+      final mapsAreEqual = mapEquals(newMap, user.todoToUpdate);
+      mapsAreEqual 
+      ? {
+        loadingScreen.hideOverlay(),
+        await showNotification(
+          context, 
+          'You have No changes to Update', 
+          Icons.info,
+          customGreenColor
+        )
+        .then((_) {
+          user.todoTitleController.clear();
+          user.todoDateTimeController.clear();
+          user.todoContentController.clear();
+          user.callToAction(() => user.isInUpdateMode = false);
+          Navigator.pop(context);
+        })
+      } 
+      : await backend.updateTodo(
+          initialTitle,
+          initialDueDateTime,
+          initialContent, 
+          newTitle, 
+          newDueDateTime, 
+          newContent
+        )
+        .then((updateResult) async{
+          final successfulUpdate = updateResult == 'Update Successful...';
+          loadingScreen.hideOverlay();
+            await showNotification(
+              context, 
+              updateResult, 
+              successfulUpdate ?
+                Icons.check : Icons.warning_rounded,
+              successfulUpdate ?
+                greenColor : redColor
+            )
+            .then((_){
+              user.todoTitleController.clear();
+              user.todoDateTimeController.clear();
+              user.todoContentController.clear();
+              user.callToAction(() => user.isInUpdateMode = false);
+              Navigator.pop(context);
+            });
+        });
     }
     //Saving a new Todo
     else{

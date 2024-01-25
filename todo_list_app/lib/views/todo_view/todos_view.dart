@@ -114,6 +114,8 @@ class Views extends StatelessWidget{
                   datetimeOfCreation
                 ),
                 onLongPress: (){
+                  user.todoToUpdate = mapOfTodoDetails;
+                  user.populateTodoFields();
                   user.callToAction(() => user.isInUpdateMode = true);
                   Navigator.of(context).pushNamed(addTodoPageRoute);
                 },
