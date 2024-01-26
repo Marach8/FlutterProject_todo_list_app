@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_list_app/animations/slider_animations.dart';
+import 'package:todo_list_app/animations/slider_animation.dart';
 import 'package:todo_list_app/constants/fonts_and_colors.dart';
 import 'package:todo_list_app/custom_widgets/buttons/elevated_button.dart';
 import 'package:todo_list_app/custom_widgets/textfield_widget.dart';
