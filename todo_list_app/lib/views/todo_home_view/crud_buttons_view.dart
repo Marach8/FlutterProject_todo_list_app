@@ -37,8 +37,13 @@ class CrudButtonsView extends StatelessWidget {
           CrudButtonModel(
             icon: Icons.add, 
             text: 'Add',
-            function: () => Navigator.of(context)
-              .pushNamed(addTodoPageRoute)
+            function: () => {
+              user.todoTitleController.clear(),
+              user.todoDateTimeController.clear(),
+              user.todoContentController.clear(),
+              Navigator.of(context)
+              .pushNamed(addTodoPageRoute),
+            }
           ),
       
           CrudButtonModel(
@@ -48,7 +53,7 @@ class CrudButtonsView extends StatelessWidget {
               if (user.dataBase.isNotEmpty) {
                 await showNotification(
                   context, 
-                  'To view an item in detail, tap on the item.', 
+                  'To view an item in detail, tap on it.', 
                   Icons.view_array_rounded, 
                   blueColor,
                 ).then((_) => Navigator.of(context)

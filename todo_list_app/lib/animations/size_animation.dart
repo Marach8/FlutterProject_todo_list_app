@@ -28,11 +28,17 @@ SingleTickerProviderStateMixin{
     )..repeat(reverse: true);
 
     sizeAnimation = Tween<double> (begin: 0.0, end: 5.0
-    ).animate(sizeController);
+    ).animate(
+      CurvedAnimation(
+        parent: sizeController,
+        curve: Curves.linear
+      )
+    );
 
     sizeAnimation.addStatusListener((status) {
       if(status == AnimationStatus.completed){
-        sizeController.reverse().then((_) => sizeController.forward());
+        sizeController.reverse()
+          .then((_) => sizeController.forward());
       }
     });
   }

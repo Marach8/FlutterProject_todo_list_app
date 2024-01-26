@@ -28,7 +28,9 @@ class TodoHome extends StatelessWidget{
         => Scaffold(
           backgroundColor: blackColor,
           appBar: AppBar( 
-            actions: [PopUpMenuForMainView(contextForLoadingScreen: context)],
+            actions: [
+              PopUpMenuForMainView(contextForLoadingScreen: context)
+            ],
             centerTitle: true, 
             title: const Row(
               mainAxisAlignment: MainAxisAlignment.center ,
@@ -110,7 +112,7 @@ class TodoHome extends StatelessWidget{
                         ),
                         const DividerWidget(),
                         user.dataBase.isEmpty
-                          ? SizeAnimation()
+                          ? const SizeAnimation()
                           : ContainerWithTextView(user: user),
                         const DividerWidget(),
                         CrudButtonsView(user: user)

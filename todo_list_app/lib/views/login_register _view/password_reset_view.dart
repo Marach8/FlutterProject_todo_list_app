@@ -26,7 +26,7 @@ class PasswordResetView extends StatelessWidget {
             Container(
               width:45,
               decoration: BoxDecoration(
-                color: customGreenColor,
+                color: greenColor,
                 shape: BoxShape.circle,                                                          
                 border: Border.all(width:1)
               ),
@@ -67,7 +67,7 @@ class PasswordResetView extends StatelessWidget {
           builder: (_, user, __) => ElevatedButtonWidget(
             onPressed: () async 
               => await resetUserPassword(user, context),
-            backgroundColor: customGreenColor,
+            backgroundColor: greenColor,
             borderColor: blackColor,
             child: const TextItem(
               text: 'Change Password', 
