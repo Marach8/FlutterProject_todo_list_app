@@ -23,19 +23,22 @@ SingleTickerProviderStateMixin{
     super.initState();
     sizeController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 10),
-      reverseDuration: const Duration(seconds: 10), 
-    )..repeat(reverse: true);
+      duration: const Duration(seconds: 2),
+      reverseDuration: const Duration(seconds: 2), 
+    )..repeat();
 
-    sizeAnimation = Tween<double> (begin: 0.0, end: 50.0
+    // sizeAnimation = CurvedAnimation(
+    //   parent: sizeController, 
+    //   curve: Curves.easeInOut
+    // );
+    sizeAnimation = Tween<double> (begin: 0.0, end: 10.0
     ).animate(sizeController);
 
-    // sizeController.repeat(reverse: true);
-    // sizeAnimation.addStatusListener((status) {
-    //   if(status == AnimationStatus.completed){
-    //     sizeController.reverse();
-    //   }
-    // });
+    sizeAnimation.addStatusListener((status) {
+      if(status == AnimationStatus.completed){
+        sizeController.reverse();
+      }
+    });
     sizeController.forward();
   }
 
@@ -47,14 +50,18 @@ SingleTickerProviderStateMixin{
 
   @override
   Widget build(BuildContext context) {
-    print(sizeAnimation.value);
-    print(sizeController.value);
-    return AnimatedSize(
-      curve: Curves.easeInOut,
-      duration: const Duration(seconds: 10),
-      child: Container(
-        height: 200, width: MediaQuery.of(context).size.width,
-        child: Text('Hello', style: TextStyle(fontSize: sizeAnimation.value*1000),)
+    // print(sizeAnimation.value);
+    // print(sizeController.value);
+    return SizeTransition(
+      sizeFactor: sizeAnimation,
+      child: ScaleTransition(
+        scale: sizeAnimation,
+        child: Center(
+          child: Text(
+            'Hello', 
+            style: TextStyle(fontSize: 20),
+          ),
+        ),
       )
     );
   }
