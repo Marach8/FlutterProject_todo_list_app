@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_list_app/animations/size_animation.dart';
 import 'package:todo_list_app/animations/slider_animation.dart';
 import 'package:todo_list_app/backend_auth/firebase_backend.dart';
 import 'package:todo_list_app/constants/fonts_and_colors.dart';
@@ -108,7 +109,9 @@ class TodoHome extends StatelessWidget{
                           fit: BoxFit.cover
                         ),
                         const DividerWidget(),
-                        ContainerWithTextView(user: user),
+                        user.dataBase.isEmpty
+                          ? SizeAnimation()
+                          : ContainerWithTextView(user: user),
                         const DividerWidget(),
                         CrudButtonsView(user: user)
                       ],
