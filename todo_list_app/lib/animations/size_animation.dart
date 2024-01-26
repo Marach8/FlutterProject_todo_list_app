@@ -25,21 +25,16 @@ SingleTickerProviderStateMixin{
       vsync: this,
       duration: const Duration(seconds: 2),
       reverseDuration: const Duration(seconds: 2), 
-    )..repeat();
+    )..repeat(reverse: true);
 
-    // sizeAnimation = CurvedAnimation(
-    //   parent: sizeController, 
-    //   curve: Curves.easeInOut
-    // );
-    sizeAnimation = Tween<double> (begin: 0.0, end: 10.0
+    sizeAnimation = Tween<double> (begin: 0.0, end: 5.0
     ).animate(sizeController);
 
     sizeAnimation.addStatusListener((status) {
       if(status == AnimationStatus.completed){
-        sizeController.reverse();
+        sizeController.reverse().then((_) => sizeController.forward());
       }
     });
-    sizeController.forward();
   }
 
   @override 
@@ -50,17 +45,18 @@ SingleTickerProviderStateMixin{
 
   @override
   Widget build(BuildContext context) {
-    // print(sizeAnimation.value);
-    // print(sizeController.value);
+    sizeController.forward();
     return SizeTransition(
       sizeFactor: sizeAnimation,
       child: ScaleTransition(
         scale: sizeAnimation,
         child: Center(
-          child: Text(
-            'Hello', 
-            style: TextStyle(fontSize: 20),
-          ),
+          child: const Text('No Todos to display...')
+            .decoratewithGoogleFont(
+              whiteColor, 
+              fontSize1, 
+              fontWeight3
+            ),
         ),
       )
     );
