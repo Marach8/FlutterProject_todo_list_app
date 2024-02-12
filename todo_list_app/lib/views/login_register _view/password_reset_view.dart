@@ -13,70 +13,70 @@ class PasswordResetView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const TextItem(
-              text: 'Password Reset', 
-              fontSize: fontSize4, 
-              fontWeight: fontWeight1,
-              color: blackColor
+    children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const TextItem(
+            text: 'Password Reset', 
+            fontSize: fontSize4, 
+            fontWeight: fontWeight1,
+            color: blackColor
+          ),
+          Container(
+            width:45,
+            decoration: BoxDecoration(
+              color: greenColor,
+              shape: BoxShape.circle,                                                          
+              border: Border.all(width:1)
             ),
-            Container(
-              width:45,
-              decoration: BoxDecoration(
-                color: greenColor,
-                shape: BoxShape.circle,                                                          
-                border: Border.all(width:1)
-              ),
-              child: Consumer<AppUsers>(
-                builder: (_, user, __) => Center(                    
-                  child: IconButton(
-                    onPressed: () {
-                      user.forgotPasswordController.clear();
-                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                      user.callToAction(() => user.forgotPassword = false);
-                    }, 
-                    icon: const Icon(
-                      Icons.arrow_downward_rounded, 
-                      color: blackColor
-                    )
-                  ),
+            child: Consumer<AppUsers>(
+              builder: (_, user, __) => Center(                    
+                child: IconButton(
+                  onPressed: () {
+                    user.forgotPasswordController.clear();
+                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                    user.callToAction(() => user.forgotPassword = false);
+                  }, 
+                  icon: const Icon(
+                    Icons.arrow_downward_rounded, 
+                    color: blackColor
+                  )
                 ),
               ),
-            )
-          ]
-        ),
-        const Gap(20),
-        const Divider(height: 1), 
-        const Gap(25),
-
-        Consumer<AppUsers>(
-          builder: (_, user, __) => LoginAndSignUpTextFields(
-            hintText: 'Enter your email...',
-            color: whiteColor,
-            enabled: user.forgotPassword ? true: false,
-            controller: user.forgotPasswordController,
-          ),
-        ), 
-        const Gap(20),
-        const Divider(height: 1), 
-        const Gap(20),
-        Consumer<AppUsers>(
-          builder: (_, user, __) => ElevatedButtonWidget(
-            onPressed: () async 
-              => await resetUserPassword(user, context),
-            backgroundColor: greenColor,
-            borderColor: blackColor,
-            child: const TextItem(
-              text: 'Change Password', 
-              fontSize: fontSize2, 
-              fontWeight: fontWeight2,
-              color: blackColor
             ),
-          ) 
+          )
+        ]
+      ),
+      const Gap(20),
+      const Divider(height: 1), 
+      const Gap(25),
+
+      Consumer<AppUsers>(
+        builder: (_, user, __) => LoginAndSignUpTextFields(
+          hintText: 'Enter your email...',
+          color: whiteColor,
+          enabled: user.forgotPassword ? true: false,
+          controller: user.forgotPasswordController,
         ),
-      ],
-    );
+      ), 
+      const Gap(20),
+      const Divider(height: 1), 
+      const Gap(20),
+      Consumer<AppUsers>(
+        builder: (_, user, __) => ElevatedButtonWidget(
+          onPressed: () async 
+            => await resetUserPassword(user, context),
+          backgroundColor: greenColor,
+          borderColor: blackColor,
+          child: const TextItem(
+            text: 'Change Password', 
+            fontSize: fontSize2, 
+            fontWeight: fontWeight2,
+            color: blackColor
+          ),
+        ) 
+      ),
+    ],
+  );
 }

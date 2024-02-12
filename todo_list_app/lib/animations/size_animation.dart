@@ -27,7 +27,8 @@ SingleTickerProviderStateMixin{
       reverseDuration: const Duration(seconds: 2), 
     )..repeat(reverse: true);
 
-    sizeAnimation = Tween<double> (begin: 0.0, end: 5.0
+    sizeAnimation = Tween<double> (
+      begin: 0.0, end: 5.0
     ).animate(
       CurvedAnimation(
         parent: sizeController,

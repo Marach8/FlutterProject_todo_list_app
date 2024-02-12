@@ -79,7 +79,6 @@ class LoginAndSignUpTextFields extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Column(
-
       children: [
         textItem == null ? const SizedBox.shrink() 
         : TextItem(
