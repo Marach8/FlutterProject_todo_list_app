@@ -34,9 +34,9 @@ Future<void> saveOrUpdateTodo(
       final initialContent = user.todoToUpdate[contentString].trim();
 
       final newMap = {
-        'title': newTitle,
-        'due-datetime': newDueDateTime,
-        'content': newContent
+        titleString: newTitle,
+        dueDateTime: newDueDateTime,
+        contentString: newContent
       };
       final mapsAreEqual = newMap.checkMapEquality(user.todoToUpdate);
       mapsAreEqual 
@@ -65,7 +65,7 @@ Future<void> saveOrUpdateTodo(
           newContent
         )
         .then((updateResult) async{
-          final successfulUpdate = updateResult == 'Update Successful...';
+          final successfulUpdate = updateResult == updateSucessful;
           loadingScreen.hideOverlay();
             await showNotification(
               context, 
@@ -86,7 +86,7 @@ Future<void> saveOrUpdateTodo(
     }
     //Saving a new Todo
     else{
-      loadingScreen.showOverlay(context, 'Saving...');
+      loadingScreen.showOverlay(context, saving);
       backend.uploadTodo(
         user.todoTitleController.text.trim(),
         user.todoDateTimeController.text.trim(),
@@ -98,8 +98,8 @@ Future<void> saveOrUpdateTodo(
       user.todoContentController.clear();
       await showGenericDialog(
         context: context, 
-        title: 'Save Todo', 
-        content: 'Your todo has been saved sucessfully. Do you want to add another?',
+        title: saveTodo,
+        content: todoSaved,
         options: {
           'No': false,
           'Yes': true
