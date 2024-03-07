@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_app/constants/fonts_and_colors.dart';
 import 'package:todo_list_app/constants/routes.dart';
+import 'package:todo_list_app/constants/strings.dart';
 import 'package:todo_list_app/custom_widgets/popup_menu_buttons.dart';
 import 'package:todo_list_app/functions/extensions.dart';
 import 'package:todo_list_app/functions/todo_provider.dart';
@@ -16,7 +17,7 @@ class Views extends StatelessWidget{
       backgroundColor: backGroundColor,
       appBar: AppBar(
         centerTitle: true, 
-        title: const Text('Welcome to your views')
+        title: const Text(welcomeToYourViews)
           .decoratewithGoogleFont(
             whiteColor,
             fontSize3,
@@ -32,10 +33,10 @@ class Views extends StatelessWidget{
           itemCount: user.dataBase.length,
           itemBuilder: (_, index) {
             final mapOfTodoDetails = user.dataBase.elementAt(index);
-            final title = mapOfTodoDetails['title'];
-            final date = mapOfTodoDetails['due-datetime'] ;
-            final content = mapOfTodoDetails['content'];
-            final datetimeOfCreation = mapOfTodoDetails['datetime-of-creation'];
+            final title = mapOfTodoDetails[titleString];
+            final date = mapOfTodoDetails[dueDateTime] ;
+            final content = mapOfTodoDetails[contentString];
+            final datetimeOfCreation = mapOfTodoDetails[creationDateTime];
             
             return Dismissible(                
               key: UniqueKey(),
@@ -53,7 +54,7 @@ class Views extends StatelessWidget{
                           Radius.circular(10)
                         )
                       ),
-                      content: const Text('Item deleted!')
+                      content: const Text(itemDeleted)
                         .decoratewithGoogleFont(
                           blackColor,
                           fontSize3, 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list_app/constants/fonts_and_colors.dart';
+import 'package:todo_list_app/constants/strings.dart';
 import 'package:todo_list_app/functions/extensions.dart';
 
 class SizeAnimation extends StatefulWidget {
@@ -58,7 +59,7 @@ SingleTickerProviderStateMixin{
       child: ScaleTransition(
         scale: sizeAnimation,
         child: Center(
-          child: const Text('No Todos to display...')
+          child: const Text(noStringToDisplay)
             .decoratewithGoogleFont(
               whiteColor, 
               fontSize1, 

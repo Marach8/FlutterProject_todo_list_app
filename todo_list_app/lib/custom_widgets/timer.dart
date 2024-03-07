@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list_app/constants/fonts_and_colors.dart';
+import 'package:todo_list_app/constants/strings.dart';
 import 'package:todo_list_app/custom_widgets/circle_avatar.dart';
 import 'package:todo_list_app/functions/extensions.dart';
 
@@ -28,7 +29,7 @@ class CountDownTimerView extends StatelessWidget {
               fontSize2, 
               fontWeight2
             ),
-        ) : const Text('')
+        ) : const Text(emptyString)
       )
     );
   }
