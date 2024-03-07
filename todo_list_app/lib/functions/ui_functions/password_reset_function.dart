@@ -12,7 +12,7 @@ Future<void> resetUserPassword(dynamic user, BuildContext context) async{
   if(user.forgotPasswordController.text.isNotEmpty){
     final backend = FirebaseBackend();
     final loadingScreen = LoadingScreen(); 
-    loadingScreen.showOverlay(context, 'Please Wait...');
+    loadingScreen.showOverlay(context, pleaseWait);
 
     await backend.resetUserPassword(
       user.forgotPasswordController.text

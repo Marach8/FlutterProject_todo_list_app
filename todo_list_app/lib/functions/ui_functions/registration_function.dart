@@ -19,7 +19,7 @@ Future<void> registerNewUser(dynamic user, BuildContext context) async {
     final backend = FirebaseBackend();
     final loadingScreen = LoadingScreen();
     
-    loadingScreen.showOverlay(context, 'Registering...');
+    loadingScreen.showOverlay(context, registering);
 
     if(user.passwordController.text.trim() == user.confirmPassController.text.trim()){
       await backend.registerUser(

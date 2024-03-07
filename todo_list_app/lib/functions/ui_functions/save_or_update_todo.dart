@@ -23,15 +23,15 @@ Future<void> saveOrUpdateTodo(
 
     //Updating an existing Todo
     if(user.isInUpdateMode){
-      loadingScreen.showOverlay(context, 'Updating...');
+      loadingScreen.showOverlay(context, updating);
 
       final newTitle = user.todoTitleController.text.trim();
       final newDueDateTime = user.todoDateTimeController.text.trim();
       final newContent = user.todoContentController.text.trim();
 
-      final initialTitle = user.todoToUpdate['title'].trim();
-      final initialDueDateTime = user.todoToUpdate['due-datetime'].trim();
-      final initialContent = user.todoToUpdate['content'].trim();
+      final initialTitle = user.todoToUpdate[titleString].trim();
+      final initialDueDateTime = user.todoToUpdate[dueDateTime].trim();
+      final initialContent = user.todoToUpdate[contentString].trim();
 
       final newMap = {
         'title': newTitle,
@@ -44,7 +44,7 @@ Future<void> saveOrUpdateTodo(
         loadingScreen.hideOverlay(),
         await showNotification(
           context, 
-          'You have No changes to Update', 
+          noChangesToUpdate,
           Icons.info,
           customGreenColor
         )

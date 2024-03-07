@@ -18,7 +18,7 @@ Future<void> loginToApp(dynamic user, BuildContext context) async {
     final backend = FirebaseBackend();
     final loadingScreen = LoadingScreen();
 
-    loadingScreen.showOverlay(context, 'Logging in...');
+    loadingScreen.showOverlay(context, logginIn);
     await backend.loginUser(
       user.emailController.text.trim(), 
       user.passwordController.text.trim(), 
